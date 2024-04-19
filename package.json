@@ -2,10 +2,10 @@
 	"name": "fedeteria-back",
 	"version": "1.0.0",
 	"description": "",
-	"main": "src/index.js",
+	"main": "src/app.js",
 	"type": "module",
 	"scripts": {
-		"dev": "nodemon index.js"
+		"dev": "nodemon app.js"
 	},
 	"keywords": [],
 	"author": "",
@@ -16,7 +16,8 @@
 		"express": "4.19.2",
 		"mercadopago": "^2.0.8",
 		"morgan": "^1.10.0",
-		"node-fetch": "^3.3.2"
+		"node-fetch": "^3.3.2",
+		"resend": "^3.2.0"
 	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.24.4",

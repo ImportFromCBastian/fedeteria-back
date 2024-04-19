@@ -3,5 +3,6 @@ const config = {
 	MP_KEY: process.env.MP_ACCESS_TOKEN,
 	PORT: process.env.PORT,
 	SECURE_ROUTE: process.env.SECURE_ROUTE,
+	RESEND_KEY: process.env.RESEND_KEY,
 };
 export default config;
