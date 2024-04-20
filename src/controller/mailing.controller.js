@@ -10,8 +10,8 @@ const mailingController = async (req, res) => {
 
 const createMailBody = (body) => {
 	return {
-		from: '"Oli Informatic Solutions😺" <sebshndz2001@gmail.com>', // sender address
-		to: 'valenbulgari13@gmail.com', // list of receivers
+		from: '"Oli Informatic Solutions😺" <lafedeteria@gmail.com>', // sender address
+		to: 'sample@gmail.com', // list of receivers
 		subject: 'Hello ✔', // Subject line
 		text: 'Hello world?', // plain text body
 		html: '<b>Hello world?</b>', // html body
