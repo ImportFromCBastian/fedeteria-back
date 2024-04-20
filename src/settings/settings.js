@@ -1,5 +1,6 @@
 import 'dotenv/config';
 const config = {
+	BASE_URL: process.env.BASE_URL,
 	MP_KEY: process.env.MP_ACCESS_TOKEN,
 	PORT: process.env.PORT,
 	SECURE_ROUTE: process.env.SECURE_ROUTE,

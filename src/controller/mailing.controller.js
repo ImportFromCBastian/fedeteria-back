@@ -1,21 +1,12 @@
-import transporter from '../settings/transporter.js';
+import { MailingModel } from '../model/mailing.model.js';
 
-const mailingController = async (req, res) => {
-	const mail = createMailBody(req.body);
-	const info = await transporter.sendMail(mail);
+export class MailingController {
+	static async sendChangePasswordEmail(req, res) {
+		const { mailBody } = req.body;
+		const objectMail = await MailingModel.sendChangePasswordEmail(mailBody);
+		//send status code 201 for created mail
+		res.status(201).json(objectMail);
+	}
+}
 
-	console.log('info object: %s', info);
-	res.status(200).json({ message: 'check console' });
-};
-
-const createMailBody = (body) => {
-	return {
-		from: '"Oli Informatic Solutions😺" <lafedeteria@gmail.com>', // sender address
-		to: 'sample@gmail.com', // list of receivers
-		subject: 'Hello ✔', // Subject line
-		text: 'Hello world?', // plain text body
-		html: '<b>Hello world?</b>', // html body
-	};
-};
-
-export default mailingController;
+export default MailingController;

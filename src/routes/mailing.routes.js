@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import mailingController from '../controller/mailing.controller.js';
+import MailingController from '../controller/mailing.controller.js';
 
 const router = Router();
 
-router.post('/', mailingController);
+router.post('/', MailingController.sendChangePasswordEmail);
 
 export default router;
