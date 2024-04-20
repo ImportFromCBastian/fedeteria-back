@@ -3,6 +3,6 @@ import mailingController from '../controller/mailing.controller.js';
 
 const router = Router();
 
-router.get('/', mailingController);
+router.post('/', mailingController);
 
 export default router;

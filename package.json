@@ -17,7 +17,7 @@
 		"mercadopago": "^2.0.8",
 		"morgan": "^1.10.0",
 		"node-fetch": "^3.3.2",
-		"resend": "^3.2.0"
+		"nodemailer": "^6.9.13"
 	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.24.4",

@@ -1,21 +1,21 @@
-import { Resend } from 'resend';
-
-import config from '../settings/settings.js';
-
-const resend = new Resend(`${config.RESEND_KEY}`);
+import transporter from '../settings/transporter.js';
 
 const mailingController = async (req, res) => {
-	try {
-		const email = await resend.emails.send({
-			from: 'onboarding@resend.dev',
-			to: 'myemail@gmail.com',
-			subject: 'Hello World',
-			html: '<p>Congrats on sending your <strong>first email</strong>!</p>',
-		});
-		//capaz conviene guardar el id de la transaccion en la base de datos
-		console.log(email);
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
+	const mail = createMailBody(req.body);
+	const info = await transporter.sendMail(mail);
+
+	console.log('info object: %s', info);
+	res.status(200).json({ message: 'check console' });
 };
+
+const createMailBody = (body) => {
+	return {
+		from: '"Oli Informatic Solutions😺" <sebshndz2001@gmail.com>', // sender address
+		to: 'valenbulgari13@gmail.com', // list of receivers
+		subject: 'Hello ✔', // Subject line
+		text: 'Hello world?', // plain text body
+		html: '<b>Hello world?</b>', // html body
+	};
+};
+
 export default mailingController;
