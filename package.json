@@ -11,7 +11,7 @@
     "format": "prettier --config .prettierrc --cache --write ."
   },
   "lint-staged": {
-    "**/*": "prettier --config .prettierrc --cache --write . --ignore-unknown --ext js"
+    "**/*": "prettier --config .prettierrc --cache --write --ignore-unknown --ext js"
   },
   "keywords": [],
   "author": "",
