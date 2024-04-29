@@ -8,7 +8,7 @@ import mailingRouters from './routes/mailing.routes.js'
 
 const app = express()
 
-const PORT = config.PORT
+const PORT = config.PORT ?? 3000
 
 app.disable('x-powered-by') // Disable the X-Powered-By header
 
