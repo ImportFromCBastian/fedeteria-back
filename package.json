@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "nodemon app.js",
     "prepare": "husky",
-    "test": "echo hola"
+    "lint": "prettier --config .prettierrc --check . && eslint . --ext js --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --config .prettierrc --cache --write ."
   },
   "lint-staged": {
     "**/*": "prettier --config .prettierrc --cache --write --ignore-unknown"
