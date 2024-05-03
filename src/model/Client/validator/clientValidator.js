@@ -6,7 +6,7 @@ const clientValidator = client => {
   client.notification = client.notification === 'true' ? 'si' : 'no'
 
   const result = clientSchema.safeParse(client)
-  //encriptar password con bcrypt
+
   return result
 }
 

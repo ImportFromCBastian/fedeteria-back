@@ -1,5 +1,6 @@
 import { ClientModel } from '../../model/Client/client.js'
 import clientValidator from '../../model/Client/validator/clientValidator.js'
+import { encryptPassword } from '../../settings/encryptPassword.js'
 
 export class ClientController {
   static async create(req, res) {
@@ -10,9 +11,13 @@ export class ClientController {
       if (!result.success) {
         return res.status(400).json({ error: JSON.parse(result.error.mesage) })
       }
+      //encriptar password con bcrypt
+      client.password = encryptPassword(client.password)
 
-      await ClientModel.create(user)
-      res.status(201).json({ message: 'Cliente creado con éxito' })
+      console.log(client)
+
+      // await ClientModel.create(client)
+      // res.status(201).json({ message: 'Cliente creado con éxito' })
     } catch (error) {
       res.status(500).json({ error: error })
     }
