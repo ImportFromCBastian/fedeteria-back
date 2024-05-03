@@ -15,8 +15,6 @@ export class ClientController {
       //encriptar password con bcrypt
       client.password = encryptPassword(client.password)
 
-      console.log(client)
-
       await ClientModel.create(client)
       res.status(201).json({ message: 'Cliente creado con éxito' })
     } catch (error) {
