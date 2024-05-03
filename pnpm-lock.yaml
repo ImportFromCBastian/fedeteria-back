@@ -32,6 +32,9 @@ importers:
       nodemailer:
         specifier: ^6.9.13
         version: 6.9.13
+      zod:
+        specifier: 3.23.6
+        version: 3.23.6
     devDependencies:
       '@babel/preset-env':
         specifier: ^7.24.4
@@ -1805,6 +1808,9 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod@3.23.6:
+    resolution: {integrity: sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==}
 
 snapshots:
 
@@ -3671,3 +3677,5 @@ snapshots:
   yaml@2.3.4: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@3.23.6: {}
