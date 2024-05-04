@@ -1,5 +1,5 @@
 import { ClientModel } from '../../model/Client/client.js'
-import clientValidator from '../../model/Client/validator/clientValidator.js'
+import clientValidator from '../../model/Client/schema/clientSchema.js'
 import { encryptPassword } from '../../settings/encryptPassword.js'
 
 export class ClientController {

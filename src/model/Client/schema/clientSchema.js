@@ -1,7 +1,7 @@
 import { z } from 'zod'
 const clientSchema = z.object({
   //dni validations
-  dni: z.number({
+  dni: z.coerce.number({
     required_error: 'El DNI es requerido',
     invalid_type_error: 'El DNI debe ser un número',
   }),
@@ -51,7 +51,11 @@ const clientSchema = z.object({
         message: 'La persona debe ser mayor de edad.',
       },
     ),
-  notification: z.enum(['si', 'no']),
+  notification: z.string().transform(value => (value === 'true' ? 'si' : 'no')),
 })
 
-export default clientSchema
+const clientValidator = client => {
+  return clientSchema.safeParse(client)
+}
+
+export default clientValidator
