@@ -7,11 +7,9 @@ export class ClientController {
     try {
       const client = req.body
       const result = clientValidator(client)
-
       if (!result.success) {
         return res.status(400).json({ error: JSON.parse(result.error.mesage) })
       }
-
       //encriptar password con bcrypt
       client.password = encryptPassword(client.password)
 
@@ -22,3 +20,4 @@ export class ClientController {
     }
   }
 }
+// flata chequear cuando pones el mismo mail y ay esta registrado que no se registro, lo mismo con dni.

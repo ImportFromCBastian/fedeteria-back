@@ -1,10 +1,12 @@
 import { z } from 'zod'
 const clientSchema = z.object({
   //dni validations
-  dni: z.coerce.number({
-    required_error: 'El DNI es requerido',
-    invalid_type_error: 'El DNI debe ser un número',
-  }),
+  dni: z.coerce
+    .number({
+      required_error: 'El DNI es requerido',
+      invalid_type_error: 'El DNI debe ser un número',
+    })
+    .transform(value => value.toString()),
   //firstName validations
   name: z.string({
     required_error: 'El nombre es requerido',
@@ -51,10 +53,11 @@ const clientSchema = z.object({
         message: 'La persona debe ser mayor de edad.',
       },
     ),
-  notification: z.string().transform(value => (value === 'true' ? 'si' : 'no')),
+  notification: z.boolean().transform(value => (value === true ? 'si' : 'no')),
 })
 
 const clientValidator = client => {
+  console.log(client)
   return clientSchema.safeParse(client)
 }
 
