@@ -57,7 +57,6 @@ const clientSchema = z.object({
 })
 
 const clientValidator = client => {
-  console.log(client)
   return clientSchema.safeParse(client)
 }
 
