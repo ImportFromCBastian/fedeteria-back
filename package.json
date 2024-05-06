@@ -24,7 +24,8 @@
     "morgan": "^1.10.0",
     "mysql2": "^3.9.7",
     "node-fetch": "^3.3.2",
-    "nodemailer": "^6.9.13"
+    "nodemailer": "^6.9.13",
+    "zod": "^3.23.6"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.4",
