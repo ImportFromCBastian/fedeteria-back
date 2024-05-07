@@ -11,7 +11,7 @@ const publicationSchema = z.object({
     required_error: 'Se requiere la descripcion',
   }),
   //producto a cambio validations
-  proucto_a_cambio: z.string(),
+  producto_a_cambio: z.string(),
   //estado validations
   estado: z.boolean().transform(value => (value === true ? 'si' : 'no')),
 })
