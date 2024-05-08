@@ -1,7 +1,7 @@
 import { z } from 'zod'
 const publicationSchema = z.object({
   //el dni va a venir ya del publicante no hay que chequearlo
-  dni: z.string(),
+  dni: z.number().positive(),
   //nombre validations
   nombre: z.string({
     required_error: 'El nombre de la publicacion es requerido',
@@ -13,7 +13,7 @@ const publicationSchema = z.object({
   //producto a cambio validations
   producto_a_cambio: z.string(),
   //estado validations
-  estado: z.boolean().transform(value => (value === true ? 'si' : 'no')),
+  estado: z.string().transform(value => (value === 'Nuevo' ? 'si' : 'no')),
 })
 
 const publicationValidator = publication => {
