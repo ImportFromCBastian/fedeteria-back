@@ -1,4 +1,4 @@
-import { PublicationModel } from '../../model/publication/publication.js'
+import { PublicationModel } from '../../model/publication/Publication.js'
 import publicationValidator from '../../model/publication/schema/PublicationSchema.js'
 
 export class PublicationController {
