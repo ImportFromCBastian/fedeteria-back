@@ -6,6 +6,9 @@ const publicationSchema = z.object({
   nombre: z.string({
     required_error: 'El nombre de la publicacion es requerido',
   }),
+  fotos: z.array({
+    required_error: 'Se necesitan subir fotos',
+  }),
   //descripcion validations
   descripcion: z.string({
     required_error: 'Se requiere la descripcion',
