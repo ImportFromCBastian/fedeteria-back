@@ -6,7 +6,9 @@ const clientSchema = z.object({
       required_error: 'El DNI es requerido',
       invalid_type_error: 'El DNI debe ser un número',
     })
-    .transform(value => value.toString()),
+    .positive({
+      message: 'El DNI debe ser un número positivo',
+    }),
   //firstName validations
   name: z.string({
     required_error: 'El nombre es requerido',

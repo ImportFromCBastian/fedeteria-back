@@ -4,7 +4,7 @@ import { corsMiddleware } from './middleware/cors.js'
 import config from './settings/settings.js'
 import preferenceRoutes from './routes/preference.routes.js'
 import paymentRoutes from './routes/payment.routes.js'
-import mailingRouters from './routes/mailing.routes.js'
+import mailingRouters from './routes/mail/mailing.routes.js'
 import clientRouter from './routes/Client/client.routes.js'
 
 const app = express()

@@ -24,6 +24,18 @@ export class ClientController {
       client.password = encryptPassword(client.password)
 
       await ClientModel.create(client)
+
+      //send mail to the client
+      const mailResopnse = await fetch('http://localhost:3001/mailing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: client.email,
+        }),
+      })
+
       res.status(201).json({ ok: true, message: 'Cliente creado con éxito' })
     } catch (error) {
       res.status(500).json({ error: error })
