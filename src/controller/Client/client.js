@@ -1,6 +1,7 @@
 import { ClientModel } from '../../model/Client/client.js'
 import clientValidator from '../../model/Client/schema/clientSchema.js'
 import { encryptPassword } from '../../settings/encryptPassword.js'
+import config from '../../settings/settings.js'
 
 export class ClientController {
   static async create(req, res) {
@@ -8,7 +9,7 @@ export class ClientController {
       const client = req.body
       const result = clientValidator(client)
       if (!result.success) {
-        return res.status(400).json(JSON.parse(JSON.stringify(result.error.issues, null, 2)))
+        return res.status(400).json({ message: result.error })
       }
       //validar dni unico y validar email unico
       const [dni] = await ClientModel.findByDni(client.dni)
@@ -26,7 +27,7 @@ export class ClientController {
       await ClientModel.create(client)
 
       //send mail to the client
-      const mailResopnse = await fetch('http://localhost:3001/mailing', {
+      const mailResopnse = await fetch(`${config.BASE_URL}/mailing`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +37,7 @@ export class ClientController {
         }),
       })
 
-      res.status(201).json({ ok: true, message: 'Cliente creado con éxito' })
+      res.status(201).json({ ok: true, message: 'Cliente creado con éxito', id: mailResopnse })
     } catch (error) {
       res.status(500).json({ error: error })
     }
