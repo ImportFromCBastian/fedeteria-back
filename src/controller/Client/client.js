@@ -1,6 +1,8 @@
 import { ClientModel } from '../../model/Client/client.js'
 import clientValidator from '../../model/Client/schema/clientSchema.js'
 import { encryptPassword } from '../../settings/encryptPassword.js'
+import jwt from 'jsonwebtoken'
+import config from '../../settings/settings.js'
 
 export class ClientController {
   static async create(req, res) {
@@ -49,6 +51,15 @@ export class ClientController {
     const contra = user[0].contra
     //en este moment tenemos hashed password y password
     const comparacion = await ClientModel.compare(body.contra, contra)
-    return res.status(200).json({ ok: comparacion })
+    const token = jwt.sign(
+      {
+        data: { dni: user[0].DNI, rol: 'cliente' },
+      },
+      config.SECRET_WORD,
+    )
+    return res.status(200).json({
+      ok: comparacion,
+      token: token,
+    })
   }
 }
