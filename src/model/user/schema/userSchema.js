@@ -1,5 +1,5 @@
 import { z } from 'zod'
-const clientSchema = z.object({
+const userSchema = z.object({
   //dni validations
   dni: z.coerce.number({
     required_error: 'El DNI es requerido',
@@ -54,8 +54,8 @@ const clientSchema = z.object({
   notification: z.boolean().transform(value => (value === true ? 'si' : 'no')),
 })
 
-const clientValidator = client => {
-  return clientSchema.safeParse(client)
+const userValidator = user => {
+  return userSchema.safeParse(user)
 }
 
-export default clientValidator
+export default userValidator

@@ -1,18 +1,19 @@
-import { WorkerModel } from '../../model/worker/worker.js'
-import workerValidator from '../../model/worker/schema/workerSchema.js'
-import { encryptPassword } from '../../settings/encryptPassword.js'
+import { WorkerModel } from '../../../model/user/worker/worker.js'
+import userValidator from '../../../model/user/schema/userSchema.js'
+import { encryptPassword } from '../../../settings/encryptPassword.js'
+import { UserModel } from '../../../model/user/user.js'
 
 export class WorkerController {
   static async create(req, res) {
     try {
       const worker = req.body
-      const result = workerValidator(worker)
+      const result = userValidator(worker)
       if (!result.success) {
         return res.status(400).json({ message: result.error })
       }
       //validar dni unico y validar email unico
-      const [dni] = await WorkerModel.findByDni(worker.dni)
-      const [email] = await WorkerModel.findByEmail(worker.email)
+      const [dni] = await UserModel.findByDni(worker.dni)
+      const [email] = await UserModel.findByEmail(worker.email)
 
       if (dni.length > 0) {
         return res.status(400).json({ message: 'El DNI ya esta en uso' })
@@ -23,8 +24,9 @@ export class WorkerController {
       // encriptar password con bcrypt
       worker.password = encryptPassword(worker.password)
 
+      await UserModel.create(worker)
       await WorkerModel.create(worker)
-      res.status(201).json({ ok: true, message: 'Cliente creado con éxito' })
+      res.status(201).json({ ok: true, message: 'Empleado creado con éxito' })
     } catch (error) {
       res.status(500).json({ error: error })
     }
