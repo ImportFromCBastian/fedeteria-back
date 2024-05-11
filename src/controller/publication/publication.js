@@ -9,8 +9,8 @@ export class PublicationController {
       if (!result.success) {
         return res.status(400).json(JSON.parse(JSON.stringify(result.error.issues, null, 2)))
       }
-      await PublicationModel.create(publication)
-      res.status(201).json({ message: 'Publicación creada con éxito', ok: true })
+      const insertId = await PublicationModel.create(publication)
+      res.status(201).json({ message: insertId, ok: true })
     } catch (error) {
       res.status(500).json({ error: error })
     }

@@ -6,10 +6,10 @@ import preferenceRoutes from './routes/preference.routes.js'
 import paymentRoutes from './routes/payment.routes.js'
 import mailingRouters from './routes/mailing.routes.js'
 import publicationRouter from './routes/publication/publication.routes.js'
+import fotoRouter from './routes/publication/foto.routes.js'
 const app = express()
 
 const PORT = config.PORT ?? 3000
-
 app.disable('x-powered-by') // Disable the X-Powered-By header
 
 app.use(express.json()) // Parse incoming requests with JSON payloads
@@ -25,6 +25,8 @@ app.use('/process_payment', paymentRoutes)
 app.use('/mailing', mailingRouters)
 
 app.use('/publication', publicationRouter)
+
+app.use('/add-foto', fotoRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
