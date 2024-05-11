@@ -8,4 +8,6 @@ router.get('/', PublicacionController.getAll)
 
 router.delete('/:idPublicacion', PublicacionController.eliminateById)
 
+router.put('/:idPublicacion', PublicacionController.acceptById)
+
 export default router
