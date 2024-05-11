@@ -43,4 +43,12 @@ export class ClientController {
       res.status(500).json({ error: error })
     }
   }
+  static async compare(req, res) {
+    const body = req.body
+    const [user] = await ClientModel.findByDni(body.DNI)
+    const contra = user[0].contra
+    //en este moment tenemos hashed password y password
+    const comparacion = await ClientModel.compare(body.contra, contra)
+    return res.status(200).json({ ok: comparacion })
+  }
 }

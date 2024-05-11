@@ -7,4 +7,6 @@ router.post('/', ClientController.create)
 
 router.get('/:dni', ClientController.findByDni)
 
+router.post('/compare', ClientController.compare)
+
 export default router
