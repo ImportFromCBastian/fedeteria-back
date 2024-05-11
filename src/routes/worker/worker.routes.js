@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { WorkerController } from '../../controller/worker/worker'
+import { WorkerController } from '../../controller/worker/worker.js'
 
 const route = Router()
 

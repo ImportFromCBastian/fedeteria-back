@@ -11,12 +11,12 @@ export class WorkerModel {
   }
 
   static async findByDni(dni) {
-    const query = `SELECT e.dni,e.nombre,e.apellido, e.mail FROM Empleado e WHERE DNI = ?;`
+    const query = `SELECT * FROM Usuario WHERE DNI = ?;`
     return await connection.query(query, [dni]).catch(error => new Error(error))
   }
 
   static async findByEmail(email) {
-    const query = `SELECT e.mail FROM Empleado e WHERE mail = ?;`
+    const query = `SELECT * FROM Usuario WHERE mail = ?;`
     return await connection.query(query, [email]).catch(error => new Error(error))
   }
 }

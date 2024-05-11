@@ -8,7 +8,7 @@ export class WorkerController {
       const worker = req.body
       const result = workerValidator(worker)
       if (!result.success) {
-        return res.status(400).json(JSON.parse(JSON.stringify(result.error.issues, null, 2)))
+        return res.status(400).json({ message: result.error })
       }
       //validar dni unico y validar email unico
       const [dni] = await WorkerModel.findByDni(worker.dni)
