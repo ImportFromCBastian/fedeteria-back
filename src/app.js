@@ -28,7 +28,7 @@ app.use('/mailing', mailingRouters)
 
 app.use('/client', clientRouter)
 
-app.use('/mi-perfil', perfilRouter)
+app.use('/mi_perfil', perfilRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)

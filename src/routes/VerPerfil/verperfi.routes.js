@@ -3,7 +3,7 @@ import { PerfilController } from '../../controller/VerPerfil/perfil.js'
 
 const router = Router()
 
-// Define la ruta para obtener todas las publicaciones
-router.get('/mi-perfil/:idPerfil', PerfilController.getMiPerfil)
+// ruta para obtener el perfil
+router.get('/:dniPerfil', PerfilController.getMiPerfil)
 
 export default router
