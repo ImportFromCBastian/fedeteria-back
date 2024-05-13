@@ -1,14 +1,12 @@
 import connection from '../../settings/database.js'
 import * as bcrypt from 'bcrypt'
 
-export class ClientModel {
+export class UserModel {
   static async create(user) {
     const queryUser = `INSERT INTO Usuario (DNI,nombre,apellido, mail, contra,recibeAnuncio,fechaNacimiento) VALUES (?, ?, ?, ?, ?, ?, ?);`
     await connection
       .query(queryUser, [user.dni, user.name, user.lastName, user.email, user.password, user.notification, user.birthdate])
       .catch(error => new Error(error))
-    const queryClient = `INSERT INTO Cliente (DNI) VALUES (?);`
-    return await connection.query(queryClient, [user.dni]).catch(error => new Error(error))
   }
   static async compare(password, hashedPassword) {
     return await bcrypt.compare(password, hashedPassword)
