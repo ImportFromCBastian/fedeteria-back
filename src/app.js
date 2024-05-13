@@ -26,6 +26,7 @@ app.use('/process_payment', paymentRoutes)
 app.use('/mailing', mailingRouters)
 
 app.use('/client', clientRouter)
+app.use('/sucursal', clientRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
