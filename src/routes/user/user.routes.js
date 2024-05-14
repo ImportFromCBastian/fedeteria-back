@@ -9,8 +9,6 @@ router.post('/client', ClientController.create)
 
 router.post('/worker', WorkerController.create)
 
-const router = Router()
-
 // User routes
 router.get('/:dni', UserController.findByDni)
 

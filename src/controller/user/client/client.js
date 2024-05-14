@@ -2,15 +2,16 @@ import { UserModel } from '../../../model/user/user.js'
 import { ClientModel } from '../../../model/user/client/client.js'
 import userValidator from '../../../model/user/schema/userSchema.js'
 import { encryptPassword } from '../../../settings/encryptPassword.js'
+import config from '../../../settings/settings.js'
 
 export class ClientController {
   static async create(req, res) {
     try {
       const client = req.body
       const result = userValidator(client)
-      if (!result.success) {
-        return res.status(400).json({ message: result.error })
-      }
+
+      if (!result.success) return res.status(400).json({ message: result.error })
+
       //validar dni unico y validar email unico
       const [dni] = await UserModel.findByDni(client.dni)
       const [email] = await UserModel.findByEmail(client.email)
@@ -25,13 +26,24 @@ export class ClientController {
       client.password = encryptPassword(client.password)
 
       await UserModel.create(client)
+
       await ClientModel.create(client)
-      res.status(201).json({ ok: true, message: 'Cliente creado con éxito' })
+
+      const mailResopnse = await fetch(`${config.BASE_URL}/mailing`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: client.email,
+        }),
+      })
+      res.status(201).json({ ok: true, message: 'Cliente creado con éxito', id: mailResopnse })
     } catch (error) {
       res.status(500).json({ error: error })
     }
   }
-  
+
   static async findByDni(req, res) {
     try {
       const dni = req.params.dni
