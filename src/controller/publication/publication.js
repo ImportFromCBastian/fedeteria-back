@@ -1,4 +1,4 @@
-import { PublicationModel } from '../../model/publication/publication.js'
+import { PublicationModel } from '../../model/publication/Publication.js'
 import publicationValidator from '../../model/publication/schema/PublicationSchema.js'
 
 export class PublicationController {
@@ -7,7 +7,7 @@ export class PublicationController {
       const publication = req.body
       const result = publicationValidator(publication)
       if (!result.success) {
-        return res.status(400).json(JSON.parse(JSON.stringify(result.error.issues, null, 2)))
+        return res.status(400).json({ error: result.error })
       }
       const insertId = await PublicationModel.create(publication)
       res.status(201).json({ message: insertId, ok: true })
