@@ -31,10 +31,11 @@ export class ClientController {
       res.status(500).json({ error: error })
     }
   }
-
+  
   static async findByDni(req, res) {
     try {
       const dni = req.params.dni
+
       const [usuario] = await UserModel.findByDni(dni)
       if (usuario.length === 0) {
         return res.status(404).json({ message: 'Usuario no encontrado' })

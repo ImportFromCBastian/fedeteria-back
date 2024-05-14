@@ -14,6 +14,7 @@ import perfilRouter from './routes/VerPerfil/verperfi.routes.js'
 import publicacionRouter from './routes/ListadoPubRoutes/listadopub.routes.js'
 import sucursalRouter from './routes/Sucursal/sucursal.routes.js'
 
+
 const app = express()
 
 const PORT = config.PORT ?? 3000

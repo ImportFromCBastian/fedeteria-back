@@ -18,7 +18,7 @@ export class UserModel {
   }
 
   static async findByEmail(email) {
-    const query = `SELECT u.mail FROM Usuario u WHERE mail = ?;`
+    const query = `SELECT * FROM Usuario WHERE mail = ?;`
     return await connection.query(query, [email]).catch(error => new Error(error))
   }
 }

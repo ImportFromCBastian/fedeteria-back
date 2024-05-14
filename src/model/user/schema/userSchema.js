@@ -1,12 +1,11 @@
 import { z } from 'zod'
 const userSchema = z.object({
   //dni validations
-  dni: z.coerce
-    .number({
-      required_error: 'El DNI es requerido',
-      invalid_type_error: 'El DNI debe ser un número',
-    })
-    .transform(value => value.toString()),
+
+  dni: z.coerce.number({
+    required_error: 'El DNI es requerido',
+    invalid_type_error: 'El DNI debe ser un número',
+  }),
   //firstName validations
   name: z.string({
     required_error: 'El nombre es requerido',

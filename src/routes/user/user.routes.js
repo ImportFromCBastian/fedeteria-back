@@ -5,6 +5,12 @@ import { UserController } from '../../controller/user/user.js'
 
 const router = Router()
 
+router.post('/client', ClientController.create)
+
+router.post('/worker', WorkerController.create)
+
+const router = Router()
+
 // User routes
 router.get('/:dni', UserController.findByDni)
 
@@ -18,4 +24,5 @@ router.post('/worker', WorkerController.create)
 router.post('/compare', UserController.compare)
 
 router.post('/generate_token', UserController.tokenGenerator)
+
 export default router
