@@ -30,6 +30,7 @@ app.use('/publication', publicationRouter)
 app.use('/add-foto', fotoRouter)
 
 app.use('/client', clientRouter)
+app.use('/sucursal', clientRouter)
 
 
 app.listen(PORT, () => {
