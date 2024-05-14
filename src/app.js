@@ -8,6 +8,7 @@ import mailingRouters from './routes/mailing.routes.js'
 import publicationRouter from './routes/publication/publication.routes.js'
 import fotoRouter from './routes/publication/foto.routes.js'
 import clientRouter from './routes/Client/client.routes.js'
+import publicacionRouter from './routes/ListadoPubRoutes/listadopub.routes.js'
 import sucursalRouter from './routes/Sucursal/sucursal.routes.js'
 
 const app = express()
@@ -33,8 +34,9 @@ app.use('/add-foto', fotoRouter)
 
 app.use('/client', clientRouter)
 
-app.use('/sucursal', sucursalRouter)
+app.use('/publicaciones', publicacionRouter)
 
+app.use('/sucursal', sucursalRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
