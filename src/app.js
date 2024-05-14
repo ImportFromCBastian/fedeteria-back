@@ -7,6 +7,7 @@ import paymentRoutes from './routes/payment.routes.js'
 import mailingRouters from './routes/mailing.routes.js'
 import publicationRouter from './routes/publication/publication.routes.js'
 import fotoRouter from './routes/publication/foto.routes.js'
+import clientRouter from './routes/Client/client.routes.js'
 const app = express()
 
 const PORT = config.PORT ?? 3000
@@ -27,6 +28,9 @@ app.use('/mailing', mailingRouters)
 app.use('/publication', publicationRouter)
 
 app.use('/add-foto', fotoRouter)
+
+app.use('/client', clientRouter)
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
