@@ -4,6 +4,7 @@ const config = {
   MP_KEY: process.env.MP_ACCESS_TOKEN,
   PORT: process.env.PORT,
   SECURE_ROUTE: process.env.SECURE_ROUTE,
+  SECRET_WORD: process.env.SECRET_WORD,
   SMTP_OPTIONS: {
     host: process.env.SMTP_SERVER,
     port: parseInt(process.env.SMTP_PORT),
