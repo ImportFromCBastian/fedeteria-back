@@ -14,6 +14,12 @@ const sucursalSchema = z.object({
       invalid_type_error: 'El número debe ser un número',
     })
     .transform(value => value.toString()),
+  piso: z.coerce
+    .number({
+      invalid_type_error: 'El piso debe ser un número',
+    })
+    .transform(value => value.toString()),
+  depto: z.string().transform(value => value.toString()),
 })
 
 const sucursalValidator = sucursal => {

@@ -6,6 +6,7 @@ import preferenceRoutes from './routes/preference.routes.js'
 import paymentRoutes from './routes/payment.routes.js'
 import mailingRouters from './routes/mailing.routes.js'
 import clientRouter from './routes/Client/client.routes.js'
+import sucursalRouter from './routes/Sucursal/sucursal.routes.js'
 
 const app = express()
 
@@ -26,7 +27,7 @@ app.use('/process_payment', paymentRoutes)
 app.use('/mailing', mailingRouters)
 
 app.use('/client', clientRouter)
-app.use('/sucursal', clientRouter)
+app.use('/sucursal', sucursalRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
