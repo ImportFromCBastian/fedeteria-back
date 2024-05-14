@@ -15,4 +15,5 @@ export class MailingController {
     res.status(201).json(objectMail)
   }
 }
+
 export default MailingController

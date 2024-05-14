@@ -28,7 +28,7 @@ export class ClientController {
       await UserModel.create(client)
 
       await ClientModel.create(client)
-
+      //send mail to the client
       const mailResopnse = await fetch(`${config.BASE_URL}/mailing`, {
         method: 'POST',
         headers: {
@@ -38,6 +38,7 @@ export class ClientController {
           email: client.email,
         }),
       })
+
       res.status(201).json({ ok: true, message: 'Cliente creado con éxito', id: mailResopnse })
     } catch (error) {
       res.status(500).json({ error: error })

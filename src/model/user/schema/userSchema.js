@@ -8,7 +8,7 @@ const userSchema = z.object({
       invalid_type_error: 'El DNI debe ser un número',
     })
     .positive({
-      message: 'El DNI debe ser un número valido',
+      message: 'El DNI debe ser un número positivo',
     }),
   //firstName validations
   name: z.string({
