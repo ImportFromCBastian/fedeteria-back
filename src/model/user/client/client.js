@@ -5,4 +5,9 @@ export class ClientModel {
     const query = `INSERT INTO Cliente (DNI) VALUES (?);`
     return await connection.query(query, [user.dni]).catch(error => new Error(error))
   }
+
+  static async findByDni(dni) {
+    const query = `SELECT * FROM Cliente WHERE DNI = ?;`
+    return await connection.query(query, [dni]).catch(error => new Error(error))
+  }
 }

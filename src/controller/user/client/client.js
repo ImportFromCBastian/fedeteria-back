@@ -31,15 +31,20 @@ export class ClientController {
       res.status(500).json({ error: error })
     }
   }
-
+  
   static async findByDni(req, res) {
     try {
       const dni = req.params.dni
-      const [client] = await ClientModel.findByDni(dni)
-      if (client.length === 0) {
-        return res.status(404).json({ message: 'Cliente no encontrado' })
+
+      const [usuario] = await UserModel.findByDni(dni)
+      if (usuario.length === 0) {
+        return res.status(404).json({ message: 'Usuario no encontrado' })
       }
-      res.status(200).json(client)
+      const [cliente] = await ClientModel.findByDni(dni)
+      if (cliente.length === 0) {
+        return res.status(404).json({ message: 'el dni no pertenece a ningun cliente' })
+      }
+      res.status(200).json(cliente)
     } catch (error) {
       console.log(error)
       res.status(500).json({ error: error })
