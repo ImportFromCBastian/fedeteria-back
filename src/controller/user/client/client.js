@@ -1,19 +1,20 @@
-import { ClientModel } from '../../model/Client/client.js'
-import clientValidator from '../../model/Client/schema/clientSchema.js'
-import { encryptPassword } from '../../settings/encryptPassword.js'
+import { UserModel } from '../../../model/user/user.js'
+import { ClientModel } from '../../../model/user/client/client.js'
+import userValidator from '../../../model/user/schema/userSchema.js'
+import { encryptPassword } from '../../../settings/encryptPassword.js'
 import config from '../../settings/settings.js'
 
 export class ClientController {
   static async create(req, res) {
     try {
       const client = req.body
-      const result = clientValidator(client)
+      const result = userValidator(client)
       if (!result.success) {
         return res.status(400).json({ message: result.error })
       }
       //validar dni unico y validar email unico
-      const [dni] = await ClientModel.findByDni(client.dni)
-      const [email] = await ClientModel.findByEmail(client.email)
+      const [dni] = await UserModel.findByDni(client.dni)
+      const [email] = await UserModel.findByEmail(client.email)
 
       if (dni.length > 0) {
         return res.status(400).json({ message: 'El DNI ya esta en uso' })
@@ -24,6 +25,7 @@ export class ClientController {
       // encriptar password con bcrypt
       client.password = encryptPassword(client.password)
 
+      await UserModel.create(client)
       await ClientModel.create(client)
 
       //send mail to the client
@@ -46,11 +48,16 @@ export class ClientController {
   static async findByDni(req, res) {
     try {
       const dni = req.params.dni
-      const [client] = await ClientModel.findByDni(dni)
-      if (client.length === 0) {
-        return res.status(404).json({ message: 'Cliente no encontrado' })
+
+      const [usuario] = await UserModel.findByDni(dni)
+      if (usuario.length === 0) {
+        return res.status(404).json({ message: 'Usuario no encontrado' })
       }
-      res.status(200).json(client)
+      const [cliente] = await ClientModel.findByDni(dni)
+      if (cliente.length === 0) {
+        return res.status(404).json({ message: 'el dni no pertenece a ningun cliente' })
+      }
+      res.status(200).json(cliente)
     } catch (error) {
       console.log(error)
       res.status(500).json({ error: error })
