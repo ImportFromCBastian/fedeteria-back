@@ -2,7 +2,9 @@ import { UserModel } from '../../../model/user/user.js'
 import { ClientModel } from '../../../model/user/client/client.js'
 import userValidator from '../../../model/user/schema/userSchema.js'
 import { encryptPassword } from '../../../settings/encryptPassword.js'
+
 import config from '../../settings/settings.js'
+
 
 export class ClientController {
   static async create(req, res) {
@@ -27,7 +29,6 @@ export class ClientController {
 
       await UserModel.create(client)
       await ClientModel.create(client)
-
       //send mail to the client
       const mailResopnse = await fetch(`${config.BASE_URL}/mailing`, {
         method: 'POST',

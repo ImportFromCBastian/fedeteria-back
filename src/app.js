@@ -14,6 +14,7 @@ import perfilRouter from './routes/VerPerfil/verperfi.routes.js'
 import publicacionRouter from './routes/ListadoPubRoutes/listadopub.routes.js'
 import sucursalRouter from './routes/Sucursal/sucursal.routes.js'
 
+
 const app = express()
 
 const PORT = config.PORT ?? 3000
@@ -31,7 +32,21 @@ app.use('/process_payment', paymentRoutes)
 
 app.use('/mailing', mailingRouters)
 
+app.use('/user', userRoutes)
+
+app.use('/publication', publicationRouter)
+
+app.use('/add-foto', fotoRouter)
+
 app.use('/client', clientRouter)
+
+app.use('/ver_detalles', detalleRouter)
+
+app.use('/mi_perfil', perfilRouter)
+
+app.use('/publicaciones', publicacionRouter)
+
+app.use('/sucursal', sucursalRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)

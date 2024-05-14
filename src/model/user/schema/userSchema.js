@@ -1,6 +1,7 @@
 import { z } from 'zod'
 const userSchema = z.object({
   //dni validations
+
   dni: z.coerce
     .number({
       required_error: 'El DNI es requerido',
