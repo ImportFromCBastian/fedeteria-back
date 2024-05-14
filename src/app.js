@@ -8,6 +8,7 @@ import mailingRouters from './routes/mailing.routes.js'
 import publicationRouter from './routes/publication/publication.routes.js'
 import fotoRouter from './routes/publication/foto.routes.js'
 import clientRouter from './routes/Client/client.routes.js'
+import detalleRouter from './routes/VerDetallePub/verdetallepub.routes.js'
 import perfilRouter from './routes/VerPerfil/verperfi.routes.js'
 import publicacionRouter from './routes/ListadoPubRoutes/listadopub.routes.js'
 import sucursalRouter from './routes/Sucursal/sucursal.routes.js'
@@ -35,6 +36,8 @@ app.use('/publication', publicationRouter)
 app.use('/add-foto', fotoRouter)
 
 app.use('/client', clientRouter)
+
+app.use('/ver_detalles', detalleRouter)
 
 app.use('/mi_perfil', perfilRouter)
 
