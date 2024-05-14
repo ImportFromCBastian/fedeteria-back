@@ -9,7 +9,8 @@ export class SucursalController {
       if (!result.success) {
         return res.status(400).json(JSON.parse(JSON.stringify(result.error.issues, null, 2)))
       }
-      res.status(201).json({ message: error, ok: true })
+      await SucursalModel.create(sucursal)
+      res.status(201).json({ ok: true })
     } catch (error) {
       res.status(500).json({ error: error })
     }

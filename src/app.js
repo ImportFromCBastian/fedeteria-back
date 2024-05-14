@@ -8,6 +8,8 @@ import mailingRouters from './routes/mailing.routes.js'
 import publicationRouter from './routes/publication/publication.routes.js'
 import fotoRouter from './routes/publication/foto.routes.js'
 import clientRouter from './routes/Client/client.routes.js'
+import sucursalRouter from './routes/Sucursal/sucursal.routes.js'
+
 const app = express()
 
 const PORT = config.PORT ?? 3000
@@ -30,7 +32,8 @@ app.use('/publication', publicationRouter)
 app.use('/add-foto', fotoRouter)
 
 app.use('/client', clientRouter)
-app.use('/sucursal', clientRouter)
+
+app.use('/sucursal', sucursalRouter)
 
 
 app.listen(PORT, () => {
