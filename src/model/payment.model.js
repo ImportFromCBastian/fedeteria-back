@@ -15,7 +15,10 @@ export class PaymentModel {
           },
         },
       })
-      .catch(console.log)
+      .catch(error => {
+        console.error(error)
+        return { error: error }
+      })
     //maybe save transaction in DB...
     return result
   }

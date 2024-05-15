@@ -17,7 +17,6 @@ export class PublicacionController {
   static async acceptById(req, res) {
     const idPublicacion = req.params.idPublicacion
     const numero = req.body.numero
-    console.log(numero)
     const query = ` UPDATE publicacion SET precio = ? WHERE idPublicacion = ?;`
     const [result] = await connection.query(query, [numero, idPublicacion])
     return res.status(200).json({ data: result })

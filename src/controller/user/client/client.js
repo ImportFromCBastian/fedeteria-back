@@ -59,7 +59,6 @@ export class ClientController {
       }
       res.status(200).json(cliente)
     } catch (error) {
-      console.log(error)
       res.status(500).json({ error: error })
     }
   }

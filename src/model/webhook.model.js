@@ -5,7 +5,6 @@ export class WebhookModel {
     try {
       if (query.id) {
         const paymentData = await preference.get({ preferenceId: query.id })
-        console.log(paymentData)
         //store in db
       }
       return paymentData

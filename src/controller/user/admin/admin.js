@@ -15,7 +15,6 @@ export class AdminController {
       }
       res.status(200).json(admin)
     } catch (error) {
-      console.log(error)
       res.status(500).json({ error: error })
     }
   }

@@ -41,7 +41,6 @@ export class WorkerController {
       }
       res.status(200).json(worker)
     } catch (error) {
-      console.log(error)
       res.status(500).json({ error: error })
     }
   }

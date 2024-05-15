@@ -1,7 +1,14 @@
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`usuario`
 -- -----------------------------------------------------
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
 DROP TABLE IF EXISTS `fedeteria-db`.`usuario` ;
+
+CREATE SCHEMA IF NOT EXISTS `fedeteria-db` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
+USE `fedeteria-db` ;
 
 CREATE TABLE IF NOT EXISTS `fedeteria-db`.`usuario` (
   `DNI` BIGINT NOT NULL,
@@ -71,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`empleado` (
 DROP TABLE IF EXISTS `fedeteria-db`.`publicacion` ;
 
 CREATE TABLE IF NOT EXISTS `fedeteria-db`.`publicacion` (
-  `idPublicacion` INT UNSIGNED NOT NULL,
+  `idPublicacion` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `DNI` BIGINT NOT NULL,
   `nombre` VARCHAR(50) NOT NULL,
   `precio` FLOAT UNSIGNED NOT NULL DEFAULT '0',
