@@ -14,11 +14,11 @@ export class DetalleController {
       const query = 'SELECT foto FROM Foto WHERE idPublicacion = ?;'
       const [result] = await connection.query(query, [idPublicacion])
       // Convertir las imágenes binarias a URLs de datos
-      const fotosUrls = result.map(foto => {
-        const base64Image = Buffer.from(foto, 'binary').toString('base64')
-        return `data:image/png;base64,${base64Image}` // Cambiar 'png' según el formato de tu imagen
-      })
-      return res.status(200).json(fotosUrls)
+      //const fotosUrls = result.map(foto => {
+      //const base64Image = Buffer.from(foto, 'binary').toString('base64')
+      //return `data:image/png;base64,${base64Image}` // Cambiar 'png' según el formato de tu imagen
+      //})
+      return res.status(200).json(result)
     } catch (error) {
       console.error('Error al conseguir las fotos:', error)
       return res.status(500).json({ error: 'Error al conseguir la fotos' })
