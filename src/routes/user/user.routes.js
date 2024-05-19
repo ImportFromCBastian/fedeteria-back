@@ -23,4 +23,6 @@ router.post('/compare', UserController.compare)
 
 router.post('/generate_token', UserController.tokenGenerator)
 
+router.post('/decode_token', UserController.decodeToken)
+
 export default router

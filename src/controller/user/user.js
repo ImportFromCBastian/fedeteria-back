@@ -1,5 +1,6 @@
 import { UserModel } from '../../model/user/user.js'
 import { ClientModel } from '../../model/user/client/client.js'
+import { WorkerModel } from '../../model/user/worker/worker.js'
 import { AdminModel } from '../../model/user/admin/admin.js'
 import config from '../../settings/settings.js'
 import jwt from 'jsonwebtoken'
@@ -63,5 +64,16 @@ export class UserController {
       },
       config.SECRET_WORD,
     )
+  }
+
+  static decodeToken(req, res) {
+    try {
+      const token = req.headers.authorization
+      const refactorToken = token.split(' ')[1]
+      const tokenVerified = jwt.verify(refactorToken, config.SECRET_WORD)
+      return res.status(200).json({ data: tokenVerified })
+    } catch (error) {
+      return res.status(500).json({ error: 'error in token verification' })
+    }
   }
 }
