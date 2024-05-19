@@ -10,6 +10,11 @@
     "lint": "prettier --config .prettierrc --check . && eslint . --ext js --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --config .prettierrc --cache --write ."
   },
+  "eslintConfig": {
+    "extends": [
+      "wesbos"
+    ]
+  },
   "lint-staged": {
     "**/*": "prettier --config .prettierrc --cache --write --ignore-unknown --ext js"
   },
@@ -20,6 +25,7 @@
     "bcrypt": "5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "eslint-config-wesbos": "^4.0.1",
     "express": "4.19.2",
     "jsonwebtoken": "9.0.2",
     "mercadopago": "^2.0.8",
@@ -32,8 +38,6 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.4",
-    "eslint": "^9.1.1",
-    "eslint-config-prettier": "^9.1.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "nodemon": "^3.1.0",
