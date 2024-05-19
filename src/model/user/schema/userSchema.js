@@ -5,35 +5,35 @@ const userSchema = z.object({
   dni: z.coerce
     .number({
       required_error: 'El DNI es requerido',
-      invalid_type_error: 'El DNI debe ser un número',
+      invalid_type_error: 'El DNI debe ser un número'
     })
     .positive({
-      message: 'El DNI debe ser un número positivo',
+      message: 'El DNI debe ser un número positivo'
     }),
   //firstName validations
   name: z.string({
-    required_error: 'El nombre es requerido',
+    required_error: 'El nombre es requerido'
   }),
   //lastName validations
   lastName: z.string({
-    required_error: 'El apellido es requerido',
+    required_error: 'El apellido es requerido'
   }),
   //email validations
   email: z.string().email({
     required_error: 'El email es requerido',
-    invalid_type_error: 'El email no es válido',
+    invalid_type_error: 'El email no es válido'
   }),
   //password validations
   password: z
     .string()
     .min(6, {
-      message: 'La contraseña debe tener al menos 6 caracteres',
+      message: 'La contraseña debe tener al menos 6 caracteres'
     })
-    .regex(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/, {
-      message: 'La contraseña debe tener al menos un caracter especial',
+    .regex(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/, {
+      message: 'La contraseña debe tener al menos un caracter especial'
     })
     .regex(/[A-Z]/g, {
-      message: 'La contraseña debe tener al menos una letra mayuscula',
+      message: 'La contraseña debe tener al menos una letra mayuscula'
     }),
   //birthdate validations
   birthdate: z
@@ -53,10 +53,11 @@ const userSchema = z.object({
         return age > 18
       },
       {
-        message: 'La persona debe ser mayor de edad.',
-      },
+        message: 'La persona debe ser mayor de edad.'
+      }
     ),
-  notification: z.boolean().transform(value => (value === true ? 'si' : 'no')),
+  sucursal: z.number().optional(),
+  notification: z.boolean().transform(value => (value === true ? 'si' : 'no'))
 })
 
 const userValidator = user => {

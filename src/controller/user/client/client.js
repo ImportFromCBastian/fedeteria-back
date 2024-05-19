@@ -27,16 +27,16 @@ export class ClientController {
 
       await UserModel.create(client)
 
-      await ClientModel.create(client)
+      await ClientModel.create(result.data)
       //send mail to the client
       const mailResopnse = await fetch(`${config.BASE_URL}/mailing`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email: client.email,
-        }),
+          email: client.email
+        })
       })
 
       res.status(201).json({ ok: true, message: 'Cliente creado con éxito', id: mailResopnse })
