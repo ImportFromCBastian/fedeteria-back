@@ -2,6 +2,15 @@ import { SucursalModel } from '../../model/Sucursal/sucursal.js'
 import sucursalValidator from '../../model/Sucursal/schema/sucursalSchema.js'
 
 export class SucursalController {
+  static async getAll(req, res) {
+    try {
+      const sucursales = await SucursalModel.getAll()
+      return res.status(200).json({ data: sucursales })
+    } catch (error) {
+      return res.status(500).json({ error: error })
+    }
+  }
+
   static async create(req, res) {
     try {
       const sucursal = req.body

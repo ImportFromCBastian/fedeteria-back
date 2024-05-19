@@ -5,4 +5,6 @@ const router = Router()
 
 router.post('/', SucursalController.create)
 
+router.get('/', SucursalController.getAll)
+
 export default router

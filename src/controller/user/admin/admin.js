@@ -25,7 +25,7 @@ export class AdminController {
       await UserModel.create(admin)
 
       await AdminModel.create(admin)
-      res.status(201).json({ ok: true, message: 'Cliente creado con éxito', id: mailResopnse })
+      res.status(201).json({ ok: true, message: 'Cliente creado con éxito' })
     } catch (error) {
       res.status(500).json({ error: error })
     }
