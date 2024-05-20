@@ -2,7 +2,7 @@ import connection from '../../../settings/database.js'
 
 export class ClientModel {
   static async update(dni, user) {
-    const query = `UPDATE Usuario SET idLocal = ? WHERE DNI = ?;`
+    const query = `UPDATE Cliente SET idLocal = ? WHERE DNI = ?;`
     return await connection.query(query, [user.idLocal, dni]).catch(error => new Error(error))
   }
   static async create(user) {

@@ -68,7 +68,6 @@ export class ClientController {
   static async findByDni(req, res) {
     try {
       const dni = req.params.dni
-
       const [user] = await UserModel.findByDni(dni)
       if (user.length === 0) {
         return res.status(404).json({ message: 'Usuario no encontrado' })
