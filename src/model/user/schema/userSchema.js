@@ -56,7 +56,7 @@ const userSchema = z.object({
         message: 'La persona debe ser mayor de edad.'
       }
     ),
-  sucursal: z.number().optional(),
+  sucursal: z.number({ message: 'Debe seleccionar una sucursal' }).optional(),
   notification: z.boolean().transform(value => (value === true ? 'si' : 'no'))
 })
 
