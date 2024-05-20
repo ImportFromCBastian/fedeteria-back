@@ -11,7 +11,7 @@ export class ClientModel {
   }
 
   static async findByDni(dni) {
-    const query = `SELECT u.DNI,u.nombre,u.apellido,u.mail,u.fechaNacimiento,l.nombre as nombreSucursal , l.idLocal FROM Usuario u INNER JOIN Cliente c ON (c.DNI = u.DNI) INNER JOIN Local l ON (l.idLocal = c.idLocal);`
+    const query = `SELECT u.DNI,u.nombre,u.apellido,u.mail,u.fechaNacimiento,l.nombre as nombreSucursal , l.idLocal FROM Usuario u INNER JOIN Cliente c ON (c.DNI = u.DNI) INNER JOIN Local l ON (l.idLocal = c.idLocal) WHERE c.DNI = ?;`
     return await connection.query(query, [dni]).catch(error => new Error(error))
   }
 }

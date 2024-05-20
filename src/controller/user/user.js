@@ -60,9 +60,9 @@ export class UserController {
     return jwt.sign(
       {
         DNI: dni,
-        rol: rol,
+        rol: rol
       },
-      config.SECRET_WORD,
+      config.SECRET_WORD
     )
   }
 

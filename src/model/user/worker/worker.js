@@ -2,8 +2,8 @@ import connection from '../../../settings/database.js'
 
 export class WorkerModel {
   static async create(user) {
-    const query = `INSERT INTO Empleado (DNI) VALUES (?);`
-    return await connection.query(query, [user.dni]).catch(error => new Error(error))
+    const query = `INSERT INTO Empleado (DNI,idLocal) VALUES (?, ?);`
+    return await connection.query(query, [user.dni, user.sucursal]).catch(error => new Error(error))
   }
   static async findByDni(dni) {
     const query = `SELECT * FROM Empleado WHERE DNI = ?;`
