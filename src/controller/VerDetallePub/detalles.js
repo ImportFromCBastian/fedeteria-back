@@ -3,7 +3,7 @@ import connection from '../../settings/database.js'
 export class DetalleController {
   static async getPub(req, res) {
     const idPublicacion = req.params.idPublicacion
-    const query = `SELECT idPublicacion, nombre, precio, descripcion, productoACambio FROM Publicacion WHERE idPublicacion = ?  ;`
+    const query = `SELECT idPublicacion, nombre, precio, descripcion, productoACambio,estado FROM Publicacion WHERE idPublicacion = ?  ;`
     const [result] = await connection.query(query, [idPublicacion])
     return res.status(200).json(result)
   }
