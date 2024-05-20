@@ -1,5 +1,5 @@
 import { WorkerModel } from '../../../model/user/worker/worker.js'
-import userValidator from '../../../model/user/schema/userSchema.js'
+import { userValidator } from '../../../model/user/schema/userSchema.js'
 import { encryptPassword } from '../../../settings/encryptPassword.js'
 import { UserModel } from '../../../model/user/user.js'
 

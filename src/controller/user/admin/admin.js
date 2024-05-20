@@ -1,7 +1,7 @@
 import { UserModel } from '../../../model/user/user.js'
 import { AdminModel } from '../../../model/user/admin/admin.js'
 import { encryptPassword } from '../../../settings/encryptPassword.js'
-import userValidator from '../../../model/user/schema/userSchema.js'
+import { userValidator } from '../../../model/user/schema/userSchema.js'
 
 export class AdminController {
   static async create(req, res) {

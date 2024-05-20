@@ -6,10 +6,6 @@ import { UserController } from '../../controller/user/user.js'
 
 const router = Router()
 
-router.post('/client', ClientController.create)
-
-router.post('/worker', WorkerController.create)
-
 // User routes
 router.get('/:dni', UserController.findByDni)
 
@@ -17,6 +13,8 @@ router.get('/:dni', UserController.findByDni)
 router.post('/client', ClientController.create)
 
 router.get('/client/:dni', ClientController.findByDni)
+
+router.patch('/client/:dni', ClientController.update)
 
 // Worker routes
 router.post('/worker', WorkerController.create)

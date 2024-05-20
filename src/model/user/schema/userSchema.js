@@ -60,8 +60,10 @@ const userSchema = z.object({
   notification: z.boolean().transform(value => (value === true ? 'si' : 'no'))
 })
 
-const userValidator = user => {
+export const userValidator = user => {
   return userSchema.safeParse(user)
 }
 
-export default userValidator
+export const userPartialValidator = user => {
+  return userSchema.partial().safeParse(user)
+}
