@@ -16,6 +16,8 @@ router.get('/:dni', UserController.findByDni)
 // Client routes
 router.post('/client', ClientController.create)
 
+router.get('/client/:dni', ClientController.findByDni)
+
 // Worker routes
 router.post('/worker', WorkerController.create)
 

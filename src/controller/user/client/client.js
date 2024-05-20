@@ -49,15 +49,15 @@ export class ClientController {
     try {
       const dni = req.params.dni
 
-      const [usuario] = await UserModel.findByDni(dni)
-      if (usuario.length === 0) {
+      const [user] = await UserModel.findByDni(dni)
+      if (user.length === 0) {
         return res.status(404).json({ message: 'Usuario no encontrado' })
       }
-      const [cliente] = await ClientModel.findByDni(dni)
-      if (cliente.length === 0) {
-        return res.status(404).json({ message: 'el dni no pertenece a ningun cliente' })
+      const [client] = await ClientModel.findByDni(dni)
+      if (client.length === 0) {
+        return res.status(404).json({ message: 'El dni no pertenece a ningun cliente' })
       }
-      res.status(200).json(cliente)
+      res.status(200).json(client[0])
     } catch (error) {
       res.status(500).json({ error: error })
     }
