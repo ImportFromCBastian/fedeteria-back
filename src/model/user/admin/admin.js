@@ -7,7 +7,7 @@ export class AdminModel {
   }
 
   static async findByDni(dni) {
-    const query = `SELECT * FROM Admin WHERE DNI = ?;`
+    const query = `SELECT u.* FROM Usuario u INNER JOIN Admin a ON (a.DNI = u.DNI) WHERE a.DNI = ?;`
     return await connection.query(query, [dni]).catch(error => new Error(error))
   }
 }

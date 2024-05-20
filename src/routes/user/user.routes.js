@@ -18,11 +18,18 @@ router.patch('/client/:dni', ClientController.update)
 
 // Worker routes
 router.post('/worker', WorkerController.create)
+
 router.get('/worker/:dni', WorkerController.findByDni)
+
 router.patch('/worker/:dni', WorkerController.update)
 
 router.post('/admin', AdminController.create)
+
 router.get('/admin/:dni', AdminController.findByDni)
+
+// Admin routes
+router.patch('/admin/:dni', AdminController.update)
+router.patch('/admin/:dni', AdminController.findByDni)
 
 // User auth
 router.post('/compare', UserController.compare)
