@@ -2,6 +2,10 @@ import connection from '../../settings/database.js'
 import * as bcrypt from 'bcrypt'
 
 export class UserModel {
+  static async update(dni, user) {
+    const query = `UPDATE Usuario SET nombre = ?, apellido = ? WHERE DNI = ?;`
+    return await connection.query(query, [user.nombre, user.apellido, dni]).catch(error => new Error(error))
+  }
   static async create(user) {
     const queryUser = `INSERT INTO Usuario (DNI,nombre,apellido, mail, contra,recibeAnuncio,fechaNacimiento) VALUES (?, ?, ?, ?, ?, ?, ?);`
     await connection

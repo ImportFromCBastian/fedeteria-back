@@ -1,7 +1,7 @@
 import { UserModel } from '../../../model/user/user.js'
 import { AdminModel } from '../../../model/user/admin/admin.js'
 import { encryptPassword } from '../../../settings/encryptPassword.js'
-import userValidator from '../../../model/user/schema/userSchema.js'
+import { userValidator } from '../../../model/user/schema/userSchema.js'
 
 export class AdminController {
   static async create(req, res) {
@@ -25,7 +25,7 @@ export class AdminController {
       await UserModel.create(admin)
 
       await AdminModel.create(admin)
-      res.status(201).json({ ok: true, message: 'Cliente creado con éxito', id: mailResopnse })
+      res.status(201).json({ ok: true, message: 'Cliente creado con éxito' })
     } catch (error) {
       res.status(500).json({ error: error })
     }
