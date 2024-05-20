@@ -1,7 +1,7 @@
 import { z } from 'zod'
 const publicationSchema = z.object({
   //el dni va a venir ya del publicante no hay que chequearlo
-  dni: z.number().positive(),
+  dni: z.number({ invalid_type_error: 'El dni debe ser un numero' }).positive(),
   //nombre validations
   nombre: z.string({
     required_error: 'El nombre de la publicacion es requerido',
