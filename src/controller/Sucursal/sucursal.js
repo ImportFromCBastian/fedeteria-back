@@ -16,7 +16,7 @@ export class SucursalController {
       const sucursal = req.body
       const result = sucursalValidator(sucursal)
       if (!result.success) {
-        return res.status(400).json(JSON.parse(JSON.stringify(result.error.issues, null, 2)))
+        return res.status(400).json({ error: result.error })
       }
       await SucursalModel.create(sucursal)
       res.status(201).json({ ok: true })

@@ -76,7 +76,8 @@ export class ClientController {
       if (client.length === 0) {
         return res.status(404).json({ message: 'El dni no pertenece a ningun cliente' })
       }
-      res.status(200).json(client[0])
+      const data = client[0]
+      res.status(200).json({ data })
     } catch (error) {
       res.status(500).json({ error: error })
     }

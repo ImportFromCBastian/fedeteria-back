@@ -21,7 +21,7 @@ const sucursalSchema = z.object({
     .transform(value => value.toString())
     .optional(),
   depto: z
-    .string()
+    .number()
     .transform(value => value.toString())
     .optional()
 })

@@ -63,7 +63,8 @@ export class AdminController {
       if (admin.length === 0) {
         return res.status(404).json({ message: 'el dni no pertenece a ningun administrador' })
       }
-      res.status(200).json({ admin, nombreSucursal: 'Admin' })
+      const data = { ...admin[0], idLocal: 'Admin' }
+      res.status(200).json({ data })
     } catch (error) {
       res.status(500).json({ error: error })
     }
