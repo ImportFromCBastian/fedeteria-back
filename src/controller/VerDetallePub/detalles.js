@@ -26,6 +26,7 @@ export class DetalleController {
     const [result] = await connection.query(query, [idPublication])
     return res.status(200).json({ data: result })
   }
+
   static async acceptById(req, res) {
     const idPublicacion = req.params.idPublicacion
     const numero = req.body.numero
