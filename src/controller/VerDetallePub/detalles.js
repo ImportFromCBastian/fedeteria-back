@@ -8,18 +8,6 @@ export class DetalleController {
     return res.status(200).json(result)
   }
 
-  static async getFotos(req, res) {
-    try {
-      const idPublicacion = req.params.idPublicacion
-      const query = 'SELECT foto FROM Foto WHERE idPublicacion = ?;'
-      const [result] = await connection.query(query, [idPublicacion])
-      return res.status(200).json(result)
-    } catch (error) {
-      console.error('Error al conseguir las fotos:', error)
-      return res.status(500).json({ error: 'Error al conseguir la fotos' })
-    }
-  }
-
   static async eliminateById(req, res) {
     const idPublication = req.params.idPublicacion
     const query = `DELETE FROM Publicacion WHERE idPublicacion = ?;`
