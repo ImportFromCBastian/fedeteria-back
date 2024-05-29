@@ -5,4 +5,6 @@ const router = Router()
 
 router.post('/', PublicationController.create)
 
+router.get('/:idPublicacion', PublicationController.searchById)
+
 export default router

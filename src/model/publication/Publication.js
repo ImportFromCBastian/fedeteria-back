@@ -8,8 +8,12 @@ export class PublicationModel {
       publication.nombre,
       publication.descripcion,
       publication.producto_a_cambio,
-      publication.estado,
+      publication.estado
     ])
     return result.insertId // Devuelve el ID de la publicación creada
+  }
+  static async findPublicationById(idPublication) {
+    const query = `SELECT * FROM Publication WHERE idPublication = ?;`
+    return await connection.query(query, [idPublication]).catch(error => new Error(error))
   }
 }
