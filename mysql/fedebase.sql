@@ -142,7 +142,9 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Foto` (
   INDEX `idPublicacion_idx` (`idPublicacion` ASC) VISIBLE,
   CONSTRAINT `idPublicacion`
     FOREIGN KEY (`idPublicacion`)
-    REFERENCES `fedeteria-db`.`Publicacion` (`idPublicacion`))
+    REFERENCES `fedeteria-db`.`Publicacion` (`idPublicacion`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
