@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Publicacion` (
   INDEX `CLIENTE_PUB_FK_idx` (`DNI` ASC) VISIBLE,
   CONSTRAINT `CLIENTE_PUB_FK`
     FOREIGN KEY (`DNI`)
-    REFERENCES `fedeteria-db`.`Cliente` (`DNI`)
+    REFERENCES `fedeteria-db`.`Usuario` (`DNI`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
