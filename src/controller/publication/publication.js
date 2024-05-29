@@ -16,12 +16,36 @@ export class PublicationController {
       res.status(500).json({ error: error })
     }
   }
+
   static async getAllAcepted(req, res) {
     try {
       const publications = await PublicationModel.getAllAcepted()
-      console.log(publications)
       return res.status(200).json(publications)
     } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async findById(req, res) {
+    try {
+      const { id } = req.params
+      const publication = await PublicationModel.findById(id)
+      if (!publication) {
+        return res.status(404).json({ error: 'Publication not found' })
+      }
+      return res.status(200).json(publication)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async findAllAceptedByDni(req, res) {
+    try {
+      const { dni } = req.params
+      const publications = await PublicationModel.findAllAceptedByDni(dni)
+      return res.status(200).json(publications)
+    } catch (error) {
+      console.log(error)
       res.status(500).json({ error: error })
     }
   }

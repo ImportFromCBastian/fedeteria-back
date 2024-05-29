@@ -7,4 +7,8 @@ router.post('/', PublicationController.create)
 
 router.get('/', PublicationController.getAllAcepted)
 
+router.get('/:id', PublicationController.findById)
+
+router.get('/user/:dni', PublicationController.findAllAceptedByDni)
+
 export default router

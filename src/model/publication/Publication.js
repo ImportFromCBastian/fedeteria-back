@@ -17,4 +17,16 @@ export class PublicationModel {
     const [publications] = await connection.query(queryPublication)
     return publications
   }
+
+  static async findById(id) {
+    const query = `SELECT * FROM publicacion WHERE idPublicacion = ?;`
+    const [publication] = await connection.query(query, [id])
+    return publication[0]
+  }
+
+  static async findAllAceptedByDni(dni) {
+    const query = `SELECT * FROM Publicacion WHERE DNI = ? AND precio <> 0;`
+    const [publication] = await connection.query(query, [dni])
+    return publication
+  }
 }
