@@ -80,30 +80,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fedeteria-db`.`Cliente`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `fedeteria-db`.`Cliente` ;
-
-CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Cliente` (
-  `DNI` BIGINT NOT NULL,
-  `idLocal` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`DNI`),
-  UNIQUE INDEX `DNI_UNIQUE` (`DNI` ASC) VISIBLE,
-  INDEX `Cliente_Local_FK_idx` (`idLocal` ASC) VISIBLE,
-  CONSTRAINT `Cliente_DNI_FK`
-    FOREIGN KEY (`DNI`)
-    REFERENCES `fedeteria-db`.`Usuario` (`DNI`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `Cliente_Local_FK`
-    FOREIGN KEY (`idLocal`)
-    REFERENCES `fedeteria-db`.`Local` (`idLocal`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `fedeteria-db`.`Publicacion`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `fedeteria-db`.`Publicacion` ;
@@ -122,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Publicacion` (
   INDEX `CLIENTE_PUB_FK_idx` (`DNI` ASC) VISIBLE,
   CONSTRAINT `CLIENTE_PUB_FK`
     FOREIGN KEY (`DNI`)
-    REFERENCES `fedeteria-db`.`Cliente` (`DNI`)
+    REFERENCES `fedeteria-db`.`Usuario` (`DNI`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -160,6 +136,30 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Admin` (
   CONSTRAINT `Admin_DNI_FK`
     FOREIGN KEY (`DNI`)
     REFERENCES `fedeteria-db`.`Usuario` (`DNI`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`Cliente`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `fedeteria-db`.`Cliente` ;
+
+CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Cliente` (
+  `DNI` BIGINT NOT NULL,
+  `idLocal` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`DNI`),
+  UNIQUE INDEX `DNI_UNIQUE` (`DNI` ASC) VISIBLE,
+  INDEX `Cliente_Local_FK_idx` (`idLocal` ASC) VISIBLE,
+  CONSTRAINT `Cliente_DNI_FK`
+    FOREIGN KEY (`DNI`)
+    REFERENCES `fedeteria-db`.`Usuario` (`DNI`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  CONSTRAINT `Cliente_Local_FK`
+    FOREIGN KEY (`idLocal`)
+    REFERENCES `fedeteria-db`.`Local` (`idLocal`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;

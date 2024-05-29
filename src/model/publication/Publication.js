@@ -8,8 +8,13 @@ export class PublicationModel {
       publication.nombre,
       publication.descripcion,
       publication.producto_a_cambio,
-      publication.estado,
+      publication.estado
     ])
     return result.insertId // Devuelve el ID de la publicación creada
+  }
+  static async getAllAcepted() {
+    const queryPublication = `SELECT * FROM publicacion WHERE precio <> 0;`
+    const [publications] = await connection.query(queryPublication)
+    return publications
   }
 }

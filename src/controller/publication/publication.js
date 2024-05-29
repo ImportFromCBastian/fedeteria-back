@@ -12,6 +12,16 @@ export class PublicationController {
       const insertId = await PublicationModel.create(publication)
       res.status(201).json({ message: insertId, ok: true })
     } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
+  static async getAllAcepted(req, res) {
+    try {
+      const publications = await PublicationModel.getAllAcepted()
+      console.log(publications)
+      return res.status(200).json(publications)
+    } catch (error) {
       res.status(500).json({ error: error })
     }
   }
