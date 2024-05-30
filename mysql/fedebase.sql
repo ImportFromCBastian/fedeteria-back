@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Foto` (
     REFERENCES `fedeteria-db`.`Publicacion` (`idPublicacion`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-ENGINE = InnoDB;
+ENGINE = InnoDB ;
 
 
 -- -----------------------------------------------------
@@ -172,11 +172,11 @@ DROP TABLE IF EXISTS `fedeteria-db`.`Trueque` ;
 
 CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Trueque` (
   `idTrueque` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `hora` TIME NULL,
-  `fecha` DATE NULL,
+  `hora` TIME NULL DEFAULT NULL,
+  `fecha` DATE NULL DEFAULT NULL,
   `realizado` TINYINT NULL DEFAULT NULL,
   `productoDeseado` INT UNSIGNED NOT NULL,
-  `idLocal` INT UNSIGNED NOT NULL,
+  `idLocal` INT UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`idTrueque`),
   UNIQUE INDEX `idTrueque_UNIQUE` (`idTrueque` ASC) VISIBLE,
   INDEX `PUB_PRIN_TRUEQUE_FK_idx` (`productoDeseado` ASC) VISIBLE,
