@@ -1,8 +1,8 @@
 import connection from '../../settings/database.js'
 export class ExchangeModel {
   static async create(mainPublicationId) {
-    const query = 'INSERT INTO Trueque (productoDeseado,idLocal) VALUES (?,?)'
-    return await connection.query(query, [mainPublicationId, 1]).then(([result]) => result.insertId)
+    const query = 'INSERT INTO Trueque (productoDeseado) VALUES (?)'
+    return await connection.query(query, [mainPublicationId]).then(([result]) => result.insertId)
   }
   static async findById(id) {
     const query = 'SELECT * FROM Trueque WHERE idTrueque = ?'
