@@ -56,7 +56,23 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Local` (
   UNIQUE INDEX `idLocal_UNIQUE` (`idLocal` ASC) VISIBLE)
 ENGINE = InnoDB;
 
+DROP TABLE IF EXISTS `fedeteria-db`.`Notificacion`;
 
+CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Notificacion` (
+  `idNotificacion` BIGINT NOT NULL AUTO_INCREMENT,
+  `tipo` VARCHAR(20) DEFAULT 'default' NOT NULL,
+  `contenido` VARCHAR(255) COLLATE 'utf8mb3_bin' NOT NULL,
+  `DNI` BIGINT NOT NULL,
+  `nueva` VARCHAR(2) DEFAULT 'si' NOT NULL,
+  PRIMARY KEY (`idNotificacion`),
+  UNIQUE INDEX `idNotificacion_UNIQUE` (`idNotificacion` ASC) VISIBLE,
+  CONSTRAINT `Usuario_FK`
+    FOREIGN KEY (`DNI`)
+    REFERENCES `fedeteria-db`.`Usuario` (`DNI`)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+)
+ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`Empleado`
 -- -----------------------------------------------------
