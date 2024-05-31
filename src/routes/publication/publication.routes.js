@@ -7,4 +7,6 @@ router.post('/', PublicationController.create)
 
 router.get('/:idPublicacion', PublicationController.searchById)
 
+router.patch('/:idPublicacion', PublicationController.update)
+
 export default router
