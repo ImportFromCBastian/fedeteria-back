@@ -112,7 +112,13 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Publicacion` (
   `productoACambio` VARCHAR(255) COLLATE 'utf8mb3_bin' NULL,
   `estado` VARCHAR(5) NOT NULL,
   PRIMARY KEY (`idPublicacion`),
-  UNIQUE INDEX `id_UNIQUE` (`idPublicacion` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`idPublicacion` ASC) VISIBLE,
+  INDEX `CLIENTE_PUB_FK_idx` (`DNI` ASC) VISIBLE,
+  CONSTRAINT `CLIENTE_PUB_FK`
+    FOREIGN KEY (`DNI`)
+    REFERENCES `fedeteria-db`.`Usuario` (`DNI`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -150,11 +156,9 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Admin` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`Cliente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `fedeteria-db`.`Cliente` ;
 
 CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Cliente` (
   `DNI` BIGINT NOT NULL,
@@ -170,6 +174,59 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Cliente` (
   CONSTRAINT `Cliente_Local_FK`
     FOREIGN KEY (`idLocal`)
     REFERENCES `fedeteria-db`.`Local` (`idLocal`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`Trueque`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Trueque` (
+  `idTrueque` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `hora` TIME NULL DEFAULT NULL,
+  `fecha` DATE NULL DEFAULT NULL,
+  `realizado` TINYINT NULL DEFAULT NULL,
+  `productoDeseado` INT UNSIGNED NOT NULL,
+  `idLocal` INT UNSIGNED NULL DEFAULT NULL,
+  PRIMARY KEY (`idTrueque`),
+  UNIQUE INDEX `idTrueque_UNIQUE` (`idTrueque` ASC) VISIBLE,
+  INDEX `PUB_PRIN_TRUEQUE_FK_idx` (`productoDeseado` ASC) VISIBLE,
+  INDEX `TRUEQUE_LOCAL_FK_idx` (`idLocal` ASC) VISIBLE,
+  CONSTRAINT `PUB_PRIN_TRUEQUE_FK`
+    FOREIGN KEY (`productoDeseado`)
+    REFERENCES `fedeteria-db`.`Publicacion` (`idPublicacion`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  CONSTRAINT `Cliente_Local_FK`
+    FOREIGN KEY (`idLocal`)
+    REFERENCES `fedeteria-db`.`Local` (`idLocal`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`ProductosCambio`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `fedeteria-db`.`ProductosCambio` ;
+
+CREATE TABLE IF NOT EXISTS `fedeteria-db`.`ProductosCambio` (
+  `idProductosCambio` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idTrueque` INT UNSIGNED NOT NULL,
+  `idPublicacion` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idProductosCambio`),
+  UNIQUE INDEX `idProductosCambio_UNIQUE` (`idProductosCambio` ASC) VISIBLE,
+  INDEX `REL_TRUEQUE_PUB_idx` (`idTrueque` ASC) VISIBLE,
+  INDEX `REL_PUB_TRUEQUE_idx` (`idPublicacion` ASC) VISIBLE,
+  CONSTRAINT `REL_TRUEQUE_PUB`
+    FOREIGN KEY (`idTrueque`)
+    REFERENCES `fedeteria-db`.`Trueque` (`idTrueque`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  CONSTRAINT `REL_PUB_TRUEQUE`
+    FOREIGN KEY (`idPublicacion`)
+    REFERENCES `fedeteria-db`.`Publicacion` (`idPublicacion`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
