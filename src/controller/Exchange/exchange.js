@@ -10,6 +10,15 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+  static async getSuggestionByDNI(req, res) {
+    try {
+      const { DNI } = req.params
+      const suggestions = await ExchangeModel.getSuggestionByDNI(DNI)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
   static async create(req, res) {
     try {
       const { mainPublication, publicationList } = req.body

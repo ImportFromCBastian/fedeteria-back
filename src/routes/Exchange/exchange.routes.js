@@ -5,6 +5,8 @@ const router = Router()
 
 router.post('/', ExchangeController.create)
 
-router.get('/suggestions/:DNI', ExchangeController.getExchangeSuggestionByDNI)
+router.get('/:DNI', ExchangeController.getSuggestionByDNI)
+
+router.get('/suggestions/dni/:DNI', ExchangeController.getExchangeSuggestionByDNI)
 
 export default router

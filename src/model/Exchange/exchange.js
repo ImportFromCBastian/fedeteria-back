@@ -9,9 +9,16 @@ export class ExchangeModel {
     return await connection.query(query, [id])
   }
   static async checkExchangeSuggestionByDNI(DNI) {
-    const query = `SELECT  t.productoDeseado FROM Trueque t INNER JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque INNER JOIN Publicacion p ON pc.idPublicacion = p.idPublicacion WHERE p.DNI = ? AND t.realizado IS NULL;`
+    const query = `SELECT  t.* FROM Trueque t INNER JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque INNER JOIN Publicacion p ON pc.idPublicacion = p.idPublicacion WHERE p.DNI = ? AND t.realizado IS NULL;`
 
     const [rows] = await connection.query(query, [DNI])
+    return rows
+  }
+  static async getSuggestionByDNI(DNI) {
+    const query = `SELECT * FROM Trueque t WHERE realizado IS NULL AND t.productoDeseado IN (SELECT p.idPublicacion FROM Publicacion p WHERE p.DNI = ?);`
+
+    const [rows] = await connection.query(query, [DNI])
+    console.log(rows)
     return rows
   }
   static async createList(exchangeId, publicationId) {
