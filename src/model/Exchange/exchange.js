@@ -18,7 +18,6 @@ export class ExchangeModel {
     const query = `SELECT * FROM Trueque t WHERE realizado IS NULL AND t.productoDeseado IN (SELECT p.idPublicacion FROM Publicacion p WHERE p.DNI = ?);`
 
     const [rows] = await connection.query(query, [DNI])
-    console.log(rows)
     return rows
   }
   static async createList(exchangeId, publicationId) {

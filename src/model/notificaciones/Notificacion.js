@@ -12,7 +12,6 @@ export class NotificacionesModel {
   }
   static async create(notificacion) {
     try {
-      console.log('notificacion', notificacion)
       const queryNotificacion = `INSERT INTO Notificacion (tipo, contenido, DNI) VALUES (?, ?, ?);`
       const [result] = await connection.query(queryNotificacion, [notificacion.tipo, notificacion.contenido, notificacion.DNI])
       return result
