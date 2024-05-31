@@ -156,6 +156,10 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Admin` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`Cliente`
+-- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Cliente` (
   `DNI` BIGINT NOT NULL,
   `idLocal` INT UNSIGNED NOT NULL,
@@ -175,7 +179,9 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Cliente` (
 ENGINE = InnoDB;
 
 
-
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`Trueque`
+-- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Trueque` (
   `idTrueque` INT UNSIGNED NOT NULL AUTO_INCREMENT,
