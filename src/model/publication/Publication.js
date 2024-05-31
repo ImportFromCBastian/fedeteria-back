@@ -29,4 +29,9 @@ export class PublicationModel {
     const [publication] = await connection.query(query, [dni])
     return publication
   }
+
+  static async findPublicationById(idPublication) {
+    const query = `SELECT * FROM Publication WHERE idPublication = ?;`
+    return await connection.query(query, [idPublication]).catch(error => new Error(error))
+  }
 }

@@ -11,6 +11,7 @@ import fotoRouter from './routes/publication/foto.routes.js'
 import detalleRouter from './routes/VerDetallePub/verdetallepub.routes.js'
 import publicacionRouter from './routes/ListadoPubRoutes/listadopub.routes.js'
 import sucursalRouter from './routes/Sucursal/sucursal.routes.js'
+import notificacionesRouter from './routes/Notificaciones/notificaciones.routes.js'
 import exchangeRouter from './routes/Exchange/exchange.routes.js'
 
 const app = express()
@@ -26,6 +27,7 @@ app.use(morgan('dev')) // Log HTTP requests
 
 app.use(preferenceRoutes)
 
+app.use('/notificaciones', notificacionesRouter)
 app.use('/process_payment', paymentRoutes)
 
 app.use('/mailing', mailingRoutes)

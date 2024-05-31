@@ -24,4 +24,13 @@ export class SucursalController {
       res.status(500).json({ error: error })
     }
   }
+  static async delete(req, res) {
+    try {
+      const id = req.params.id
+      await SucursalModel.delete(id)
+      res.status(200).json({ ok: true })
+    } catch (error) {
+      res.status(500).json({ error: error.message })
+    }
+  }
 }

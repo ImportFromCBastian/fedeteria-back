@@ -1,4 +1,5 @@
 import { z } from 'zod'
+
 const sucursalSchema = z.object({
   nombre: z.string({
     required_error: 'El nombre de la sucursal es requerido'
@@ -14,16 +15,10 @@ const sucursalSchema = z.object({
       invalid_type_error: 'El número debe ser un número'
     })
     .transform(value => value.toString()),
-  piso: z.coerce
-    .number({
-      invalid_type_error: 'El piso debe ser un número'
-    })
-    .transform(value => value.toString())
-    .optional(),
-  depto: z
-    .number()
-    .transform(value => value.toString())
-    .optional()
+
+  piso: z.union([z.string().nullable(), z.null()]).optional(),
+
+  depto: z.union([z.string().nullable(), z.null()]).optional()
 })
 
 const sucursalValidator = sucursal => {
