@@ -40,7 +40,7 @@ export class PublicationModel {
       publication.nombre,
       publication.descripcion,
       publication.precio,
-      publication.producto_a_cambio,
+      publication.productoACambio,
       publication.estado,
       idPublication
     ])
