@@ -35,7 +35,6 @@ export class WorkerController {
     try {
       const dni = req.params.dni
       const workerBody = req.body
-      console.log(workerBody)
       const result = userPartialValidator(workerBody)
 
       if (!result.success) return res.status(400).json({ message: result.error })

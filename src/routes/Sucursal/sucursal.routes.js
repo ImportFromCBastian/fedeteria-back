@@ -7,4 +7,6 @@ router.post('/', SucursalController.create)
 
 router.get('/', SucursalController.getAll)
 
+router.delete('/:id', SucursalController.delete)
+
 export default router

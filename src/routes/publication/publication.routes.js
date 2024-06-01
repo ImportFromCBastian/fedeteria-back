@@ -5,7 +5,11 @@ const router = Router()
 
 router.post('/', PublicationController.create)
 
-router.get('/:idPublicacion', PublicationController.searchById)
+router.get('/', PublicationController.getAllAcepted)
+
+router.get('/:id', PublicationController.findById)
+
+router.get('/user/:dni', PublicationController.findAllAceptedByDni)
 
 router.patch('/:idPublicacion', PublicationController.update)
 
