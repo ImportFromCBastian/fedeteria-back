@@ -11,4 +11,6 @@ router.get('/:id', PublicationController.findById)
 
 router.get('/user/:dni', PublicationController.findAllAceptedByDni)
 
+router.patch('/:idPublicacion', PublicationController.updatePublication)
+
 export default router

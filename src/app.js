@@ -46,6 +46,8 @@ app.use('/sucursal', sucursalRouter)
 
 app.use('/exchange', exchangeRouter)
 
+app.use('/modificar_publicacion', publicationRouter)
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
 })

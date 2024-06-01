@@ -1,5 +1,5 @@
 import { PublicationModel } from '../../model/publication/Publication.js'
-import publicationValidator from '../../model/publication/schema/PublicationSchema.js'
+import { publicationValidator, partialPublicationValidator } from '../../model/publication/schema/PublicationSchema.js'
 
 export class PublicationController {
   static async create(req, res) {
@@ -64,6 +64,22 @@ export class PublicationController {
     } catch (error) {
       // Si hay un error durante la búsqueda de la publicación, se responde con un error 500 (Error interno del servidor)
       return res.status(500).json({ error: error.message })
+    }
+  }
+  static async updatePublication(req, res) {
+    try {
+      const { idPublicacion } = req.params
+      const publication = req.body
+      console.log(req.body)
+      const result = partialPublicationValidator(publication)
+      if (!result.success) {
+        return res.status(400).json({ error: result.error })
+      }
+      const updatedPublication = await PublicationModel.update(idPublicacion, publication)
+      return res.status(200).json(updatedPublication)
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({ error: error })
     }
   }
 }
