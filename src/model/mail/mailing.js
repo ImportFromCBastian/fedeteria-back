@@ -65,4 +65,35 @@ export class MailingModel {
       ]
     }
   }
+  static async sendBloqueoCuenta(mailBody) {
+    //validate correct mail body
+    //create mail body
+    const mail = await MailingModel.createBloqueoMailBody(mailBody)
+    //send mail
+    const mailId = await transporter.sendMail(mail)
+    return {
+      mailId: mailId.messageId
+    }
+  }
+  static async createBloqueoMailBody(body) {
+    //use body to create mail receiver and gather the html for the mail
+    const htmlTemplate = await readFile('src/public/template/mailBloqueo.html', 'utf-8')
+    //read image to attach
+    const cidImage = await readFile('src/public/assets/Fedeteria_Horizontal.png')
+    const emailBodyWithUsername = htmlTemplate.replace(/{username}/g, body.nombre)
+    return {
+      from: '"Fedeteria🔨" <lafedeteria@gmail.com>', // sender address
+      to: `${body.email}`, // list of receivers
+      subject: 'Tu cuenta está bloqueada 😔.', // Subject line
+      html: emailBodyWithUsername,
+      attachments: [
+        {
+          filename: 'Fedeteria_Horizontal.png',
+          content: cidImage,
+          encoding: 'base64',
+          cid: 'uniqueImageCID' // Referenced in the HTML template
+        }
+      ]
+    }
+  }
 }

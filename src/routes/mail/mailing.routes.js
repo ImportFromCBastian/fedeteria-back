@@ -5,5 +5,6 @@ const router = Router()
 
 router.post('/', MailingController.sendRegister)
 router.post('/contrasenia', MailingController.sendRecuperarContrasenia)
+router.post('/bloqueo', MailingController.sendBloqueoCuenta)
 
 export default router
