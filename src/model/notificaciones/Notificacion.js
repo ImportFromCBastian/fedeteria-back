@@ -2,7 +2,7 @@ import connection from '../../settings/database.js'
 
 export class NotificacionesModel {
   static async getNotificaciones(dni) {
-    const query = `SELECT * FROM notificacion WHERE DNI = ?;`
+    const query = `SELECT * FROM notificacion WHERE DNI = ? ORDER BY idNotificacion DESC;`
     const [result] = await connection.query(query, [dni])
     return result
   }
