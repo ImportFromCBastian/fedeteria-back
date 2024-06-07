@@ -31,4 +31,85 @@ export class ExchangeModel {
     const query = 'INSERT INTO ProductosCambio (idTrueque,idPublicacion) VALUES (?,?)'
     return await connection.query(query, [exchangeId, publicationId])
   }
+
+  static async getSuggestionProductById(id) {
+    const query = `
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE 
+      t.idTrueque = ? AND t.realizado IS NULL;`
+    const [rows] = await connection.query(query, [id])
+    return rows
+  }
+
+  static async getMainProductById(id) {
+    const query = `
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON t.productoDeseado = p.idPublicacion
+    WHERE 
+      t.idTrueque = ? AND t.realizado IS NULL;`
+    const [rows] = await connection.query(query, [id])
+    return rows
+  }
+
+  static async createPendingExchange(id) {
+    const query = `
+    UPDATE Trueque
+    SET realizado = 2
+    WHERE idTrueque = ?;`
+    return await connection
+      .query(query, [id])
+      .then(([result]) => {
+        return { ok: true, result }
+      })
+      .catch(e => {
+        return { ok: false, message: e }
+      })
+  }
+
+  static async deleteSuggestion(id) {
+    const deleteProductsQuery = `
+    DELETE FROM ProductosCambio pc
+    WHERE pc.idTrueque IN (
+      SELECT t.idTrueque FROM Trueque t
+      WHERE t.productoDeseado = ? 
+      AND t.realizado IS NULL
+    )
+  ;`
+
+    const deleteExchangeQuery = `
+    DELETE FROM Trueque t
+    WHERE
+      t.productoDeseado = ?
+        AND
+      t.realizado IS NULL;
+    `
+    try {
+      await connection.query(deleteProductsQuery, [id])
+      const [result] = await connection.query(deleteExchangeQuery, [id])
+      return { ok: true, result }
+    } catch (e) {
+      return { ok: false, error: e }
+    }
+  }
+
+  static async getPendingExchange() {
+    console.log('hola')
+    const query = `
+    SELECT t.productoDeseado
+    FROM Trueque t
+    WHERE t.realizado = 2;
+   `
+    return await connection.query(query).then(([rows]) => {
+      return { ok: true, rows }
+    })
+  }
 }
