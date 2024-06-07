@@ -15,9 +15,16 @@ export class ExchangeModel {
     return rows
   }
   static async getSuggestionByDNI(DNI) {
-    const query = `SELECT * FROM Trueque t WHERE realizado IS NULL AND t.productoDeseado IN (SELECT p.idPublicacion FROM Publicacion p WHERE p.DNI = ?);`
+    const query = `
+    SELECT t.productoDeseado,t.idTrueque,COUNT(pc.idPublicacion) as countPublication
+    FROM Trueque t INNER JOIN ProductosCambio pc ON (t.idTrueque = pc.idTrueque)
+    WHERE realizado IS NULL AND t.productoDeseado IN (
+      SELECT p.idPublicacion FROM Publicacion p WHERE p.DNI = ?
+    ) GROUP BY t.idTrueque ,t.productoDeseado;`
 
-    const [rows] = await connection.query(query, [DNI])
+    const [rows] = await connection.query(query, [DNI]).catch(e => {
+      console.log(e)
+    })
     return rows
   }
   static async createList(exchangeId, publicationId) {
