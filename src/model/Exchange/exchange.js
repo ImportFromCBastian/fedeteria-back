@@ -102,7 +102,6 @@ export class ExchangeModel {
   }
 
   static async getPendingExchange() {
-    console.log('hola')
     const query = `
     SELECT t.productoDeseado
     FROM Trueque t
