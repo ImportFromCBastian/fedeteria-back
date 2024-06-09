@@ -29,6 +29,7 @@ export class MailingController {
       res.status(500).json({ message: 'Error al enviar el correo de recuperación' })
     }
   }
+
   static async sendBloqueoCuenta(req, res) {
     try {
       // Obtén el cuerpo de la solicitud que incluye el correo electrónico y el nombre de usuario
@@ -43,6 +44,13 @@ export class MailingController {
       console.error('Error al enviar el correo de bloqueo:', error)
       res.status(500).json({ message: 'Error al enviar el correo de bloqueo' })
     }
+
+
+  static async sendContactInformation(req, res) {
+    const { owner, suggestor } = req.body
+    const objectMail = await MailingModel.sendContactInformation(owner, suggestor)
+    return res.status(201).json({ ok: true, objectMail })
+
   }
 }
 

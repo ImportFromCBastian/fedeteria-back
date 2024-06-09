@@ -65,6 +65,7 @@ export class MailingModel {
       ]
     }
   }
+
   static async sendBloqueoCuenta(mailBody) {
     //validate correct mail body
     //create mail body
@@ -94,6 +95,39 @@ export class MailingModel {
           cid: 'uniqueImageCID' // Referenced in the HTML template
         }
       ]
+
+  static async sendContactInformation(ownerMail, suggestorMail) {
+    const ownerMailBody = await MailingModel.createContactInformationMailBody(ownerMail, suggestorMail, 'owner')
+    const suggestorMailBody = await MailingModel.createContactInformationMailBody(suggestorMail, ownerMail, 'suggestor')
+    const ownerMailId = await transporter.sendMail(ownerMailBody)
+    const suggestorMailId = await transporter.sendMail(suggestorMailBody)
+    return {
+      ownerMailId: ownerMailId.messageId,
+      suggestorMailId: suggestorMailId.messageId
+    }
+  }
+
+  static async createContactInformationMailBody(to, mailMessage, type) {
+    if (type === 'suggestor') {
+      return {
+        from: '"Fedeteria🔨" <lafedeteria@gmail.com>', // sender address
+        to: `${to}`, // list of receivers
+        subject: 'FedeTrueque Aceptado Contactate con tu FedeAmigo📨', // Subject line
+        html: `
+        <h1>¡Hola!👋</h1>
+        <p>¡Tu sugerencia de trueque ha sido aceptado!🎉, contactate con ${mailMessage} para determinar la hora y lugar del trueque</p>
+        
+        `
+      }
+    }
+    return {
+      from: '"Fedeteria🔨" <lafedeteria@gmail.com>', // sender address
+      to: `${to}`, // list of receivers
+      subject: 'FedeTrueque Aceptado Contactate con tu FedeAmigo📨', // Subject line
+      html: `
+          <h1>¡Hola!👋</h1>
+          <p>¡Aceptaste un trueque recientemente!🎉, contactate con ${mailMessage} para determinar la hora y lugar del trueque</p>
+          `
     }
   }
 }

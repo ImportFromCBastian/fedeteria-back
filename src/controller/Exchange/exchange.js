@@ -41,4 +41,54 @@ export class ExchangeController {
       await ExchangeModel.createList(exchangeId, publicationId)
     })
   }
+
+  static async getSuggestionProductById(req, res) {
+    try {
+      const { id } = req.params
+      const suggestions = await ExchangeModel.getSuggestionProductById(id)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async getMainProductById(req, res) {
+    try {
+      const { id } = req.params
+      const suggestions = await ExchangeModel.getMainProductById(id)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async createPendingExchange(req, res) {
+    try {
+      const { id } = req.body
+      const result = await ExchangeModel.createPendingExchange(id)
+      res.status(200).json(result)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async deleteSuggestion(req, res) {
+    try {
+      const { id } = req.params
+      const result = await ExchangeModel.deleteSuggestion(id)
+      if (!result.ok) return res.status(404).json({ message: 'No se pudo eliminar la sugerencia' })
+      res.status(200).json(result)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async getPendingExchange(req, res) {
+    try {
+      const pending = await ExchangeModel.getPendingExchange()
+      res.status(200).json(pending)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }
