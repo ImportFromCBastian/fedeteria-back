@@ -129,7 +129,6 @@ export class ExchangeModel {
   static async getAvailableTimes(selectedSucursal, day) {
     const sucursal = selectedSucursal
     const dia = day
-    console.log(sucursal, dia)
     const query = `
     SELECT t.hora
     FROM Trueque t
