@@ -111,4 +111,44 @@ export class ExchangeModel {
       return { ok: true, rows }
     })
   }
+
+  static async checkExchangeSuggestionAcceptedsByDNI(DNI) {
+    const query = `
+    SELECT t.productoDeseado,t.idTrueque,COUNT(pc.idPublicacion) as countPublication
+    FROM Trueque t INNER JOIN ProductosCambio pc ON (t.idTrueque = pc.idTrueque)
+    WHERE realizado = 2 AND t.productoDeseado IN (
+      SELECT p.idPublicacion FROM Publicacion p WHERE p.DNI = ?
+    ) GROUP BY t.idTrueque ,t.productoDeseado;`
+
+    const [rows] = await connection.query(query, [DNI]).catch(e => {
+      console.log(e)
+    })
+    return rows
+  }
+
+  static async getAvailableTimes(selectedSucursal, day) {
+    const sucursal = selectedSucursal
+    const dia = day
+    console.log(sucursal, dia)
+    const query = `
+    SELECT t.hora
+    FROM Trueque t
+    WHERE 
+      t.idLocal = ? AND t.fecha = ? AND t.hora IS NOT NULL;`
+    const [rows] = await connection.query(query, [sucursal, dia])
+    return rows
+  }
+  static async createExchangeDetailsById(id, data) {
+    const { selectedSucursal, selectedDay, selectedTime } = data
+    const query = `
+    UPDATE Trueque 
+    SET idLocal = ?, fecha = ?, hora = ?, realizado = ?
+    WHERE idTrueque = ?;`
+    try {
+      await connection.query(query, [selectedSucursal, selectedDay, selectedTime, 3, id])
+      return { ok: true }
+    } catch (e) {
+      return { ok: false, error: e }
+    }
+  }
 }
