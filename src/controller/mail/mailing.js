@@ -30,10 +30,27 @@ export class MailingController {
     }
   }
 
+  static async sendBloqueoCuenta(req, res) {
+    try {
+      // Obtén el cuerpo de la solicitud que incluye el correo electrónico y el nombre de usuario
+      const { email, nombre } = req.body
+      // Envía el correo electrónico de recuperación con el nombre de usuario
+      const objectMail = await MailingModel.sendBloqueoCuenta({ email, nombre })
+
+      // Envía una respuesta con el objeto del correo electrónico enviado
+      res.status(201).json(objectMail)
+    } catch (error) {
+      // Maneja los errores
+      console.error('Error al enviar el correo de bloqueo:', error)
+      res.status(500).json({ message: 'Error al enviar el correo de bloqueo' })
+    }
+
+
   static async sendContactInformation(req, res) {
     const { owner, suggestor } = req.body
     const objectMail = await MailingModel.sendContactInformation(owner, suggestor)
     return res.status(201).json({ ok: true, objectMail })
+
   }
 }
 
