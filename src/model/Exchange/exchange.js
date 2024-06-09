@@ -34,7 +34,7 @@ export class ExchangeModel {
 
   static async getSuggestionProductById(id) {
     const query = `
-    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
     FROM Trueque t
       INNER JOIN
         ProductosCambio pc ON t.idTrueque = pc.idTrueque
@@ -48,7 +48,7 @@ export class ExchangeModel {
 
   static async getMainProductById(id) {
     const query = `
-    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
     FROM Trueque t
       INNER JOIN
         ProductosCambio pc ON t.idTrueque = pc.idTrueque
