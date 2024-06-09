@@ -70,7 +70,6 @@ export class PublicationController {
     try {
       const { idPublicacion } = req.params
       const publication = req.body
-      console.log(req.body)
       const result = partialPublicationValidator(publication)
       if (!result.success) {
         return res.status(400).json({ error: result.error })

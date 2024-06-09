@@ -35,7 +35,6 @@ export class PublicationModel {
     return await connection.query(query, [idPublication]).catch(error => new Error(error))
   }
   static async update(idPublication, publication) {
-    console.log(publication)
     const query = `UPDATE Publicacion SET nombre = ?, descripcion = ?,precio = ?, productoACambio = ?, estado = ? WHERE idPublicacion = ?;`
     return await connection.query(query, [
       publication.nombre,
