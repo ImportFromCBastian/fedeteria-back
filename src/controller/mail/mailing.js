@@ -29,6 +29,12 @@ export class MailingController {
       res.status(500).json({ message: 'Error al enviar el correo de recuperación' })
     }
   }
+
+  static async sendContactInformation(req, res) {
+    const { owner, suggestor } = req.body
+    const objectMail = await MailingModel.sendContactInformation(owner, suggestor)
+    return res.status(201).json({ ok: true, objectMail })
+  }
 }
 
 export default MailingController

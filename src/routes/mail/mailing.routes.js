@@ -6,4 +6,6 @@ const router = Router()
 router.post('/', MailingController.sendRegister)
 router.post('/contrasenia', MailingController.sendRecuperarContrasenia)
 
+router.post('/exchange/contact', MailingController.sendContactInformation)
+
 export default router
