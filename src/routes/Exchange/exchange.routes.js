@@ -19,6 +19,12 @@ router.post('/suggestion', ExchangeController.createPendingExchange)
 
 router.delete('/suggestion/:id', ExchangeController.deleteSuggestion)
 
+router.get('/accepteds/:DNI', ExchangeController.getAcceptedExchanges)
+
+router.get('/availableTimes/:selectedSucursal/:day', ExchangeController.getAvailableTimes)
+
+router.post('/details/:id', ExchangeController.createExchangeDetailsById)
+
 router.get('/:idLocal', ExchangeController.getIdExchangeByIdLocal)
 
 router.get('/product/:id', ExchangeController.getExchangeMainProductById)
