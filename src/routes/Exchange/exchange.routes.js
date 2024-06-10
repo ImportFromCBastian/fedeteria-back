@@ -25,7 +25,7 @@ router.get('/availableTimes/:selectedSucursal/:day', ExchangeController.getAvail
 
 router.post('/details/:id', ExchangeController.createExchangeDetailsById)
 
-router.get('/:idLocal', ExchangeController.getIdExchangeByIdLocal)
+router.get('/truequeLocal/:idLocal', ExchangeController.getIdExchangeByIdLocal)
 
 router.get('/product/:id', ExchangeController.getExchangeMainProductById)
 
