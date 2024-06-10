@@ -7,7 +7,7 @@ export class PublicationModel {
       publication.dni,
       publication.nombre,
       publication.descripcion,
-      publication.productoACambio,
+      publication.producto_a_cambio,
       publication.estado
     ])
     return result.insertId // Devuelve el ID de la publicación creada
