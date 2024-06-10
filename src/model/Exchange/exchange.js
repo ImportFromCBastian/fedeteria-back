@@ -111,4 +111,28 @@ export class ExchangeModel {
       return { ok: true, rows }
     })
   }
+
+  static async getIdExchangeByIdLocal(idLocal) {
+    const query = `
+    SELECT t.idTrueque
+    FROM Trueque t
+    WHERE 
+      t.idLocal = ? AND t.realizado IS NOT NULL;`
+    const [rows] = await connection.query(query, [idLocal])
+    return rows
+  }
+
+  static async getExchangeMainProductById(id) {
+    const query = `
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE 
+      t.idTrueque = ? AND t.realizado IS NOT NULL;`
+    const [rows] = await connection.query(query, [id])
+    return rows
+  }
 }

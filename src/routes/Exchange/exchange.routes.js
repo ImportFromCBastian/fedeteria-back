@@ -19,4 +19,8 @@ router.post('/suggestion', ExchangeController.createPendingExchange)
 
 router.delete('/suggestion/:id', ExchangeController.deleteSuggestion)
 
+router.get('/:idLocal', ExchangeController.getIdExchangeByIdLocal)
+
+router.get('/product/:id', ExchangeController.getExchangeMainProductById)
+
 export default router

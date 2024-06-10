@@ -95,6 +95,8 @@ export class MailingModel {
           cid: 'uniqueImageCID' // Referenced in the HTML template
         }
       ]
+    }
+  }
 
   static async sendContactInformation(ownerMail, suggestorMail) {
     const ownerMailBody = await MailingModel.createContactInformationMailBody(ownerMail, suggestorMail, 'owner')

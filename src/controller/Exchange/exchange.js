@@ -91,4 +91,24 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+
+  static async getExchangeMainProductById(req, res) {
+    try {
+      const { id } = req.params
+      const suggestions = await ExchangeModel.getExchangeMainProductById(id)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async getIdExchangeByIdLocal(req, res) {
+    try {
+      const { idLocal } = req.params
+      const suggestions = await ExchangeModel.getIdExchangeByIdLocal(idLocal)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }

@@ -48,6 +48,8 @@ app.use('/exchange', exchangeRouter)
 
 app.use('/modificar_publicacion', publicationRouter)
 
+app.use('/trueques', exchangeRouter)
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
 })
