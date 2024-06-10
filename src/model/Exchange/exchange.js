@@ -153,10 +153,17 @@ export class ExchangeModel {
 
   static async getIdExchangeByIdLocal(idLocal) {
     const query = `
-    SELECT t.idTrueque
+    SELECT t.realizado,t.productoDeseado,COUNT(pc.idPublicacion) as countPublication,p.idPublicacion
     FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON pc.idPublicacion = p.idPublicacion
     WHERE 
-      t.idLocal = ? AND t.realizado IS NOT NULL;`
+      t.idLocal = ? AND t.realizado IS NOT NULL
+    GROUP BY
+    t.realizado,t.productoDeseado,p.idPublicacion;`
+
     const [rows] = await connection.query(query, [idLocal])
     return rows
   }
