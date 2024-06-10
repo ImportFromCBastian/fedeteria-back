@@ -91,4 +91,32 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+  static async getAcceptedExchanges(req, res) {
+    try {
+      const { DNI } = req.params
+      const suggestions = await ExchangeModel.checkExchangeSuggestionAcceptedsByDNI(DNI)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  static async getAvailableTimes(req, res) {
+    try {
+      const { selectedSucursal, day } = req.params
+      const times = await ExchangeModel.getAvailableTimes(selectedSucursal, day)
+      res.status(200).json(times)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  static async createExchangeDetailsById(req, res) {
+    try {
+      const { id } = req.params
+      const { data } = req.body
+      const result = await ExchangeModel.createExchangeDetailsById(id, data)
+      res.status(200).json(result)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }

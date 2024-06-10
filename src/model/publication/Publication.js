@@ -13,7 +13,14 @@ export class PublicationModel {
     return result.insertId // Devuelve el ID de la publicación creada
   }
   static async getAllAcepted() {
-    const queryPublication = `SELECT * FROM publicacion WHERE precio <> 0;`
+    const queryPublication = `SELECT p.*
+  FROM Publicacion p
+  LEFT JOIN Trueque t ON p.idPublicacion = t.productoDeseado AND t.realizado IN (1, 2, 3)
+  LEFT JOIN ProductosCambio pc ON p.idPublicacion = pc.idPublicacion
+  LEFT JOIN Trueque t2 ON pc.idTrueque = t2.idTrueque AND t2.realizado IN (1, 2, 3)
+  WHERE p.precio > 0
+    AND t.idTrueque IS NULL
+  AND t2.idTrueque IS NULL;;`
     const [publications] = await connection.query(queryPublication)
     return publications
   }
@@ -25,7 +32,15 @@ export class PublicationModel {
   }
 
   static async findAllAceptedByDni(dni) {
-    const query = `SELECT * FROM Publicacion WHERE DNI = ? AND precio <> 0;`
+    const query = `SELECT p.*
+    FROM Publicacion p
+    LEFT JOIN Trueque t ON p.idPublicacion = t.productoDeseado AND t.realizado IN (1, 2, 3)
+    LEFT JOIN ProductosCambio pc ON p.idPublicacion = pc.idPublicacion
+    LEFT JOIN Trueque t2 ON pc.idTrueque = t2.idTrueque AND t2.realizado IN (1, 2, 3)
+    WHERE p.precio > 0
+      AND t.idTrueque IS NULL
+    AND t2.idTrueque IS NULL
+    AND p.DNI = ?;`
     const [publication] = await connection.query(query, [dni])
     return publication
   }
@@ -35,7 +50,6 @@ export class PublicationModel {
     return await connection.query(query, [idPublication]).catch(error => new Error(error))
   }
   static async update(idPublication, publication) {
-    console.log(publication)
     const query = `UPDATE Publicacion SET nombre = ?, descripcion = ?,precio = ?, productoACambio = ?, estado = ? WHERE idPublicacion = ?;`
     return await connection.query(query, [
       publication.nombre,
