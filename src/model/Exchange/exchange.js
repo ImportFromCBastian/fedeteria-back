@@ -76,24 +76,40 @@ export class ExchangeModel {
   }
 
   static async deleteSuggestion(id) {
-    const deleteProductsQuery = `
-    DELETE FROM ProductosCambio pc
-    WHERE pc.idTrueque IN (
-      SELECT t.idTrueque FROM Trueque t
-      WHERE t.productoDeseado = ? 
-      AND t.realizado IS NULL
-    )
-  ;`
+    const deleteProductsByTruequeQuery = `
+      DELETE FROM ProductosCambio pc
+      WHERE pc.idTrueque IN (
+        SELECT t.idTrueque
+        FROM Trueque t
+        WHERE t.productoDeseado = ? AND t.realizado IS NULL
+      )
+    ;`
+
+    const deleteProductsByPublicacionQuery = `
+      DELETE FROM ProductosCambio pc
+      WHERE pc.idPublicacion = ?
+    ;`
 
     const deleteExchangeQuery = `
-    DELETE FROM Trueque t
-    WHERE
-      t.productoDeseado = ?
-        AND
-      t.realizado IS NULL;
-    `
+      DELETE FROM Trueque t
+      WHERE t.productoDeseado = ? AND t.realizado IS NULL
+    ;`
+
+    const deleteOfferedProductsInTruequeQuery = `
+      DELETE pc
+      FROM ProductosCambio pc
+      JOIN Trueque t ON pc.idPublicacion = t.productoDeseado
+      WHERE pc.idPublicacion = ?
+    ;`
+
     try {
-      await connection.query(deleteProductsQuery, [id])
+      // Delete products linked to Trueque
+      await connection.query(deleteProductsByTruequeQuery, [id])
+      // Delete products by idPublicacion
+      await connection.query(deleteProductsByPublicacionQuery, [id])
+      // Delete offered products in Trueque where idPublicacion is the main product
+      await connection.query(deleteOfferedProductsInTruequeQuery, [id])
+      // Delete entries in Trueque
       const [result] = await connection.query(deleteExchangeQuery, [id])
       return { ok: true, result }
     } catch (e) {
