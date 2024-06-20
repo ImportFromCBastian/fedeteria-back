@@ -76,7 +76,8 @@ export class ExchangeModel {
   }
 
   static async deleteSuggestion(id) {
-    const deleteProductsByTruequeQuery = `
+    // borra la lista de productos ofrecidos donde el producto deseado es igual al id
+    const deleteProductsByMainProduct = `
       DELETE FROM ProductosCambio pc
       WHERE pc.idTrueque IN (
         SELECT t.idTrueque
@@ -85,33 +86,30 @@ export class ExchangeModel {
       )
     ;`
 
-    const deleteProductsByPublicacionQuery = `
-      DELETE FROM ProductosCambio pc
-      WHERE pc.idPublicacion = ?
-    ;`
-
-    const deleteExchangeQuery = `
+    // borra todos los trueques donde el producto deseado es igual al id
+    const deleteOtherSuggestion = `
       DELETE FROM Trueque t
-      WHERE t.productoDeseado = ? AND t.realizado IS NULL
-    ;`
+      WHERE t.productoDeseado = ? AND t.realizado IS NULL    
+    `
 
-    const deleteOfferedProductsInTruequeQuery = `
-      DELETE pc
-      FROM ProductosCambio pc
-      JOIN Trueque t ON pc.idPublicacion = t.productoDeseado
-      WHERE pc.idPublicacion = ?
-    ;`
-
+    // borra de la lista de productos donde el producto esta involucrado en otra sugerencia donde no es nulo
+    const deleteFromListOfProducts = `
+        DELETE FROM ProductosCambio pc
+        WHERE pc.idPublicacion = ? AND pc.idTrueque NOT IN (
+          SELECT t.idTrueque
+          FROM Trueque t
+          WHERE t.realizado IS NOT NULL
+        )
+      `
+    const result = []
     try {
-      // Delete products linked to Trueque
-      await connection.query(deleteProductsByTruequeQuery, [id])
-      // Delete products by idPublicacion
-      await connection.query(deleteProductsByPublicacionQuery, [id])
-      // Delete offered products in Trueque where idPublicacion is the main product
-      await connection.query(deleteOfferedProductsInTruequeQuery, [id])
-      // Delete entries in Trueque
-      const [result] = await connection.query(deleteExchangeQuery, [id])
-      return { ok: true, result }
+      // Delete list of products of the main product where realizado is null
+      result.push(await connection.query(deleteProductsByMainProduct, [id]))
+      // Delete trueque suggestion of the main product where realizado is null
+      result.push(await connection.query(deleteOtherSuggestion, [id]))
+      // Delete from list where the product is involved in other suggestion where is not null
+      result.push(await connection.query(deleteFromListOfProducts, [id]))
+      return { ok: true, message: result }
     } catch (e) {
       return { ok: false, error: e }
     }
@@ -132,9 +130,12 @@ export class ExchangeModel {
     const query = `
     SELECT t.productoDeseado,t.idTrueque,COUNT(pc.idPublicacion) as countPublication
     FROM Trueque t INNER JOIN ProductosCambio pc ON (t.idTrueque = pc.idTrueque)
-    WHERE realizado = 2 AND t.productoDeseado IN (
-      SELECT p.idPublicacion FROM Publicacion p WHERE p.DNI = ?
-    ) GROUP BY t.idTrueque ,t.productoDeseado;`
+    WHERE t.realizado = 2 AND t.productoDeseado IN (
+      SELECT p.idPublicacion
+      FROM Publicacion p
+      WHERE p.DNI = ?
+    )
+    GROUP BY t.idTrueque ,t.productoDeseado;`
 
     const [rows] = await connection.query(query, [DNI]).catch(e => {
       console.log(e)
