@@ -13,14 +13,19 @@ export class PublicationModel {
     return result.insertId // Devuelve el ID de la publicación creada
   }
   static async getAllAcepted() {
-    const queryPublication = `SELECT p.*
-  FROM Publicacion p
-  LEFT JOIN Trueque t ON p.idPublicacion = t.productoDeseado AND t.realizado IN (1, 2, 3)
-  LEFT JOIN ProductosCambio pc ON p.idPublicacion = pc.idPublicacion
-  LEFT JOIN Trueque t2 ON pc.idTrueque = t2.idTrueque AND t2.realizado IN (1, 2, 3)
-  WHERE p.precio > 0
-    AND t.idTrueque IS NULL
-  AND t2.idTrueque IS NULL;;`
+    const queryPublication = `
+    SELECT p.*
+    FROM Publicacion p
+    WHERE p.idPublicacion NOT IN (
+      SELECT t.productoDeseado
+      FROM Trueque t
+      WHERE t.realizado IS NOT NULL
+    ) AND p.idPublicacion NOT IN (
+     SELECT pc.idPublicacion
+      FROM ProductosCambio pc
+      INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
+      WHERE t.realizado IS NOT NULL
+    );`
     const [publications] = await connection.query(queryPublication)
     return publications
   }
@@ -32,15 +37,19 @@ export class PublicationModel {
   }
 
   static async findAllAceptedByDni(dni) {
-    const query = `SELECT p.*
+    const query = `
+    SELECT p.*
     FROM Publicacion p
-    LEFT JOIN Trueque t ON p.idPublicacion = t.productoDeseado AND t.realizado IN (1, 2, 3)
-    LEFT JOIN ProductosCambio pc ON p.idPublicacion = pc.idPublicacion
-    LEFT JOIN Trueque t2 ON pc.idTrueque = t2.idTrueque AND t2.realizado IN (1, 2, 3)
-    WHERE p.precio > 0
-      AND t.idTrueque IS NULL
-    AND t2.idTrueque IS NULL
-    AND p.DNI = ?;`
+    WHERE p.idPublicacion NOT IN (
+      SELECT t.productoDeseado
+      FROM Trueque t
+      WHERE t.realizado IS NOT NULL
+    ) AND p.idPublicacion NOT IN (
+     SELECT pc.idPublicacion
+      FROM ProductosCambio pc
+      INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
+      WHERE t.realizado IS NOT NULL
+    ) AND p.DNI = ?;`
     const [publication] = await connection.query(query, [dni])
     return publication
   }
