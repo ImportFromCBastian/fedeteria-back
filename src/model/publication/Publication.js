@@ -60,4 +60,11 @@ export class PublicationModel {
       idPublication
     ])
   }
+  static async findAllByDni(dni) {
+    const query = `SELECT p.*
+    FROM Publicacion p
+    WHERE p.DNI = ?;`
+    const [publication] = await connection.query(query, [dni])
+    return publication
+  }
 }
