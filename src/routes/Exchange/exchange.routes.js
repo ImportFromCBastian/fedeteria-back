@@ -24,4 +24,7 @@ router.get('/accepteds/:DNI', ExchangeController.getAcceptedExchanges)
 router.get('/availableTimes/:selectedSucursal/:day', ExchangeController.getAvailableTimes)
 
 router.post('/details/:id', ExchangeController.createExchangeDetailsById)
+
+router.patch('/:id', ExchangeController.updateExchangeStatus)
+
 export default router

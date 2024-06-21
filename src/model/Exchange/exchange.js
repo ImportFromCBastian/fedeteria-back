@@ -167,4 +167,16 @@ export class ExchangeModel {
       return { ok: false, error: e }
     }
   }
+  static async updateExchangeStatus(id, status) {
+    const query = `
+    UPDATE Trueque
+    SET realizado = ?
+    WHERE idTrueque = ?;`
+    try {
+      await connection.query(query, [status, id])
+      return { ok: true }
+    } catch (e) {
+      return { ok: false, error: e }
+    }
+  }
 }

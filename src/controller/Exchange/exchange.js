@@ -119,4 +119,16 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+
+  static async updateExchangeStatus(req, res) {
+    try {
+      const { id } = req.params
+      const { realizado } = req.body
+      const result = await ExchangeModel.updateExchangeStatus(id, realizado)
+      if (!result.ok) return res.status(404).json({ ok: false, message: 'No se pudo actualizar el estado del trueque' })
+      res.status(200).json({ ok: true, message: result })
+    } catch (error) {
+      res.status(500).json({ ok: false, error: error })
+    }
+  }
 }
