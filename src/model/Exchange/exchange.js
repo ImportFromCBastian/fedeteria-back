@@ -167,4 +167,22 @@ export class ExchangeModel {
       return { ok: false, error: e }
     }
   }
+  static async getSentSuggestionByDNI(DNI) {
+    const query = `
+    SELECT t.idTrueque, t.productoDeseado, COUNT(pc.idPublicacion) as countPublication
+    FROM Trueque t
+    INNER JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque
+    INNER JOIN Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE p.DNI = ? AND t.realizado IS NULL
+    GROUP BY t.idTrueque, t.productoDeseado;
+  `
+
+    try {
+      const [rows] = await connection.query(query, [DNI])
+      return rows
+    } catch (error) {
+      console.error('Error fetching sent suggestions:', error)
+      return [] // Opcional: puedes manejar el error de alguna manera específica
+    }
+  }
 }

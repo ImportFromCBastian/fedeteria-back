@@ -15,6 +15,8 @@ router.get('/state/pending', ExchangeController.getPendingExchange)
 
 router.get('/suggestion/product/:id', ExchangeController.getMainProductById)
 
+router.get('/given/:DNI', ExchangeController.getSentSuggestionByDNI)
+
 router.post('/suggestion', ExchangeController.createPendingExchange)
 
 router.delete('/suggestion/:id', ExchangeController.deleteSuggestion)
