@@ -81,4 +81,14 @@ export class PublicationController {
       return res.status(500).json({ error: error })
     }
   }
+  static async findAllByDni(req, res) {
+    try {
+      const { dni } = req.params
+      const publications = await PublicationModel.findAllByDni(dni)
+      return res.status(200).json(publications)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
 }

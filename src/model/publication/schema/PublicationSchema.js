@@ -28,7 +28,7 @@ const partialPublicationSchema = z.object({
   }),
   precio: z.number().min(0),
   //producto a cambio validations
-  productoACambio: z.string(),
+  productoACambio: z.string().optional(),
   //estado validations
   estado: z.string({
     required_error: 'Se requiere el estado de la publicacion'
