@@ -139,4 +139,23 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+
+  static async getExchangeProductById(req, res) {
+    try {
+      const { id } = req.params
+      const suggestions = await ExchangeModel.getExchangeProductById(id)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  static async getExchangeInfoById(req, res) {
+    try {
+      const { id } = req.params
+      const suggestions = await ExchangeModel.getExchangeInfoById(id)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }
