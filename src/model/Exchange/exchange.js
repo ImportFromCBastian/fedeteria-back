@@ -196,10 +196,10 @@ export class ExchangeModel {
       return rows
     } catch (error) {
       console.error('Error fetching sent suggestions:', error)
-      return [] 
+      return []
     }
   }
-  
+
   static async getEveryExchangeByDNI(DNI) {
     const query = `
   SELECT 
@@ -241,7 +241,7 @@ export class ExchangeModel {
       console.error('Error fetching every exchange:', error)
       return []
     }
-
+  }
   static async getIdExchangeByIdLocal(idLocal) {
     const query = `
     SELECT t.idTrueque,t.realizado,t.productoDeseado,COUNT(pc.idPublicacion) as countPublication,p.idPublicacion
@@ -299,6 +299,5 @@ export class ExchangeModel {
       t.idTrueque = ?;`
     const [rows] = await connection.query(query, [id])
     return rows
-
   }
 }
