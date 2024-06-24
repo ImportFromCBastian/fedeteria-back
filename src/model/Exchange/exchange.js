@@ -196,9 +196,10 @@ export class ExchangeModel {
       return rows
     } catch (error) {
       console.error('Error fetching sent suggestions:', error)
-      return [] // Opcional: puedes manejar el error de alguna manera específica
+      return [] 
     }
   }
+  
   static async getEveryExchangeByDNI(DNI) {
     const query = `
   SELECT 
@@ -233,7 +234,6 @@ export class ExchangeModel {
     )
   GROUP BY t.idTrueque, t.productoDeseado;
   `
-
     try {
       const [rows] = await connection.query(query, [DNI, DNI, DNI])
       return rows
@@ -241,5 +241,64 @@ export class ExchangeModel {
       console.error('Error fetching every exchange:', error)
       return []
     }
+
+  static async getIdExchangeByIdLocal(idLocal) {
+    const query = `
+    SELECT t.idTrueque,t.realizado,t.productoDeseado,COUNT(pc.idPublicacion) as countPublication,p.idPublicacion
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE 
+      t.idLocal = ? AND t.realizado IS NOT NULL
+    GROUP BY
+    t.idTrueque,t.realizado,t.productoDeseado,p.idPublicacion;`
+
+    const [rows] = await connection.query(query, [idLocal])
+    return rows
+  }
+
+  static async getExchangeMainProductById(id) {
+    const query = `
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON t.productoDeseado = p.idPublicacion
+    WHERE 
+      t.idTrueque = ? AND t.realizado IS NOT NULL;`
+    const [rows] = await connection.query(query, [id])
+    return rows
+  }
+
+  static async getExchangeProductById(id) {
+    const query = `
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE 
+      t.idTrueque = ? AND t.realizado IS NOT NULL;`
+    const [rows] = await connection.query(query, [id])
+    return rows
+  }
+
+  static async getExchangeInfoById(id) {
+    const query = `
+    SELECT t.idTrueque,t.realizado,t.productoDeseado,t.idLocal,t.fecha,t.hora
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE 
+      t.idTrueque = ?;`
+    const [rows] = await connection.query(query, [id])
+    return rows
+
   }
 }

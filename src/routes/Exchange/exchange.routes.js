@@ -29,4 +29,13 @@ router.get('/accepteds/:DNI', ExchangeController.getAcceptedExchanges)
 router.get('/availableTimes/:selectedSucursal/:day', ExchangeController.getAvailableTimes)
 
 router.post('/details/:id', ExchangeController.createExchangeDetailsById)
+
+router.get('/truequeLocal/:idLocal', ExchangeController.getIdExchangeByIdLocal)
+
+router.get('/product/:id', ExchangeController.getExchangeMainProductById)
+
+router.get('/exchange/:id', ExchangeController.getExchangeProductById)
+
+router.get('/info/:id', ExchangeController.getExchangeInfoById)
+
 export default router
