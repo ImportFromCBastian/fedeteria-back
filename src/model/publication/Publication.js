@@ -16,16 +16,18 @@ export class PublicationModel {
     const queryPublication = `
     SELECT p.*
     FROM Publicacion p
-    WHERE p.idPublicacion NOT IN (
-      SELECT t.productoDeseado
-      FROM Trueque t
-      WHERE t.realizado IS NOT NULL
-    ) AND p.idPublicacion NOT IN (
-     SELECT pc.idPublicacion
-      FROM ProductosCambio pc
-      INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
-      WHERE t.realizado IS NOT NULL
-    );`
+    WHERE p.precio <> 0
+      AND p.idPublicacion NOT IN (
+        SELECT t.productoDeseado
+        FROM Trueque t
+        WHERE t.realizado IS NOT NULL
+      ) 
+      AND p.idPublicacion NOT IN (
+        SELECT pc.idPublicacion
+        FROM ProductosCambio pc
+        INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
+        WHERE t.realizado IS NOT NULL
+      );`
     const [publications] = await connection.query(queryPublication)
     return publications
   }
