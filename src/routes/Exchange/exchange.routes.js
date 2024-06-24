@@ -6,10 +6,13 @@ const router = Router()
 router.post('/', ExchangeController.create)
 
 router.get('/:DNI', ExchangeController.getSuggestionByDNI)
+router.get('/all/:DNI', ExchangeController.getEveryExchangeByDNI)
 
 router.get('/suggestions/dni/:DNI', ExchangeController.getExchangeSuggestionByDNI)
 
 router.get('/suggestion/:id', ExchangeController.getSuggestionProductById)
+
+router.get('/product/:id', ExchangeController.getExchangeProductById)
 
 router.get('/state/pending', ExchangeController.getPendingExchange)
 

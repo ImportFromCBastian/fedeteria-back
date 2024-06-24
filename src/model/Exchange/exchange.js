@@ -41,7 +41,21 @@ export class ExchangeModel {
       INNER JOIN
         Publicacion p ON pc.idPublicacion = p.idPublicacion
     WHERE 
-      t.idTrueque = ? AND t.realizado IS NULL;`
+      t.idTrueque = ? ;`
+    const [rows] = await connection.query(query, [id])
+    return rows
+  }
+
+  static async getExchangeProductById(id) {
+    const query = `
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE 
+      t.idTrueque = ? AND t.realizado IS NOT NULL;`
     const [rows] = await connection.query(query, [id])
     return rows
   }
@@ -55,7 +69,7 @@ export class ExchangeModel {
       INNER JOIN
         Publicacion p ON t.productoDeseado = p.idPublicacion
     WHERE 
-      t.idTrueque = ? AND t.realizado IS NULL;`
+      t.idTrueque = ?;`
     const [rows] = await connection.query(query, [id])
     return rows
   }
@@ -183,6 +197,49 @@ export class ExchangeModel {
     } catch (error) {
       console.error('Error fetching sent suggestions:', error)
       return [] // Opcional: puedes manejar el error de alguna manera específica
+    }
+  }
+  static async getEveryExchangeByDNI(DNI) {
+    const query = `
+  SELECT 
+    t.idTrueque, 
+    t.productoDeseado, 
+    t.fecha, 
+    t.realizado,
+    t.hora,
+    COUNT(pc.idPublicacion) as countPublication,
+    CASE 
+      WHEN t.productoDeseado IN (
+        SELECT p.idPublicacion
+        FROM Publicacion p
+        WHERE p.DNI = ?
+      ) THEN 'desired'
+      ELSE 'offered'
+    END as role
+  FROM Trueque t
+  LEFT JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque
+  WHERE t.realizado IS NOT NULL
+    AND (
+      t.productoDeseado IN (
+        SELECT p.idPublicacion
+        FROM Publicacion p
+        WHERE p.DNI = ?
+      )
+      OR pc.idPublicacion IN (
+        SELECT p.idPublicacion
+        FROM Publicacion p
+        WHERE p.DNI = ?
+      )
+    )
+  GROUP BY t.idTrueque, t.productoDeseado;
+  `
+
+    try {
+      const [rows] = await connection.query(query, [DNI, DNI, DNI])
+      return rows
+    } catch (error) {
+      console.error('Error fetching every exchange:', error)
+      return []
     }
   }
 }
