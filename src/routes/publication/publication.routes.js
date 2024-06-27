@@ -15,4 +15,8 @@ router.patch('/:idPublicacion', PublicationController.updatePublication)
 
 router.get('/buscar_mis_publicaciones/:dni', PublicationController.findAllByDni)
 
+router.post('/consulta', PublicationController.createConsulta)
+
+router.get('/consulta/:idPublicacion', PublicationController.getConsultasById)
+
 export default router

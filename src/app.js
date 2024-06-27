@@ -34,13 +34,13 @@ app.use('/mailing', mailingRoutes)
 
 app.use('/user', userRoutes)
 
-app.use('/publication', publicationRouter)
+app.use('/publication', publicationRouter) //este es para ver detalles de publicacion, entre otros.-> ahora se usa para las consultas
 
 app.use('/add-foto', fotoRouter)
 
 app.use('/ver_detalles', detalleRouter)
 
-app.use('/publicaciones', publicacionRouter)
+app.use('/publicaciones', publicacionRouter) //este se usa en el listado de publicaciones(para aceptar y denegar)
 
 app.use('/sucursal', sucursalRouter)
 

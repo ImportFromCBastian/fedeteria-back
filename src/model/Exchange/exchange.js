@@ -167,4 +167,19 @@ export class ExchangeModel {
       return { ok: false, error: e }
     }
   }
+  static async getTrueques() {
+    const query = `
+    SELECT l.nombre, COUNT(*) AS CantidadDeTrueques
+    FROM Local l
+      LEFT JOIN
+        Trueque t ON l.idLocal = t.idLocal
+    WHERE realizado = 1
+    GROUP BY t.idLocal, l.nombre;`
+    try {
+      const [rows] = await connection.query(query)
+      return rows
+    } catch (e) {
+      return { ok: false, error: e }
+    }
+  }
 }

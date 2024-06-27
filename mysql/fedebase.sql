@@ -242,6 +242,47 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Notificacion` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`Consulta`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `fedeteria-db`.`Consulta`;
+
+CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Consulta` (
+  `idConsulta` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `textoConsulta` TEXT NOT NULL,
+  `idPublicacion` INT UNSIGNED NOT NULL,
+  `dniUsuario` VARCHAR(20) NOT NULL,
+  `idRespuesta` INT UNSIGNED NULL DEFAULT NULL,
+  PRIMARY KEY (`idConsulta`),
+  UNIQUE INDEX `idConsulta_UNIQUE` (`idConsulta` ASC) VISIBLE,
+  INDEX `PUB_PREGUNTA_FK_idx` (`idPublicacion` ASC) VISIBLE,
+  CONSTRAINT `PUB_CONSULTA_FK`
+    FOREIGN KEY (`idPublicacion`)
+    REFERENCES `fedeteria-db`.`Publicacion` (`idPublicacion`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`Respuesta`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `fedeteria-db`.`Respuesta`;
+
+CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Respuesta` (
+  `idRespuesta` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `dniDuenoPublicacion` VARCHAR(20) NOT NULL,
+  `textoRespuesta` TEXT NOT NULL,
+  `idPregunta` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idRespuesta`),
+  UNIQUE INDEX `idRespuesta_UNIQUE` (`idRespuesta` ASC) VISIBLE,
+  INDEX `PREGUNTA_RESPUESTA_FK_idx` (`idPregunta` ASC) VISIBLE,
+  CONSTRAINT `PREGUNTA_RESPUESTA_FK`
+    FOREIGN KEY (`idPregunta`)
+    REFERENCES `fedeteria-db`.`Pregunta` (`idPregunta`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

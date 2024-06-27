@@ -76,4 +76,13 @@ export class PublicationModel {
     const [publication] = await connection.query(query, [dni])
     return publication
   }
+  static async createConsulta(consulta, idPublicacion, dni) {
+    const query = `INSERT INTO Consulta (textoConsulta,idPublicacion, dniUsuario ) VALUES (?, ?, ?);`
+    return await connection.query(query, [consulta, idPublicacion, dni])
+  }
+  static async getConsultasById(idPublicacion) {
+    const query = `SELECT * FROM Consulta WHERE idPublicacion = ?;`
+    const [consultas] = await connection.query(query, [idPublicacion])
+    return consultas
+  }
 }

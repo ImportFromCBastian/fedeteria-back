@@ -91,4 +91,25 @@ export class PublicationController {
       res.status(500).json({ error: error })
     }
   }
+  static async createConsulta(req, res) {
+    try {
+      const { consulta, idPublicacion, dni } = req.body
+      const result = await PublicationModel.createConsulta(consulta, idPublicacion, dni)
+      return res.status(201).json(result)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
+  static async getConsultasById(req, res) {
+    try {
+      const { idPublicacion } = req.params
+      const result = await PublicationModel.getConsultasById(idPublicacion)
+      console.log(result)
+      return res.status(200).json(result)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
 }
