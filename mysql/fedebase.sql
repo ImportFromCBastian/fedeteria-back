@@ -266,6 +266,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Venta` (
   `pago` VARCHAR(35) NOT NULL,
   `dniEmpleado` BIGINT NOT NULL,
   `dniCliente` BIGINT NOT NULL,
+  `precioTotal` FLOAT UNSIGNED NOT NULL,
   PRIMARY KEY (`idVenta`),
   INDEX `EMPLEADO_VENTA_FK_idx` (`dniEmpleado` ASC) VISIBLE,
   INDEX `CLIENTE_VENTA_FK_idx` (`dniCliente` ASC) VISIBLE,
