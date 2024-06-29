@@ -242,6 +242,71 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Notificacion` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`Producto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `fedeteria-db`.`Producto` ;
+
+CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Producto` (
+  `idProducto` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NOT NULL,
+  `precio` FLOAT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idProducto`),
+  UNIQUE INDEX `idProducto_UNIQUE` (`idProducto` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`Venta`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `fedeteria-db`.`Venta` ;
+
+CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Venta` (
+  `idVenta` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `pago` VARCHAR(35) NOT NULL,
+  `dniEmpleado` BIGINT NOT NULL,
+  `dniCliente` BIGINT NOT NULL,
+  PRIMARY KEY (`idVenta`),
+  INDEX `EMPLEADO_VENTA_FK_idx` (`dniEmpleado` ASC) VISIBLE,
+  INDEX `CLIENTE_VENTA_FK_idx` (`dniCliente` ASC) VISIBLE,
+  CONSTRAINT `EMPLEADO_VENTA_FK`
+    FOREIGN KEY (`dniEmpleado`)
+    REFERENCES `fedeteria-db`.`Empleado` (`DNI`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  CONSTRAINT `CLIENTE_VENTA_FK`
+    FOREIGN KEY (`dniCliente`)
+    REFERENCES `fedeteria-db`.`Cliente` (`DNI`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`ProductosVendidos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `fedeteria-db`.`ProductosVendidos` ;
+
+CREATE TABLE IF NOT EXISTS `fedeteria-db`.`ProductosVendidos` (
+  `idProductosVendidos` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idVenta` INT UNSIGNED NOT NULL,
+  `idProducto` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idProductosVendidos`),
+  INDEX `VENTA_PV_FK_idx` (`idVenta` ASC) VISIBLE,
+  INDEX `PRODUCTO_PV_FK_idx` (`idProducto` ASC) VISIBLE,
+  CONSTRAINT `VENTA_PV_FK`
+    FOREIGN KEY (`idVenta`)
+    REFERENCES `fedeteria-db`.`Venta` (`idVenta`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  CONSTRAINT `PRODUCTO_PV_FK`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `fedeteria-db`.`Producto` (`idProducto`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
