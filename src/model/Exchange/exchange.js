@@ -179,4 +179,31 @@ export class ExchangeModel {
       return { ok: false, error: e }
     }
   }
+
+  static async getByExchangeCode(code) {
+    const query = `
+    SELECT *
+    FROM Trueque t
+    WHERE t.codigo = ?;`
+    try {
+      const [rows] = await connection.query(query, [code])
+      return rows
+    } catch (e) {
+      return { ok: false, e }
+    }
+  }
+
+  static async getProductListStateThree(id) {
+    const query = `
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE 
+      t.idTrueque = ? AND t.realizado = 3;`
+    const [rows] = await connection.query(query, [id])
+    return rows
+  }
 }

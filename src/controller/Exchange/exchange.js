@@ -131,4 +131,25 @@ export class ExchangeController {
       res.status(500).json({ ok: false, error: error })
     }
   }
+
+  static async getByExchangeCode(req, res) {
+    try {
+      const { codigo } = req.params
+      const [exchange] = await ExchangeModel.getByExchangeCode(codigo)
+      if (!exchange) return res.status(404).json({ message: 'No se encontró el trueque' })
+      res.status(200).json(exchange)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async getProductListStateThree(req, res) {
+    try {
+      const { id } = req.params
+      const suggestions = await ExchangeModel.getProductListStateThree(id)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }

@@ -27,4 +27,8 @@ router.post('/details/:id', ExchangeController.createExchangeDetailsById)
 
 router.patch('/:id', ExchangeController.updateExchangeStatus)
 
+router.get('/code/:codigo', ExchangeController.getByExchangeCode)
+
+router.get('/suggestion/list/:id', ExchangeController.getProductListStateThree)
+
 export default router
