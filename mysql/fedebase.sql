@@ -54,7 +54,6 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Local` (
   UNIQUE INDEX `idLocal_UNIQUE` (`idLocal` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`Empleado`
 -- -----------------------------------------------------
@@ -178,10 +177,12 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Trueque` (
   `realizado` TINYINT NULL DEFAULT NULL,
   `productoDeseado` INT UNSIGNED NOT NULL,
   `idLocal` INT UNSIGNED NULL DEFAULT NULL,
+  `codigo` VARCHAR(10) NULL DEFAULT NULL,
   PRIMARY KEY (`idTrueque`),
   UNIQUE INDEX `idTrueque_UNIQUE` (`idTrueque` ASC) VISIBLE,
   INDEX `PUB_PRIN_TRUEQUE_FK_idx` (`productoDeseado` ASC) VISIBLE,
   INDEX `TRUEQUE_LOCAL_FK_idx` (`idLocal` ASC) VISIBLE,
+  UNIQUE INDEX `codigo_UNIQUE` (`codigo` ASC) VISIBLE,
   CONSTRAINT `PUB_PRIN_TRUEQUE_FK`
     FOREIGN KEY (`productoDeseado`)
     REFERENCES `fedeteria-db`.`Publicacion` (`idPublicacion`)
