@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Local` (
   UNIQUE INDEX `idLocal_UNIQUE` (`idLocal` ASC) VISIBLE)
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`Empleado`
 -- -----------------------------------------------------
