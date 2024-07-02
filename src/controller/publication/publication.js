@@ -105,7 +105,28 @@ export class PublicationController {
     try {
       const { idPublicacion } = req.params
       const result = await PublicationModel.getConsultasById(idPublicacion)
-      console.log(result)
+      return res.status(200).json(result)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
+  static async createRespuesta(req, res) {
+    try {
+      const { respuesta, idConsulta, dniDueno } = req.body
+      const result = await PublicationModel.createRespuesta(respuesta, idConsulta, dniDueno)
+      return res.status(201).json(result)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
+  static async updateConsulta(req, res) {
+    try {
+      const { idConsulta } = req.params
+      const { data } = req.body
+      console.log(idConsulta, data)
+      const result = await PublicationModel.updateConsultaConRespuesta(idConsulta, data)
       return res.status(200).json(result)
     } catch (error) {
       console.log(error)

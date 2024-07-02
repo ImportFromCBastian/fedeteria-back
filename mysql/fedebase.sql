@@ -272,16 +272,17 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Respuesta` (
   `idRespuesta` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `dniDuenoPublicacion` VARCHAR(20) NOT NULL,
   `textoRespuesta` TEXT NOT NULL,
-  `idPregunta` INT UNSIGNED NOT NULL,
+  `idConsulta` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`idRespuesta`),
   UNIQUE INDEX `idRespuesta_UNIQUE` (`idRespuesta` ASC) VISIBLE,
-  INDEX `PREGUNTA_RESPUESTA_FK_idx` (`idPregunta` ASC) VISIBLE,
-  CONSTRAINT `PREGUNTA_RESPUESTA_FK`
-    FOREIGN KEY (`idPregunta`)
-    REFERENCES `fedeteria-db`.`Pregunta` (`idPregunta`)
+  INDEX `CONSULTA_RESPUESTA_FK_idx` (`idConsulta` ASC) VISIBLE,
+  CONSTRAINT `CONSULTA_RESPUESTA_FK`
+    FOREIGN KEY (`idConsulta`)
+    REFERENCES `fedeteria-db`.`Consulta` (`idConsulta`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
+    ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

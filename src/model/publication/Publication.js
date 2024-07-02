@@ -85,4 +85,14 @@ export class PublicationModel {
     const [consultas] = await connection.query(query, [idPublicacion])
     return consultas
   }
+  static async createRespuesta(respuesta, idConsulta, dniDueno) {
+    const query = `INSERT INTO Respuesta (textoRespuesta, idConsulta, dniDuenoPublicacion) VALUES (?, ?, ?);`
+    const result = await connection.query(query, [respuesta, idConsulta, dniDueno])
+    return result[0].insertId // Devuelve el ID autoincremental de la respuesta creada
+  }
+  static async updateConsultaConRespuesta(idConsulta, data) {
+    const query = `UPDATE Consulta SET idRespuesta = ? WHERE idConsulta = ?`
+    const result = await connection.query(query, [data, idConsulta])
+    return result
+  }
 }
