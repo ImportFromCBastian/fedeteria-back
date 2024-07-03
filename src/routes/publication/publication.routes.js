@@ -19,6 +19,8 @@ router.post('/consulta', PublicationController.createConsulta)
 
 router.post('/respuesta', PublicationController.createRespuesta)
 
+router.get('/respuesta/:idConsulta', PublicationController.getRespuestaByIdConsulta)
+
 router.patch('/consulta/:idConsulta', PublicationController.updateConsulta)
 
 router.get('/consulta/:idPublicacion', PublicationController.getConsultasById)

@@ -25,4 +25,9 @@ export class UserModel {
     const query = `SELECT * FROM Usuario WHERE mail = ?;`
     return await connection.query(query, [email]).catch(error => new Error(error))
   }
+  static async getAll() {
+    const query = `SELECT Count(*) AS count FROM Usuario;`
+    const [cant] = await connection.query(query).catch(error => new Error(error))
+    return cant
+  }
 }

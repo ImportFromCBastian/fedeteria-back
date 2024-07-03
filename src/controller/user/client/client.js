@@ -82,4 +82,12 @@ export class ClientController {
       res.status(500).json({ error: error })
     }
   }
+  static async getClientesPorSucursal(req, res) {
+    try {
+      const clients = await ClientModel.getClientesPorSucursal()
+      res.status(200).json(clients)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }

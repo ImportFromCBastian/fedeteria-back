@@ -133,4 +133,15 @@ export class PublicationController {
       res.status(500).json({ error: error })
     }
   }
+  static async getRespuestaByIdConsulta(req, res) {
+    try {
+      const { idConsulta } = req.params
+      const result = await PublicationModel.getRespuestaByIdConsulta(idConsulta)
+      console.log(result[0])
+      return res.status(200).json(result)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
 }
