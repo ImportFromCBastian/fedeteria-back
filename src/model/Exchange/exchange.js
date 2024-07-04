@@ -206,4 +206,34 @@ export class ExchangeModel {
     const [rows] = await connection.query(query, [id])
     return rows
   }
+
+  static async getClients(idTrueque) {
+    const clientArray = []
+
+    const queryMainProduct = `
+    SELECT p.DNI,p.nombre
+    FROM Publicacion p
+    WHERE p.idPublicacion IN (
+      SELECT t.productoDeseado
+      FROM Trueque t
+      WHERE t.productoDeseado = p.idPublicacion AND t.idTrueque = ?
+    )
+    `
+
+    const queryOfferedProduct = `
+    SELECT p.DNI,p.nombre
+    FROM Publicacion p
+    WHERE p.idPublicacion IN (
+      SELECT pc.idPublicacion
+      FROM ProductosCambio pc
+      WHERE pc.idTrueque = ? AND pc.idPublicacion = p.idPublicacion
+    )
+    `
+    const [mainProduct] = await connection.query(queryMainProduct, [idTrueque])
+    clientArray.push(mainProduct)
+    const [offeredProduct] = await connection.query(queryOfferedProduct, [idTrueque])
+    clientArray.push(offeredProduct)
+
+    return clientArray
+  }
 }

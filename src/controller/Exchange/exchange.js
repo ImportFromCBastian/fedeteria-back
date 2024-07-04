@@ -152,4 +152,14 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+
+  static async getClients(req, res) {
+    const { id } = req.params
+    try {
+      const clients = await ExchangeModel.getClients(id)
+      res.status(200).json(clients)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }

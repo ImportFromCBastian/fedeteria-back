@@ -31,4 +31,6 @@ router.get('/code/:codigo', ExchangeController.getByExchangeCode)
 
 router.get('/suggestion/list/:id', ExchangeController.getProductListStateThree)
 
+router.get('/clients/:id', ExchangeController.getClients)
+
 export default router
