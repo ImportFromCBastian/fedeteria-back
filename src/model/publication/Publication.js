@@ -98,7 +98,6 @@ export class PublicationModel {
   static async getRespuestaByIdConsulta(idConsulta) {
     const query = `SELECT textoRespuesta FROM Respuesta WHERE idRespuesta = ?;`
     const [respuesta] = await connection.query(query, [idConsulta])
-    console.log(respuesta)
     return respuesta
   }
 }

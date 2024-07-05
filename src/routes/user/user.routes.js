@@ -17,8 +17,6 @@ router.get('/client/:dni', ClientController.findByDni)
 
 router.patch('/client/:dni', ClientController.update)
 
-router.get('/client', ClientController.getClientesPorSucursal)
-
 // Worker routes
 router.post('/worker', WorkerController.create)
 
@@ -41,5 +39,7 @@ router.post('/compare', UserController.compare)
 router.post('/generate_token', UserController.tokenGenerator)
 
 router.post('/decode_token', UserController.decodeToken)
+
+router.get('/client/sucursales/get', ClientController.getClientesPorSucursal)
 
 export default router

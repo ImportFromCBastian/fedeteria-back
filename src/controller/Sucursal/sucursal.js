@@ -33,4 +33,20 @@ export class SucursalController {
       res.status(500).json({ error: error.message })
     }
   }
+  static async getVentasPorSucursal(req, res) {
+    try {
+      const ventas = await SucursalModel.getVentasPorSucursal()
+      res.status(200).json(ventas)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  static async getGananciasPorSucursal(req, res) {
+    try {
+      const ganancias = await SucursalModel.getGananciasPorSucursal()
+      res.status(200).json(ganancias)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }

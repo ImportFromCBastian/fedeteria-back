@@ -33,7 +33,7 @@ export class UserController {
     try {
       const { DNI } = req.body
       const [user] = await UserModel.findByDni(DNI)
-      if (user.length === 0) return res.status(404).json({ message: 'usuario inexistente' })
+      if (user.length === 0) return res.status(404).json({ message: 'istente' })
 
       const [client] = await ClientModel.findByDni(DNI)
       if (client.length !== 0) {

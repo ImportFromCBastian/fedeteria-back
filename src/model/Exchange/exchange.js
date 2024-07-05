@@ -169,12 +169,12 @@ export class ExchangeModel {
   }
   static async getTrueques() {
     const query = `
-    SELECT l.nombre, COUNT(*) AS CantidadDeTrueques
+    SELECT l.nombre, t.fecha, COUNT(*) AS CantidadDeTrueques
     FROM Local l
       LEFT JOIN
         Trueque t ON l.idLocal = t.idLocal
     WHERE realizado = 1
-    GROUP BY t.idLocal, l.nombre;`
+    GROUP BY t.idLocal, l.nombre, t.fecha;`
     try {
       const [rows] = await connection.query(query)
       return rows

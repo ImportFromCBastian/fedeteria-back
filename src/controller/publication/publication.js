@@ -125,7 +125,6 @@ export class PublicationController {
     try {
       const { idConsulta } = req.params
       const { data } = req.body
-      console.log(idConsulta, data)
       const result = await PublicationModel.updateConsultaConRespuesta(idConsulta, data)
       return res.status(200).json(result)
     } catch (error) {
