@@ -184,7 +184,7 @@ export class ExchangeModel {
     const query = `
     SELECT *
     FROM Trueque t
-    WHERE t.codigo = ?;`
+    WHERE t.codigo = ? AND t.realizado = 3;`
     try {
       const [rows] = await connection.query(query, [code])
       return rows
