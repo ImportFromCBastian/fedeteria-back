@@ -35,10 +35,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`usuario` (
   PRIMARY KEY (`DNI`),
   UNIQUE INDEX `DNI_UNIQUE` (`DNI` ASC) VISIBLE,
   UNIQUE INDEX `mail_UNIQUE` (`mail` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`admin`
@@ -54,9 +51,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`admin` (
     REFERENCES `fedeteria-db`.`usuario` (`DNI`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -147,7 +142,6 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`consulta` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`empleado`
 -- -----------------------------------------------------
@@ -212,6 +206,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`notificacion` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`producto`
 -- -----------------------------------------------------
@@ -224,6 +219,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`producto` (
   PRIMARY KEY (`idProducto`),
   UNIQUE INDEX `idProducto_UNIQUE` (`idProducto` ASC) VISIBLE)
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`trueque`
@@ -254,7 +250,6 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`trueque` (
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`productoscambio`
@@ -293,6 +288,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`venta` (
   `dniCliente` BIGINT NOT NULL,
   `precioTotal` FLOAT UNSIGNED NOT NULL,
   `idLocal` INT UNSIGNED NOT NULL,
+  `fecha` DATE NOT NULL,
   PRIMARY KEY (`idVenta`),
   INDEX `LOCAL_VENTA_FK_idx` (`idLocal` ASC) VISIBLE,
   INDEX `CLIENTE_VENTA_FK_idx` (`dniCliente` ASC) VISIBLE,
