@@ -14,5 +14,6 @@ router.get('/user/:dni', PublicationController.findAllAceptedByDni)
 router.patch('/:idPublicacion', PublicationController.updatePublication)
 
 router.get('/buscar_mis_publicaciones/:dni', PublicationController.findAllByDni)
+router.get('/get/byQuery/:query', PublicationController.searchByQuery)
 
 export default router

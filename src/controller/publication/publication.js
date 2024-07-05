@@ -91,4 +91,14 @@ export class PublicationController {
       res.status(500).json({ error: error })
     }
   }
+  static async searchByQuery(req, res) {
+    try {
+      const { query } = req.params
+      const publications = await PublicationModel.searchByQuery(query)
+      return res.status(200).json(publications)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
 }
