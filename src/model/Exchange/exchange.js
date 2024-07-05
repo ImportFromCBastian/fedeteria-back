@@ -273,30 +273,14 @@ export class ExchangeModel {
     return rows
   }
 
-  static async getExchangeProductById(id) {
-    const query = `
-    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
-    FROM Trueque t
-      INNER JOIN
-        ProductosCambio pc ON t.idTrueque = pc.idTrueque
-      INNER JOIN
-        Publicacion p ON pc.idPublicacion = p.idPublicacion
-    WHERE 
-      t.idTrueque = ? AND t.realizado IS NOT NULL;`
-    const [rows] = await connection.query(query, [id])
-    return rows
-  }
-
   static async getExchangeInfoById(id) {
     const query = `
-    SELECT t.idTrueque,t.realizado,t.productoDeseado,t.idLocal,t.fecha,t.hora
-    FROM Trueque t
-      INNER JOIN
-        ProductosCambio pc ON t.idTrueque = pc.idTrueque
-      INNER JOIN
-        Publicacion p ON pc.idPublicacion = p.idPublicacion
-    WHERE 
-      t.idTrueque = ?;`
+    SELECT t.idTrueque, t.realizado, t.productoDeseado, t.idLocal, t.fecha, t.hora
+FROM Trueque t
+INNER JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque
+INNER JOIN Publicacion p ON pc.idPublicacion = p.idPublicacion
+WHERE t.idTrueque = ?
+ORDER BY t.fecha ASC;`
     const [rows] = await connection.query(query, [id])
     return rows
   }
