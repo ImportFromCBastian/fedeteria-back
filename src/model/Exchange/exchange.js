@@ -284,4 +284,29 @@ ORDER BY t.fecha ASC;`
     const [rows] = await connection.query(query, [id])
     return rows
   }
+  static async getLast20Exchanges() {
+    const query = `
+    SELECT 
+      t.idTrueque, 
+      t.realizado, 
+      t.productoDeseado, 
+      t.idLocal, 
+      t.fecha, 
+      t.hora,
+      COUNT(pc.idPublicacion) as countPublication
+    FROM Trueque t
+    LEFT JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque
+    WHERE t.realizado = 1
+    GROUP BY t.idTrueque, t.productoDeseado
+    ORDER BY t.fecha DESC, t.hora DESC
+    LIMIT 20;
+  `
+    try {
+      const [rows] = await connection.query(query)
+      return rows
+    } catch (error) {
+      console.error('Error fetching the last 20 exchanges:', error)
+      return []
+    }
+  }
 }

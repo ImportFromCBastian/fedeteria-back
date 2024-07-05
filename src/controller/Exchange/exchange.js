@@ -120,7 +120,7 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
-static async getExchangeMainProductById(req, res) {
+  static async getExchangeMainProductById(req, res) {
     try {
       const { id } = req.params
       const suggestions = await ExchangeModel.getExchangeMainProductById(id)
@@ -129,7 +129,7 @@ static async getExchangeMainProductById(req, res) {
       res.status(500).json({ error: error })
     }
   }
-static async getSentSuggestionByDNI(req, res) {
+  static async getSentSuggestionByDNI(req, res) {
     try {
       const { DNI } = req.params
       const suggestions = await ExchangeModel.getSentSuggestionByDNI(DNI)
@@ -147,7 +147,7 @@ static async getSentSuggestionByDNI(req, res) {
       res.status(500).json({ error: error })
     }
   }
-static async getIdExchangeByIdLocal(req, res) {
+  static async getIdExchangeByIdLocal(req, res) {
     try {
       const { idLocal } = req.params
       const suggestions = await ExchangeModel.getIdExchangeByIdLocal(idLocal)
@@ -176,5 +176,12 @@ static async getIdExchangeByIdLocal(req, res) {
       res.status(500).json({ error: error })
     }
   }
-
+  static async getLast20Exchanges(req, res) {
+    try {
+      const suggestions = await ExchangeModel.getLast20Exchanges()
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }

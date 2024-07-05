@@ -38,4 +38,5 @@ router.get('/exchange/:id', ExchangeController.getExchangeProductById)
 
 router.get('/info/:id', ExchangeController.getExchangeInfoById)
 
+router.get('/get/last20Exchanges', ExchangeController.getLast20Exchanges)
 export default router
