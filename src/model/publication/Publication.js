@@ -98,4 +98,35 @@ export class PublicationModel {
     const [publications] = await connection.query(queryPublication)
     return publications
   }
+
+  static async getReadyToPay(id) {
+    const query = `
+    SELECT p.*
+    FROM Publicacion p
+    WHERE p.idPublicacion = ? 
+    AND p.idPublicacion NOT IN (
+      SELECT t.productoDeseado
+      FROM Trueque t
+      WHERE t.realizado IS NOT NULL 
+        AND t.realizado IN (1,3)
+    ) 
+    AND p.idPublicacion NOT IN (
+      SELECT pc.idPublicacion
+      FROM ProductosCambio pc
+      INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
+      WHERE t.realizado IS NOT NULL 
+        AND t.realizado IN (1,3)
+    );
+    `
+    const [publication] = await connection.query(query, [id])
+    return publication
+  }
+
+  static async updateFeatured(id) {
+    const query = `
+    UPDATE Publicacion
+    SET destacada = 'si'
+    WHERE idPublicacion = ?;`
+    return await connection.query(query, [id])
+  }
 }

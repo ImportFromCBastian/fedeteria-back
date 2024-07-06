@@ -101,4 +101,32 @@ export class PublicationController {
       res.status(500).json({ error: error })
     }
   }
+
+  static async getReadyToPay(req, res) {
+    try {
+      const { id } = req.params
+      const publications = await PublicationModel.getReadyToPay(id)
+      if (publications.length === 0) {
+        return res.status(404).json({ ok: false, error: 'La publicacion no esta lista para pagar' })
+      }
+      return res.status(200).json({ ok: true, publications })
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async updateFeatured(req, res) {
+    try {
+      const { id } = req.params
+      const publication = await PublicationModel.updateFeatured(id)
+      if (!publication) {
+        return res.status(404).json({ error: 'Publication not found' })
+      }
+      return res.status(200).json(publication)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error })
+    }
+  }
 }
