@@ -30,6 +30,14 @@ router.get('/availableTimes/:selectedSucursal/:day', ExchangeController.getAvail
 
 router.post('/details/:id', ExchangeController.createExchangeDetailsById)
 
+router.patch('/:id', ExchangeController.updateExchangeStatus)
+
+router.get('/code/:codigo', ExchangeController.getByExchangeCode)
+
+router.get('/suggestion/list/:id', ExchangeController.getProductListStateThree)
+
+router.get('/clients/:id', ExchangeController.getClients)
+
 router.get('/truequeLocal/:idLocal', ExchangeController.getIdExchangeByIdLocal)
 
 router.get('/product/:id', ExchangeController.getExchangeMainProductById)
@@ -39,4 +47,5 @@ router.get('/exchange/:id', ExchangeController.getExchangeProductById)
 router.get('/info/:id', ExchangeController.getExchangeInfoById)
 
 router.get('/get/last20Exchanges', ExchangeController.getLast20Exchanges)
+
 export default router

@@ -10,7 +10,6 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
-
   static async getSuggestionByDNI(req, res) {
     try {
       const { DNI } = req.params
@@ -120,6 +119,59 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+
+  static async updateExchangeStatus(req, res) {
+    try {
+      const { id } = req.params
+      const { realizado } = req.body
+      const result = await ExchangeModel.updateExchangeStatus(id, realizado)
+      if (!result.ok) return res.status(404).json({ ok: false, message: 'No se pudo actualizar el estado del trueque' })
+      res.status(200).json({ ok: true, message: result })
+    } catch (error) {
+      res.status(500).json({ ok: false, error: error })
+    }
+  }
+
+  static async getByExchangeCode(req, res) {
+    try {
+      const { codigo } = req.params
+      const [exchange] = await ExchangeModel.getByExchangeCode(codigo)
+      if (!exchange) return res.status(404).json({ message: 'No se encontró el trueque' })
+      res.status(200).json(exchange)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async getProductListStateThree(req, res) {
+    try {
+      const { id } = req.params
+      const suggestions = await ExchangeModel.getProductListStateThree(id)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async getClients(req, res) {
+    const { id } = req.params
+    try {
+      const clients = await ExchangeModel.getClients(id)
+      res.status(200).json(clients)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  
+   static async getLast20Exchanges(req, res) {
+    try {
+      const suggestions = await ExchangeModel.getLast20Exchanges()
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  
   static async getExchangeMainProductById(req, res) {
     try {
       const { id } = req.params
@@ -129,6 +181,7 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+  
   static async getSentSuggestionByDNI(req, res) {
     try {
       const { DNI } = req.params
@@ -138,6 +191,7 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+  
   static async getEveryExchangeByDNI(req, res) {
     try {
       const { DNI } = req.params
@@ -147,6 +201,7 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+  
   static async getIdExchangeByIdLocal(req, res) {
     try {
       const { idLocal } = req.params
@@ -156,7 +211,7 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
-
+  
   static async getExchangeProductById(req, res) {
     try {
       const { id } = req.params
@@ -166,7 +221,7 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
-
+  
   static async getExchangeInfoById(req, res) {
     try {
       const { id } = req.params
@@ -176,6 +231,7 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+
   static async getLast20Exchanges(req, res) {
     try {
       const suggestions = await ExchangeModel.getLast20Exchanges()
