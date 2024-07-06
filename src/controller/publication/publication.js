@@ -136,10 +136,17 @@ export class PublicationController {
     try {
       const { idConsulta } = req.params
       const result = await PublicationModel.getRespuestaByIdConsulta(idConsulta)
-      console.log(result[0])
       return res.status(200).json(result)
     } catch (error) {
-      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
+  static async deleteConsulta(req, res) {
+    try {
+      const { idConsulta } = req.params
+      const result = await PublicationModel.deleteConsulta(idConsulta)
+      return res.status(200).json(result)
+    } catch (error) {
       res.status(500).json({ error: error })
     }
   }

@@ -25,4 +25,6 @@ router.patch('/consulta/:idConsulta', PublicationController.updateConsulta)
 
 router.get('/consulta/:idPublicacion', PublicationController.getConsultasById)
 
+router.delete('/consulta/:idConsulta', PublicationController.deleteConsulta)
+
 export default router

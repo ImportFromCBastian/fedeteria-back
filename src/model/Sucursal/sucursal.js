@@ -31,20 +31,11 @@ export class SucursalModel {
   }
   static async getGananciasPorSucursal() {
     const query = `SELECT 
-    l.idLocal, 
-    l.nombre AS nombreLocal, 
     v.fecha, 
     SUM(v.precioTotal) AS gananciasTotales
 FROM 
-    Venta v 
-JOIN 
-    Local l ON v.idLocal = l.idLocal 
+    Venta v
 GROUP BY 
-    l.idLocal, 
-    l.nombre, 
-    v.fecha
-ORDER BY 
-    l.idLocal, 
     v.fecha;`
     const [result] = await connection.query(query)
     return result

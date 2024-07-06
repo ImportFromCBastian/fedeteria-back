@@ -100,4 +100,8 @@ export class PublicationModel {
     const [respuesta] = await connection.query(query, [idConsulta])
     return respuesta
   }
+  static async deleteConsulta(idConsulta) {
+    const query = `DELETE FROM Consulta WHERE idConsulta = ?;`
+    return await connection.query(query, [idConsulta])
+  }
 }

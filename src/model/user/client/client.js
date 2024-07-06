@@ -18,7 +18,6 @@ export class ClientModel {
     const query =
       'SELECT l.idLocal, l.nombre, COUNT(c.idLocal) AS Clientes FROM Cliente c INNER JOIN Local l ON c.idLocal = l.idLocal GROUP BY l.idLocal, l.nombre;'
     const [res] = await connection.query(query).catch(error => new Error(error))
-    console.log(res)
     return res
   }
 }
