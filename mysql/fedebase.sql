@@ -120,7 +120,6 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`publicacion` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`consulta`
 -- -----------------------------------------------------
@@ -185,7 +184,6 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`foto` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`notificacion`
 -- -----------------------------------------------------
@@ -220,7 +218,6 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`producto` (
   UNIQUE INDEX `idProducto_UNIQUE` (`idProducto` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`trueque`
 -- -----------------------------------------------------
@@ -250,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`trueque` (
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`productoscambio`
@@ -335,7 +333,6 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`productosvendidos` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`respuesta`
 -- -----------------------------------------------------
@@ -352,6 +349,27 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`respuesta` (
   CONSTRAINT `PREGUNTA_RESPUESTA_FK`
     FOREIGN KEY (`idPregunta`)
     REFERENCES `fedeteria-db`.`pregunta` (`idPregunta`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `fedeteria-db`.`Pagos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `fedeteria-db`.`Pagos` ;
+
+CREATE TABLE IF NOT EXISTS `fedeteria-db`.`Pagos` (
+  `idPagos` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `monto` FLOAT NOT NULL,
+  `desde` DATE NOT NULL,
+  `hasta` DATE NOT NULL,
+  `idPublicacion` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idPagos`),
+  INDEX `PAGO_PUB_FK_idx` (`idPublicacion` ASC) VISIBLE,
+  CONSTRAINT `PAGO_PUB_FK`
+    FOREIGN KEY (`idPublicacion`)
+    REFERENCES `fedeteria-db`.`publicacion` (`idPublicacion`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
