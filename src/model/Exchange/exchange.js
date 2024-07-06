@@ -295,7 +295,7 @@ export class ExchangeModel {
     END as role
   FROM Trueque t
   LEFT JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque
-  WHERE t.realizado IS NOT NULL
+  WHERE t.realizado IS NOT NULL AND t.realizado != 5
     AND (
       t.productoDeseado IN (
         SELECT p.idPublicacion
