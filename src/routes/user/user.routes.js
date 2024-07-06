@@ -8,6 +8,7 @@ const router = Router()
 
 // User routes
 router.get('/:dni', UserController.findByDni)
+router.get('/', UserController.getAll)
 
 // Client routes
 router.post('/client', ClientController.create)
@@ -38,5 +39,7 @@ router.post('/compare', UserController.compare)
 router.post('/generate_token', UserController.tokenGenerator)
 
 router.post('/decode_token', UserController.decodeToken)
+
+router.get('/client/sucursales/get', ClientController.getClientesPorSucursal)
 
 export default router

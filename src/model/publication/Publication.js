@@ -78,6 +78,34 @@ export class PublicationModel {
     const [publication] = await connection.query(query, [dni])
     return publication
   }
+  static async createConsulta(consulta, idPublicacion, dni) {
+    const query = `INSERT INTO Consulta (textoConsulta,idPublicacion, dniUsuario ) VALUES (?, ?, ?);`
+    return await connection.query(query, [consulta, idPublicacion, dni])
+  }
+  static async getConsultasById(idPublicacion) {
+    const query = `SELECT * FROM Consulta WHERE idPublicacion = ?;`
+    const [consultas] = await connection.query(query, [idPublicacion])
+    return consultas
+  }
+  static async createRespuesta(respuesta, idConsulta, dniDueno) {
+    const query = `INSERT INTO Respuesta (textoRespuesta, idConsulta, dniDuenoPublicacion) VALUES (?, ?, ?);`
+    const result = await connection.query(query, [respuesta, idConsulta, dniDueno])
+    return result[0].insertId // Devuelve el ID autoincremental de la respuesta creada
+  }
+  static async updateConsultaConRespuesta(idConsulta, data) {
+    const query = `UPDATE Consulta SET idRespuesta = ? WHERE idConsulta = ?`
+    const result = await connection.query(query, [data, idConsulta])
+    return result
+  }
+  static async getRespuestaByIdConsulta(idConsulta) {
+    const query = `SELECT textoRespuesta FROM Respuesta WHERE idRespuesta = ?;`
+    const [respuesta] = await connection.query(query, [idConsulta])
+    return respuesta
+  }
+  static async deleteConsulta(idConsulta) {
+    const query = `DELETE FROM Consulta WHERE idConsulta = ?;`
+    return await connection.query(query, [idConsulta])
+  }
   static async searchByQuery(query) {
     const queryPublication = `
     SELECT p.*

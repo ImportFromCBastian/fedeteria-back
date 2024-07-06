@@ -91,6 +91,65 @@ export class PublicationController {
       res.status(500).json({ error: error })
     }
   }
+  static async createConsulta(req, res) {
+    try {
+      const { consulta, idPublicacion, dni } = req.body
+      const result = await PublicationModel.createConsulta(consulta, idPublicacion, dni)
+      return res.status(201).json(result)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
+  static async getConsultasById(req, res) {
+    try {
+      const { idPublicacion } = req.params
+      const result = await PublicationModel.getConsultasById(idPublicacion)
+      return res.status(200).json(result)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
+  static async createRespuesta(req, res) {
+    try {
+      const { respuesta, idConsulta, dniDueno } = req.body
+      const result = await PublicationModel.createRespuesta(respuesta, idConsulta, dniDueno)
+      return res.status(201).json(result)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
+  static async updateConsulta(req, res) {
+    try {
+      const { idConsulta } = req.params
+      const { data } = req.body
+      const result = await PublicationModel.updateConsultaConRespuesta(idConsulta, data)
+      return res.status(200).json(result)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
+  static async getRespuestaByIdConsulta(req, res) {
+    try {
+      const { idConsulta } = req.params
+      const result = await PublicationModel.getRespuestaByIdConsulta(idConsulta)
+      return res.status(200).json(result)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  static async deleteConsulta(req, res) {
+    try {
+      const { idConsulta } = req.params
+      const result = await PublicationModel.deleteConsulta(idConsulta)
+      return res.status(200).json(result)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
   static async searchByQuery(req, res) {
     try {
       const { query } = req.params

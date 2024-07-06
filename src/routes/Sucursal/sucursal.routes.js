@@ -9,4 +9,8 @@ router.get('/', SucursalController.getAll)
 
 router.delete('/:id', SucursalController.delete)
 
+router.get('/ventas', SucursalController.getVentasPorSucursal)
+
+router.get('/ganancias', SucursalController.getGananciasPorSucursal)
+
 export default router

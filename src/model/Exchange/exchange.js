@@ -9,14 +9,14 @@ export class ExchangeModel {
     const query = 'SELECT * FROM Trueque WHERE idTrueque = ?'
     return await connection.query(query, [id])
   }
-  
+
   static async checkExchangeSuggestionByDNI(DNI) {
     const query = `SELECT  t.* FROM Trueque t INNER JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque INNER JOIN Publicacion p ON pc.idPublicacion = p.idPublicacion WHERE p.DNI = ? AND t.realizado IS NULL;`
 
     const [rows] = await connection.query(query, [DNI])
     return rows
   }
-  
+
   static async getSuggestionByDNI(DNI) {
     const query = `
     SELECT t.productoDeseado,t.idTrueque,COUNT(pc.idPublicacion) as countPublication
@@ -30,7 +30,7 @@ export class ExchangeModel {
     })
     return rows
   }
-  
+
   static async createList(exchangeId, publicationId) {
     const query = 'INSERT INTO ProductosCambio (idTrueque,idPublicacion) VALUES (?,?)'
     return await connection.query(query, [exchangeId, publicationId])
@@ -158,7 +158,7 @@ export class ExchangeModel {
     const [rows] = await connection.query(query, [sucursal, dia])
     return rows
   }
-  
+
   static async createExchangeDetailsById(id, data) {
     const { selectedSucursal, selectedDay, selectedTime } = data
     const query = `
@@ -172,7 +172,22 @@ export class ExchangeModel {
       return { ok: false, error: e }
     }
   }
-  
+  static async getTrueques() {
+    const query = `
+    SELECT l.nombre, t.fecha, COUNT(*) AS CantidadDeTrueques
+    FROM Local l
+      LEFT JOIN
+        Trueque t ON l.idLocal = t.idLocal
+    WHERE realizado = 1
+    GROUP BY t.idLocal, l.nombre, t.fecha;`
+    try {
+      const [rows] = await connection.query(query)
+      return rows
+    } catch (e) {
+      return { ok: false, error: e }
+    }
+  }
+
   static async updateExchangeStatus(id, status) {
     const query = `
     UPDATE Trueque
@@ -242,8 +257,8 @@ export class ExchangeModel {
 
     return clientArray
   }
-  
-    static async getSentSuggestionByDNI(DNI) {
+
+  static async getSentSuggestionByDNI(DNI) {
     const query = `
     SELECT t.idTrueque, t.productoDeseado, COUNT(pc.idPublicacion) as countPublication
     FROM Trueque t
@@ -260,7 +275,7 @@ export class ExchangeModel {
       return []
     }
   }
-  
+
   static async getEveryExchangeByDNI(DNI) {
     const query = `
   SELECT 
@@ -303,7 +318,7 @@ export class ExchangeModel {
       return []
     }
   }
-  
+
   static async getIdExchangeByIdLocal(idLocal) {
     const query = `
     SELECT t.idTrueque,t.realizado,t.productoDeseado,COUNT(pc.idPublicacion) as countPublication,p.idPublicacion
@@ -319,7 +334,7 @@ export class ExchangeModel {
     const [rows] = await connection.query(query, [idLocal])
     return rows
   }
-  
+
   static async getExchangeMainProductById(id) {
     const query = `
     SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
@@ -333,7 +348,7 @@ export class ExchangeModel {
     const [rows] = await connection.query(query, [id])
     return rows
   }
-  
+
   static async getExchangeInfoById(id) {
     const query = `
     SELECT t.idTrueque, t.realizado, t.productoDeseado, t.idLocal, t.fecha, t.hora
@@ -345,7 +360,7 @@ ORDER BY t.fecha ASC;`
     const [rows] = await connection.query(query, [id])
     return rows
   }
-  
+
   static async getLast20Exchanges() {
     const query = `
     SELECT 
@@ -371,5 +386,4 @@ ORDER BY t.fecha ASC;`
       return []
     }
   }
-  
 }

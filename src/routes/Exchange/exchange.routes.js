@@ -30,6 +30,8 @@ router.get('/availableTimes/:selectedSucursal/:day', ExchangeController.getAvail
 
 router.post('/details/:id', ExchangeController.createExchangeDetailsById)
 
+router.get('/', ExchangeController.getTrueques)
+
 router.patch('/:id', ExchangeController.updateExchangeStatus)
 
 router.get('/code/:codigo', ExchangeController.getByExchangeCode)

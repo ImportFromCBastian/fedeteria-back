@@ -33,7 +33,7 @@ export class UserController {
     try {
       const { DNI } = req.body
       const [user] = await UserModel.findByDni(DNI)
-      if (user.length === 0) return res.status(404).json({ message: 'usuario inexistente' })
+      if (user.length === 0) return res.status(404).json({ message: 'istente' })
 
       const [client] = await ClientModel.findByDni(DNI)
       if (client.length !== 0) {
@@ -74,6 +74,14 @@ export class UserController {
       return res.status(200).json({ data: tokenVerified })
     } catch (error) {
       return res.status(500).json({ error: 'error in token verification' })
+    }
+  }
+  static async getAll(req, res) {
+    try {
+      const users = await UserModel.getAll()
+      return res.status(200).json(users)
+    } catch (error) {
+      return res.status(500).json({ error: error })
     }
   }
 }

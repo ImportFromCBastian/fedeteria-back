@@ -24,4 +24,20 @@ export class SucursalModel {
     const result = await connection.query(querySucursal, [id])
     return result
   }
+  static async getVentasPorSucursal() {
+    const query = `SELECT l.idLocal, l.nombre, COUNT(v.idLocal) AS ventas FROM Venta v INNER JOIN Local l ON v.idLocal = l.idLocal GROUP BY l.idLocal, l.nombre;`
+    const [result] = await connection.query(query)
+    return result
+  }
+  static async getGananciasPorSucursal() {
+    const query = `SELECT 
+    v.fecha, 
+    SUM(v.precioTotal) AS gananciasTotales
+FROM 
+    Venta v
+GROUP BY 
+    v.fecha;`
+    const [result] = await connection.query(query)
+    return result
+  }
 }
