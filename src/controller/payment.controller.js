@@ -9,6 +9,9 @@ export class PaymentController {
     const { body } = req
     const payment = await PaymentModel.createPayment(client, body)
     //send status code 201 for created payment
+    if (payment === null) return res.status(400).json({ error: 'Bad Request' })
+
+    await PaymentModel.insertData(payment, body.pubId)
     res.status(201).json(payment)
   }
 }

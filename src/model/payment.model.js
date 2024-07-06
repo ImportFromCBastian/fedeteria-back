@@ -1,4 +1,5 @@
 import { Payment } from 'mercadopago'
+import connection from '../settings/database.js'
 //TODO: change description,payment method and payer from paymentBody argument
 export class PaymentModel {
   static async createPayment(client, paymentBody) {
@@ -7,19 +8,34 @@ export class PaymentModel {
     const result = await payment
       .create({
         body: {
-          transaction_amount: 100,
-          description: '<DESCRIPTION>',
-          payment_method_id: '<PAYMENT_METHOD_ID>',
+          token: `${paymentBody.token}`,
+          transaction_amount: paymentBody.transaction_amount,
+          description: 'Promocionar Publicaicion',
+          installments: paymentBody.installments,
+          payment_method_id: `${paymentBody.payment_method_id}`,
           payer: {
-            email: '<EMAIL>',
-          },
-        },
+            email: `${paymentBody.payer.email}`,
+            identification: {
+              type: `${paymentBody.payer.identification.type}`,
+              number: `${paymentBody.payer.identification.number}`
+            }
+          }
+        }
       })
       .catch(error => {
         console.error(error)
         return { error: error }
       })
-    //maybe save transaction in DB...
+    if (result.status !== 'approved') return null
     return result
+  }
+
+  static async insertData(payment, idPublicacion) {
+    const query = `
+    INSERT INTO Pagos
+    (monto,desde,hasta,idPublicacion)
+    VALUES 
+    (?,NOW(),DATE_ADD(NOW(),INTERVAL 1 WEEK),?);`
+    await connection.query(query, [payment.transaction_amount, idPublicacion])
   }
 }
