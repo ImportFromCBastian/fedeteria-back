@@ -45,7 +45,7 @@ export class ExchangeModel {
       INNER JOIN
         Publicacion p ON pc.idPublicacion = p.idPublicacion
     WHERE 
-      t.idTrueque = ? AND t.realizado IS NULL;`
+      t.idTrueque = ?;`
     const [rows] = await connection.query(query, [id])
     return rows
   }
@@ -59,7 +59,7 @@ export class ExchangeModel {
       INNER JOIN
         Publicacion p ON t.productoDeseado = p.idPublicacion
     WHERE 
-      t.idTrueque = ? AND t.realizado IS NULL;`
+      t.idTrueque = ?;`
     const [rows] = await connection.query(query, [id])
     return rows
   }
@@ -385,5 +385,18 @@ ORDER BY t.fecha ASC;`
       console.error('Error fetching the last 20 exchanges:', error)
       return []
     }
+  }
+  static async getExchangeProductById(id) {
+    const query = `
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE 
+      t.idTrueque = ? AND t.realizado IS NOT NULL;`
+    const [rows] = await connection.query(query, [id])
+    return rows
   }
 }
