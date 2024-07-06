@@ -1,4 +1,5 @@
 import connection from '../../settings/database.js'
+
 export class ExchangeModel {
   static async create(mainPublicationId) {
     const query = 'INSERT INTO Trueque (productoDeseado) VALUES (?)'
@@ -8,12 +9,14 @@ export class ExchangeModel {
     const query = 'SELECT * FROM Trueque WHERE idTrueque = ?'
     return await connection.query(query, [id])
   }
+  
   static async checkExchangeSuggestionByDNI(DNI) {
     const query = `SELECT  t.* FROM Trueque t INNER JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque INNER JOIN Publicacion p ON pc.idPublicacion = p.idPublicacion WHERE p.DNI = ? AND t.realizado IS NULL;`
 
     const [rows] = await connection.query(query, [DNI])
     return rows
   }
+  
   static async getSuggestionByDNI(DNI) {
     const query = `
     SELECT t.productoDeseado,t.idTrueque,COUNT(pc.idPublicacion) as countPublication
@@ -27,6 +30,7 @@ export class ExchangeModel {
     })
     return rows
   }
+  
   static async createList(exchangeId, publicationId) {
     const query = 'INSERT INTO ProductosCambio (idTrueque,idPublicacion) VALUES (?,?)'
     return await connection.query(query, [exchangeId, publicationId])
@@ -154,6 +158,7 @@ export class ExchangeModel {
     const [rows] = await connection.query(query, [sucursal, dia])
     return rows
   }
+  
   static async createExchangeDetailsById(id, data) {
     const { selectedSucursal, selectedDay, selectedTime } = data
     const query = `
@@ -167,6 +172,7 @@ export class ExchangeModel {
       return { ok: false, error: e }
     }
   }
+  
   static async updateExchangeStatus(id, status) {
     const query = `
     UPDATE Trueque
@@ -236,4 +242,134 @@ export class ExchangeModel {
 
     return clientArray
   }
+  
+    static async getSentSuggestionByDNI(DNI) {
+    const query = `
+    SELECT t.idTrueque, t.productoDeseado, COUNT(pc.idPublicacion) as countPublication
+    FROM Trueque t
+    INNER JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque
+    INNER JOIN Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE p.DNI = ? AND t.realizado IS NULL
+    GROUP BY t.idTrueque, t.productoDeseado;
+  `
+    try {
+      const [rows] = await connection.query(query, [DNI])
+      return rows
+    } catch (error) {
+      console.error('Error fetching sent suggestions:', error)
+      return []
+    }
+  }
+  
+  static async getEveryExchangeByDNI(DNI) {
+    const query = `
+  SELECT 
+    t.idTrueque, 
+    t.productoDeseado, 
+    t.fecha, 
+    t.realizado,
+    t.hora,
+    COUNT(pc.idPublicacion) as countPublication,
+    CASE 
+      WHEN t.productoDeseado IN (
+        SELECT p.idPublicacion
+        FROM Publicacion p
+        WHERE p.DNI = ?
+      ) THEN 'desired'
+      ELSE 'offered'
+    END as role
+  FROM Trueque t
+  LEFT JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque
+  WHERE t.realizado IS NOT NULL
+    AND (
+      t.productoDeseado IN (
+        SELECT p.idPublicacion
+        FROM Publicacion p
+        WHERE p.DNI = ?
+      )
+      OR pc.idPublicacion IN (
+        SELECT p.idPublicacion
+        FROM Publicacion p
+        WHERE p.DNI = ?
+      )
+    )
+  GROUP BY t.idTrueque, t.productoDeseado;
+  `
+    try {
+      const [rows] = await connection.query(query, [DNI, DNI, DNI])
+      return rows
+    } catch (error) {
+      console.error('Error fetching every exchange:', error)
+      return []
+    }
+  }
+  
+  static async getIdExchangeByIdLocal(idLocal) {
+    const query = `
+    SELECT t.idTrueque,t.realizado,t.productoDeseado,COUNT(pc.idPublicacion) as countPublication,p.idPublicacion
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON pc.idPublicacion = p.idPublicacion
+    WHERE 
+      t.idLocal = ? AND t.realizado IS NOT NULL
+    GROUP BY
+    t.idTrueque,t.realizado,t.productoDeseado,p.idPublicacion;`
+    const [rows] = await connection.query(query, [idLocal])
+    return rows
+  }
+  
+  static async getExchangeMainProductById(id) {
+    const query = `
+    SELECT p.nombre,p.estado,p.idPublicacion,p.DNI, p.descripcion, p.precio
+    FROM Trueque t
+      INNER JOIN
+        ProductosCambio pc ON t.idTrueque = pc.idTrueque
+      INNER JOIN
+        Publicacion p ON t.productoDeseado = p.idPublicacion
+    WHERE 
+      t.idTrueque = ? AND t.realizado IS NOT NULL;`
+    const [rows] = await connection.query(query, [id])
+    return rows
+  }
+  
+  static async getExchangeInfoById(id) {
+    const query = `
+    SELECT t.idTrueque, t.realizado, t.productoDeseado, t.idLocal, t.fecha, t.hora
+FROM Trueque t
+INNER JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque
+INNER JOIN Publicacion p ON pc.idPublicacion = p.idPublicacion
+WHERE t.idTrueque = ?
+ORDER BY t.fecha ASC;`
+    const [rows] = await connection.query(query, [id])
+    return rows
+  }
+  
+  static async getLast20Exchanges() {
+    const query = `
+    SELECT 
+      t.idTrueque, 
+      t.realizado, 
+      t.productoDeseado, 
+      t.idLocal, 
+      t.fecha, 
+      t.hora,
+      COUNT(pc.idPublicacion) as countPublication
+    FROM Trueque t
+    LEFT JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque
+    WHERE t.realizado = 1
+    GROUP BY t.idTrueque, t.productoDeseado
+    ORDER BY t.fecha DESC, t.hora DESC
+    LIMIT 20;
+  `
+    try {
+      const [rows] = await connection.query(query)
+      return rows
+    } catch (error) {
+      console.error('Error fetching the last 20 exchanges:', error)
+      return []
+    }
+  }
+  
 }

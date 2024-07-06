@@ -54,6 +54,8 @@ app.use('/product', productRouter)
 
 app.use('/sale', salesRouter)
 
+app.use('/trueques', exchangeRouter)
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
 })

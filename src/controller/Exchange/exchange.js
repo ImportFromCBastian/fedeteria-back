@@ -162,4 +162,82 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+  
+   static async getLast20Exchanges(req, res) {
+    try {
+      const suggestions = await ExchangeModel.getLast20Exchanges()
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  
+  static async getExchangeMainProductById(req, res) {
+    try {
+      const { id } = req.params
+      const suggestions = await ExchangeModel.getExchangeMainProductById(id)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  
+  static async getSentSuggestionByDNI(req, res) {
+    try {
+      const { DNI } = req.params
+      const suggestions = await ExchangeModel.getSentSuggestionByDNI(DNI)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  
+  static async getEveryExchangeByDNI(req, res) {
+    try {
+      const { DNI } = req.params
+      const suggestions = await ExchangeModel.getEveryExchangeByDNI(DNI)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  
+  static async getIdExchangeByIdLocal(req, res) {
+    try {
+      const { idLocal } = req.params
+      const suggestions = await ExchangeModel.getIdExchangeByIdLocal(idLocal)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  
+  static async getExchangeProductById(req, res) {
+    try {
+      const { id } = req.params
+      const suggestions = await ExchangeModel.getExchangeProductById(id)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+  
+  static async getExchangeInfoById(req, res) {
+    try {
+      const { id } = req.params
+      const suggestions = await ExchangeModel.getExchangeInfoById(id)
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async getLast20Exchanges(req, res) {
+    try {
+      const suggestions = await ExchangeModel.getLast20Exchanges()
+      res.status(200).json(suggestions)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }

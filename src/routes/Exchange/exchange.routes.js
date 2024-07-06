@@ -6,14 +6,19 @@ const router = Router()
 router.post('/', ExchangeController.create)
 
 router.get('/:DNI', ExchangeController.getSuggestionByDNI)
+router.get('/all/:DNI', ExchangeController.getEveryExchangeByDNI)
 
 router.get('/suggestions/dni/:DNI', ExchangeController.getExchangeSuggestionByDNI)
 
 router.get('/suggestion/:id', ExchangeController.getSuggestionProductById)
 
+router.get('/product/:id', ExchangeController.getExchangeProductById)
+
 router.get('/state/pending', ExchangeController.getPendingExchange)
 
 router.get('/suggestion/product/:id', ExchangeController.getMainProductById)
+
+router.get('/given/:DNI', ExchangeController.getSentSuggestionByDNI)
 
 router.post('/suggestion', ExchangeController.createPendingExchange)
 
@@ -32,5 +37,15 @@ router.get('/code/:codigo', ExchangeController.getByExchangeCode)
 router.get('/suggestion/list/:id', ExchangeController.getProductListStateThree)
 
 router.get('/clients/:id', ExchangeController.getClients)
+
+router.get('/truequeLocal/:idLocal', ExchangeController.getIdExchangeByIdLocal)
+
+router.get('/product/:id', ExchangeController.getExchangeMainProductById)
+
+router.get('/exchange/:id', ExchangeController.getExchangeProductById)
+
+router.get('/info/:id', ExchangeController.getExchangeInfoById)
+
+router.get('/get/last20Exchanges', ExchangeController.getLast20Exchanges)
 
 export default router
