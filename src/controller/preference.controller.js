@@ -6,10 +6,9 @@ const client = mpc
 
 export class PreferenceController {
   static async createPreference(req, res) {
-    // const  preferencePrice  = req.price;
-    const preference = await PreferenceModel.createPreference(client)
-
-    if (preference) res.status(201).json(preference)
+    const { amount } = req.body
+    const preference = await PreferenceModel.createPreference(client, parseInt(amount))
+    if (preference) return res.status(201).json(preference)
     res.status(400).json({ error: 'Bad Request' })
   }
 
@@ -17,5 +16,9 @@ export class PreferenceController {
     const query = req.query
     const result = await WebhookModel.receiveWebhook(query)
     res.json(result)
+  }
+
+  static async success(req, res) {
+    res.json({ message: 'success' })
   }
 }

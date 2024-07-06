@@ -13,6 +13,8 @@ import publicacionRouter from './routes/ListadoPubRoutes/listadopub.routes.js'
 import sucursalRouter from './routes/Sucursal/sucursal.routes.js'
 import notificacionesRouter from './routes/Notificaciones/notificaciones.routes.js'
 import exchangeRouter from './routes/Exchange/exchange.routes.js'
+import productRouter from './routes/Product/product.routes.js'
+import salesRouter from './routes/Sales/sales.routes.js'
 
 const app = express()
 
@@ -47,6 +49,12 @@ app.use('/sucursal', sucursalRouter)
 app.use('/exchange', exchangeRouter)
 
 app.use('/modificar_publicacion', publicationRouter)
+
+app.use('/product', productRouter)
+
+app.use('/sale', salesRouter)
+
+app.use('/trueques', exchangeRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)

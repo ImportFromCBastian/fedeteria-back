@@ -1,19 +1,19 @@
 import { Preference } from 'mercadopago'
 import config from '../settings/settings.js'
 export class PreferenceModel {
-  static async createPreference(client, preferencePrice = 2500) {
+  static async createPreference(client, preferencePrice) {
     const preference = new Preference(client)
     const preferenceOptions = PreferenceModel.preferenceOptions(preferencePrice)
     return await preference
       .create(preferenceOptions)
       .then(response => {
         return {
-          id: response.id,
+          id: response.id
         }
       })
       .catch(error => {
         return {
-          errorMessage: error,
+          errorMessage: error
         }
       })
   }
@@ -24,58 +24,58 @@ export class PreferenceModel {
         payment_methods: {
           excluded_payment_methods: [
             {
-              id: 'argencard',
+              id: 'argencard'
             },
             {
-              id: 'cabal',
+              id: 'cabal'
             },
             {
-              id: 'cmr',
+              id: 'cmr'
             },
             {
-              id: 'cencosud',
+              id: 'cencosud'
             },
             {
-              id: 'cordobesa',
+              id: 'cordobesa'
             },
             {
-              id: 'diners',
+              id: 'diners'
             },
             {
-              id: 'naranja',
+              id: 'naranja'
             },
             {
-              id: 'tarshop',
+              id: 'tarshop'
             },
             {
-              id: 'debcabal',
+              id: 'debcabal'
             },
             {
-              id: 'maestro',
-            },
+              id: 'maestro'
+            }
           ],
           excluded_payment_types: [
             {
-              id: 'ticket',
-            },
+              id: 'ticket'
+            }
           ],
-          installments: 1,
+          installments: 1
         },
         //front implementation of item
         items: [
           {
             title: 'Promocionar Publicacion',
             quantity: 1,
-            unit_price: preferencePrice,
-          },
+            unit_price: preferencePrice
+          }
         ],
         back_urls: {
           success: `${config.BASE_URL}/success`,
           failure: `${config.BASE_URL}/failure`,
-          pending: `${config.BASE_URL}/pending`,
+          pending: `${config.BASE_URL}/pending`
         },
-        notification_url: `${config.SECURE_ROUTE}/webhook`,
-      },
+        notification_url: `${config.SECURE_ROUTE}/webhook`
+      }
     }
   }
 }

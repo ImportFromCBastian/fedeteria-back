@@ -5,7 +5,7 @@ const router = Router()
 
 router.post('/create_preference', PreferenceController.createPreference)
 
-router.get('/success', (req, res) => res.send('success'))
+router.get('/success', PreferenceController.success)
 
 router.get('/failure', (req, res) => res.send('failure'))
 
