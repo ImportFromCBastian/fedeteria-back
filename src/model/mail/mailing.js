@@ -171,4 +171,45 @@ export class MailingModel {
       throw error
     }
   }
+  static async sendEnviarCodigo(mailBody) {
+    try {
+      // Validate correct mail body
+      // Create mail body
+      const mail = await MailingModel.createEnviarCodigo(mailBody)
+      // Send mail
+      const mailId = await transporter.sendMail(mail)
+      return { mailId: mailId.messageId }
+    } catch (error) {
+      console.error('Error sending password recovery mail:', error)
+      throw error
+    }
+  }
+
+  static async createEnviarCodigo(body) {
+    try {
+      // Use body to create mail receiver and gather the HTML for the mail
+      const htmlTemplate = await readFile('src/public/template/mailRecuperacion.html', 'utf-8')
+      // Read image to attach
+      const cidImage = await readFile('src/public/assets/Fedeteria_Horizontal.png')
+      const emailBodyWithUsername = htmlTemplate.replace(/{username}/g, body.nombre)
+
+      return {
+        from: '"Fedeteria🔨" <lafedeteria@gmail.com>', // Sender address
+        to: body.email, // List of receivers
+        subject: 'Recuperá tu contraseña', // Subject line
+        html: emailBodyWithUsername,
+        attachments: [
+          {
+            filename: 'Fedeteria_Horizontal.png',
+            content: cidImage.toString('base64'),
+            encoding: 'base64',
+            cid: 'uniqueImageCID' // Referenced in the HTML template
+          }
+        ]
+      }
+    } catch (error) {
+      console.error('Error creating password recovery mail body:', error)
+      throw error
+    }
+  }
 }
