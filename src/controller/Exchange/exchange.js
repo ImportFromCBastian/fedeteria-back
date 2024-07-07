@@ -248,4 +248,12 @@ export class ExchangeController {
       res.status(500).json({ error: error })
     }
   }
+  static async getCantTrueques(req, res) {
+    try {
+      const cant = await ExchangeModel.getCantTrueques()
+      res.status(200).json(cant)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
 }
