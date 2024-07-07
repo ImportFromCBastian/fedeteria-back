@@ -171,44 +171,57 @@ export class MailingModel {
       throw error
     }
   }
-  static async sendEnviarCodigo(mailBody) {
+  static async sendEnviarCodigo(ownerMail, suggestorMail, mensaje) {
     try {
-      // Validate correct mail body
-      // Create mail body
-      const mail = await MailingModel.createEnviarCodigo(mailBody)
-      // Send mail
-      const mailId = await transporter.sendMail(mail)
-      return { mailId: mailId.messageId }
+      const ownerMailBody = await MailingModel.createEnviarCodigorBody(ownerMail, mensaje, 'owner')
+      const suggestorMailBody = await MailingModel.createEnviarCodigorBody(suggestorMail, mensaje, 'suggestor')
+      const ownerMailId = await transporter.sendMail(ownerMailBody)
+      const suggestorMailId = await transporter.sendMail(suggestorMailBody)
+      return {
+        ownerMailId: ownerMailId.messageId,
+        suggestorMailId: suggestorMailId.messageId
+      }
     } catch (error) {
-      console.error('Error sending password recovery mail:', error)
+      console.error('Error sending code information mail:', error)
       throw error
     }
   }
 
-  static async createEnviarCodigo(body) {
+  static async createEnviarCodigorBody(to, nombre, mensaje, type) {
     try {
-      // Use body to create mail receiver and gather the HTML for the mail
-      const htmlTemplate = await readFile('src/public/template/mailRecuperacion.html', 'utf-8')
-      // Read image to attach
-      const cidImage = await readFile('src/public/assets/Fedeteria_Horizontal.png')
-      const emailBodyWithUsername = htmlTemplate.replace(/{username}/g, body.nombre)
+      if (type === 'suggestor') {
+        return {
+          from: '"Fedeteria🔨" <lafedeteria@gmail.com>', // Sender address
+          to: to, // List of receivers
+          subject: 'Estás a un paso de realizar tu intercambio 🔃', // Subject line
+          html: `
+            <h1>¡Hola!👋</h1>
+            <p>${mensaje.owner} ya nos indicó cuándo quieren hacer el intercambio. Los datos elegidos son:</p>
+            <p>Fecha: ${mensaje.dia}</p>
+            <p>Hora: ${mensaje.hora}</p>
+            <p>Sucursal: ${mensaje.sucursal}</p>
+            <p>El código de tu trueque es:</p>
+            <h1>${mensaje.codigo}</h1>
+          `
+        }
+      }
 
       return {
         from: '"Fedeteria🔨" <lafedeteria@gmail.com>', // Sender address
-        to: body.email, // List of receivers
-        subject: 'Recuperá tu contraseña', // Subject line
-        html: emailBodyWithUsername,
-        attachments: [
-          {
-            filename: 'Fedeteria_Horizontal.png',
-            content: cidImage.toString('base64'),
-            encoding: 'base64',
-            cid: 'uniqueImageCID' // Referenced in the HTML template
-          }
-        ]
+        to: to, // List of receivers
+        subject: 'Estás a un paso de realizar tu intercambio 🔃', // Subject line
+        html: `
+          <h1>¡Hola!👋</h1>
+          <p>Ya queda poco para que hagas tu intercambio con ${mensaje.suggestor}. Estos son los detalles del mismo:</p>
+            <p>Fecha: ${mensaje.dia}</p>
+            <p>Hora: ${mensaje.hora}</p>
+            <p>Sucursal: ${mensaje.sucursal}</p>
+            <p>El código de tu trueque es:</p>
+            <h1>${mensaje.codigo}</h1>
+        `
       }
     } catch (error) {
-      console.error('Error creating password recovery mail body:', error)
+      console.error('Error creating code information mail body:', error)
       throw error
     }
   }
