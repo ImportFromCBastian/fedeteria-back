@@ -13,4 +13,6 @@ router.get('/ventas', SucursalController.getVentasPorSucursal)
 
 router.get('/ganancias', SucursalController.getGananciasPorSucursal)
 
+router.get('/get/:id', SucursalController.getSucursalById)
+
 export default router

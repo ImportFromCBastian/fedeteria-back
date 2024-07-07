@@ -3,7 +3,7 @@ import { SaleModel } from '../../model/Sales/sale.js'
 
 export class SaleController {
   static async create(req, res) {
-    const { paymentData } = req.body
+    const paymentData = req.body
     const { error, data, success } = saleValidator(paymentData)
     if (!success) {
       return res.status(400).json({ ok: false, error })
