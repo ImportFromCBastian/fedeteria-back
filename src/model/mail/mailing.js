@@ -171,10 +171,10 @@ export class MailingModel {
       throw error
     }
   }
-  static async sendEnviarCodigo(ownerMail, suggestorMail, mensaje) {
+  static async sendEnviarCodigo(ownerMail, suggestorMail, nombreOwner, nombreSuggestor, dia, mes, hora, sucursal, codigo) {
     try {
-      const ownerMailBody = await MailingModel.createEnviarCodigorBody(ownerMail, mensaje, 'owner')
-      const suggestorMailBody = await MailingModel.createEnviarCodigorBody(suggestorMail, mensaje, 'suggestor')
+      const ownerMailBody = await MailingModel.createEnviarCodigorBody(ownerMail, nombreSuggestor, dia, mes, hora, sucursal, codigo, 'owner')
+      const suggestorMailBody = await MailingModel.createEnviarCodigorBody(suggestorMail, nombreOwner, dia, mes, hora, sucursal, codigo, 'suggestor')
       const ownerMailId = await transporter.sendMail(ownerMailBody)
       const suggestorMailId = await transporter.sendMail(suggestorMailBody)
       return {
@@ -187,7 +187,7 @@ export class MailingModel {
     }
   }
 
-  static async createEnviarCodigorBody(to, nombre, mensaje, type) {
+  static async createEnviarCodigorBody(to, nombre, dia, mes, hora, sucursal, codigo, type) {
     try {
       if (type === 'suggestor') {
         return {
@@ -196,12 +196,12 @@ export class MailingModel {
           subject: 'Estás a un paso de realizar tu intercambio 🔃', // Subject line
           html: `
             <h1>¡Hola!👋</h1>
-            <p>${mensaje.owner} ya nos indicó cuándo quieren hacer el intercambio. Los datos elegidos son:</p>
-            <p>Fecha: ${mensaje.dia}</p>
-            <p>Hora: ${mensaje.hora}</p>
-            <p>Sucursal: ${mensaje.sucursal}</p>
+            <p>${nombre} ya nos indicó cuándo quieren hacer el intercambio. Los datos elegidos son:</p>
+            <p>Fecha: ${dia} de ${mes}</p>
+            <p>Hora: ${hora}</p>
+            <p>Sucursal: ${sucursal}</p>
             <p>El código de tu trueque es:</p>
-            <h1>${mensaje.codigo}</h1>
+            <h1>${codigo}</h1>
           `
         }
       }
@@ -212,12 +212,12 @@ export class MailingModel {
         subject: 'Estás a un paso de realizar tu intercambio 🔃', // Subject line
         html: `
           <h1>¡Hola!👋</h1>
-          <p>Ya queda poco para que hagas tu intercambio con ${mensaje.suggestor}. Estos son los detalles del mismo:</p>
-            <p>Fecha: ${mensaje.dia}</p>
-            <p>Hora: ${mensaje.hora}</p>
-            <p>Sucursal: ${mensaje.sucursal}</p>
+          <p>Ya queda poco para que hagas tu intercambio con ${nombre}. Estos son los detalles del mismo:</p>
+            <p>Fecha: ${dia} de ${mes}</p>
+            <p>Hora: ${hora}</p>
+            <p>Sucursal: ${sucursal}</p>
             <p>El código de tu trueque es:</p>
-            <h1>${mensaje.codigo}</h1>
+            <h1>${codigo}</h1>
         `
       }
     } catch (error) {

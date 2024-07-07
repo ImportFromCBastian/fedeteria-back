@@ -159,14 +159,14 @@ export class ExchangeModel {
     return rows
   }
 
-  static async createExchangeDetailsById(id, data) {
+  static async createExchangeDetailsById(id, codigo, data) {
     const { selectedSucursal, selectedDay, selectedTime } = data
     const query = `
     UPDATE Trueque 
-    SET idLocal = ?, fecha = ?, hora = ?, realizado = ?
+    SET idLocal = ?, fecha = ?, hora = ?, realizado = ?, codigo= ?
     WHERE idTrueque = ?;`
     try {
-      await connection.query(query, [selectedSucursal, selectedDay, selectedTime, 3, id])
+      await connection.query(query, [selectedSucursal, selectedDay, selectedTime, 3, codigo, id])
       return { ok: true }
     } catch (e) {
       return { ok: false, error: e }
