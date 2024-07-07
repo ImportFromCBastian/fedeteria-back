@@ -40,4 +40,9 @@ GROUP BY
     const [result] = await connection.query(query)
     return result
   }
+  static async getSucursalById(id) {
+    const query = `SELECT * FROM Local WHERE idLocal = ?;`
+    const [result] = await connection.query(query, [id])
+    return result
+  }
 }

@@ -171,4 +171,58 @@ export class MailingModel {
       throw error
     }
   }
+  static async sendEnviarCodigo(ownerMail, suggestorMail, nombreOwner, nombreSuggestor, dia, mes, hora, sucursal, codigo) {
+    try {
+      const ownerMailBody = await MailingModel.createEnviarCodigorBody(ownerMail, nombreSuggestor, dia, mes, hora, sucursal, codigo, 'owner')
+      const suggestorMailBody = await MailingModel.createEnviarCodigorBody(suggestorMail, nombreOwner, dia, mes, hora, sucursal, codigo, 'suggestor')
+      const ownerMailId = await transporter.sendMail(ownerMailBody)
+      const suggestorMailId = await transporter.sendMail(suggestorMailBody)
+      return {
+        ownerMailId: ownerMailId.messageId,
+        suggestorMailId: suggestorMailId.messageId
+      }
+    } catch (error) {
+      console.error('Error sending code information mail:', error)
+      throw error
+    }
+  }
+
+  static async createEnviarCodigorBody(to, nombre, dia, mes, hora, sucursal, codigo, type) {
+    try {
+      if (type === 'suggestor') {
+        return {
+          from: '"Fedeteria🔨" <lafedeteria@gmail.com>', // Sender address
+          to: to, // List of receivers
+          subject: 'Estás a un paso de realizar tu intercambio 🔃', // Subject line
+          html: `
+            <h1>¡Hola!👋</h1>
+            <p>${nombre} ya nos indicó cuándo quieren hacer el intercambio. Los datos elegidos son:</p>
+            <p>Fecha: ${dia} de ${mes}</p>
+            <p>Hora: ${hora}</p>
+            <p>Sucursal: ${sucursal}</p>
+            <p>El código de tu trueque es:</p>
+            <h1>${codigo}</h1>
+          `
+        }
+      }
+
+      return {
+        from: '"Fedeteria🔨" <lafedeteria@gmail.com>', // Sender address
+        to: to, // List of receivers
+        subject: 'Estás a un paso de realizar tu intercambio 🔃', // Subject line
+        html: `
+          <h1>¡Hola!👋</h1>
+          <p>Ya queda poco para que hagas tu intercambio con ${nombre}. Estos son los detalles del mismo:</p>
+            <p>Fecha: ${dia} de ${mes}</p>
+            <p>Hora: ${hora}</p>
+            <p>Sucursal: ${sucursal}</p>
+            <p>El código de tu trueque es:</p>
+            <h1>${codigo}</h1>
+        `
+      }
+    } catch (error) {
+      console.error('Error creating code information mail body:', error)
+      throw error
+    }
+  }
 }

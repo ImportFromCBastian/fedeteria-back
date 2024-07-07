@@ -51,6 +51,11 @@ export class MailingController {
     const objectMail = await MailingModel.sendContactInformation(owner, suggestor)
     return res.status(201).json({ ok: true, objectMail })
   }
+  static async sendCodigo(req, res) {
+    const { owner, suggestor, ownerName, suggestorName, dia, mes, hora, sucursal, codigo } = req.body
+    const objectMail = await MailingModel.sendEnviarCodigo(owner, suggestor, ownerName, suggestorName, dia, mes, hora, sucursal, codigo)
+    return res.status(201).json({ ok: true, objectMail })
+  }
 }
 
 export default MailingController
