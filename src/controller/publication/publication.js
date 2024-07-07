@@ -188,4 +188,24 @@ export class PublicationController {
       res.status(500).json({ error })
     }
   }
+
+  static async getAllAceptedNotDeleted(req, res) {
+    try {
+      const publications = await PublicationModel.getAllAceptedNotDeleted()
+      return res.status(200).json(publications)
+    } catch (error) {
+      res.status(500).json({ error: error })
+    }
+  }
+
+  static async findAllAceptedNotDeletedByDni(req, res) {
+    try {
+      const { dni } = req.params
+      const publications = await PublicationModel.findAllAceptedNotDeletedByDni(dni)
+      return res.status(200).json(publications)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: error })
+    }
+  }
 }

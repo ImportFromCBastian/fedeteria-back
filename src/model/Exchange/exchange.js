@@ -399,4 +399,20 @@ ORDER BY t.fecha ASC;`
     const [rows] = await connection.query(query, [id])
     return rows
   }
+
+  static async isInExchange() {
+    const query = `
+    SELECT *
+    FROM Publicacion p
+    WHERE p.idPublicacion NOT IN (
+     SELECT pc.idPublicacion
+      FROM ProductosCambio pc
+      INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
+      WHERE t.realizado != 5
+    ) AND p.idPublicacion = 166 AND p.borrado = 0 AND p.precio != 0;
+   `
+    return await connection.query(query).then(([rows]) => {
+      return { ok: true, rows }
+    })
+  }
 }

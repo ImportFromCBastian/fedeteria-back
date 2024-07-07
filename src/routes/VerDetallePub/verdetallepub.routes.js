@@ -9,4 +9,6 @@ router.delete('/:idPublicacion', DetalleController.eliminateById)
 
 router.put('/:idPublicacion', DetalleController.acceptById)
 
+router.patch('/logicDelete/:idPublicacion', DetalleController.logicEliminateById)
+
 export default router

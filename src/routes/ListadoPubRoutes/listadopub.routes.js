@@ -10,4 +10,8 @@ router.delete('/:idPublicacion', PublicacionController.eliminateById)
 
 router.put('/:idPublicacion', PublicacionController.acceptById)
 
+router.patch('/:idPublicacion', PublicacionController.eliminateById)
+
+router.get('/notDeleted/', PublicacionController.getAllNotDeleted)
+
 export default router

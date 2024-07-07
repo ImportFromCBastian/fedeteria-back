@@ -21,4 +21,11 @@ export class DetalleController {
     const [result] = await connection.query(query, [numero, idPublicacion])
     return res.status(200).json({ data: result })
   }
+
+  static async logicEliminateById(req, res) {
+    const idPublication = req.params.idPublicacion
+    const query = `UPDATE publicacion SET borrado = 1 WHERE idPublicacion = ?;`
+    const [result] = await connection.query(query, [idPublication])
+    return res.status(200).json({ data: result })
+  }
 }

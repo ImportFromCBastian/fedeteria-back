@@ -21,4 +21,19 @@ export class PublicacionController {
     const [result] = await connection.query(query, [numero, idPublicacion])
     return res.status(200).json({ data: result })
   }
+
+  static async logicEliminateById(req, res) {
+    const idPublication = req.params.idPublicacion
+    const query = `UPDATE publicacion
+                  SET borrado = 1
+                  WHERE idPublicacion = ?;`
+    const [result] = await connection.query(query, [idPublication])
+    return res.status(200).json({ data: result })
+  }
+
+  static async getAllNotDeleted(req, res) {
+    const query = `SELECT idPublicacion, DNI, nombre FROM publicacion WHERE precio = 0 AND borrado = 0;`
+    const [result] = await connection.query(query)
+    return res.status(200).json({ data: result })
+  }
 }

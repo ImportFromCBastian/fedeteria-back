@@ -7,9 +7,13 @@ router.post('/', PublicationController.create)
 
 router.get('/', PublicationController.getAllAcepted)
 
+router.get('/notDeleted', PublicationController.getAllAceptedNotDeleted)
+
 router.get('/:id', PublicationController.findById)
 
 router.get('/user/:dni', PublicationController.findAllAceptedByDni)
+
+router.get('/user/notDeleted/:dni', PublicationController.findAllAceptedNotDeletedByDni)
 
 router.patch('/:idPublicacion', PublicationController.updatePublication)
 

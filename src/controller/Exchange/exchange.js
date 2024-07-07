@@ -240,10 +240,10 @@ export class ExchangeController {
     }
   }
 
-  static async getLast20Exchanges(req, res) {
+  static async isInExchange(req, res) {
     try {
-      const suggestions = await ExchangeModel.getLast20Exchanges()
-      res.status(200).json(suggestions)
+      const pending = await ExchangeModel.isInExchange()
+      res.status(200).json(pending)
     } catch (error) {
       res.status(500).json({ error: error })
     }
