@@ -103,7 +103,8 @@ export class PublicationModel {
     const query = `
     SELECT p.*
     FROM Publicacion p
-    WHERE p.idPublicacion = ? 
+    WHERE p.idPublicacion = ?
+    AND p.precio > 0
     AND p.idPublicacion NOT IN (
       SELECT t.productoDeseado
       FROM Trueque t
