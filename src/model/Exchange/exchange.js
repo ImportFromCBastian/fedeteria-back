@@ -415,4 +415,20 @@ ORDER BY t.fecha ASC;`
       return { ok: true, rows }
     })
   }
+  static async getCantTrueques() {
+    const query = `
+    SELECT l.nombre, COUNT(*) AS CantidadDeTrueques
+    FROM Local l
+      LEFT JOIN
+        Trueque t ON l.idLocal = t.idLocal
+    WHERE realizado = 1
+    GROUP BY t.idLocal, l.nombre;`
+    try {
+      const [rows] = await connection.query(query)
+      console.log(rows)
+      return rows
+    } catch (e) {
+      return { ok: false, error: e }
+    }
+  }
 }

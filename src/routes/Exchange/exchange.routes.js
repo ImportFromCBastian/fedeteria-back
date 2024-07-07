@@ -52,4 +52,6 @@ router.get('/get/last20Exchanges', ExchangeController.getLast20Exchanges)
 
 router.get('/toDelete/:id', ExchangeController.isInExchange)
 
+router.get('/cantTrueque/get', ExchangeController.getCantTrueques)
+
 export default router
