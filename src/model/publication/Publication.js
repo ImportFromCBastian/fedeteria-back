@@ -20,13 +20,13 @@ export class PublicationModel {
       AND p.idPublicacion NOT IN (
         SELECT t.productoDeseado
         FROM Trueque t
-        WHERE t.realizado IS NOT NULL
+        WHERE t.realizado IS NOT NULL AND t.realizado IN (1,3)
       ) 
       AND p.idPublicacion NOT IN (
         SELECT pc.idPublicacion
         FROM ProductosCambio pc
         INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
-        WHERE t.realizado IS NOT NULL
+        WHERE t.realizado IS NOT NULL AND t.realizado IN (1,3)
       );`
     const [publications] = await connection.query(queryPublication)
     return publications
@@ -45,12 +45,12 @@ export class PublicationModel {
     WHERE p.idPublicacion NOT IN (
       SELECT t.productoDeseado
       FROM Trueque t
-      WHERE t.realizado IS NOT NULL
+      WHERE t.realizado IS NOT NULL AND t.realizado IN (1,3)
     ) AND p.idPublicacion NOT IN (
      SELECT pc.idPublicacion
       FROM ProductosCambio pc
       INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
-      WHERE t.realizado IS NOT NULL
+      WHERE t.realizado IS NOT NULL AND t.realizado IN (1,3)
     ) AND p.DNI = ?;`
     const [publication] = await connection.query(query, [dni])
     return publication
@@ -114,13 +114,13 @@ export class PublicationModel {
       AND p.idPublicacion NOT IN (
         SELECT t.productoDeseado
         FROM Trueque t
-        WHERE t.realizado IS NOT NULL
+        WHERE t.realizado IS NOT NULL AND t.realizado IN (1,3)
       ) 
       AND p.idPublicacion NOT IN (
         SELECT pc.idPublicacion
         FROM ProductosCambio pc
         INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
-        WHERE t.realizado IS NOT NULL
+        WHERE t.realizado IS NOT NULL AND t.realizado IN (1,3)
       )
       AND LOWER(p.nombre) LIKE LOWER('%${query}%');`
     const [publications] = await connection.query(queryPublication)
