@@ -38,4 +38,11 @@ export class PaymentModel {
     (?,NOW(),DATE_ADD(NOW(),INTERVAL 1 WEEK),?);`
     await connection.query(query, [payment.transaction_amount, idPublicacion])
   }
+
+  static async getAll() {
+    const query = `
+    SELECT SUM(monto) as recaudado FROM Pagos;`
+    const [result] = await connection.query(query)
+    return result[0]
+  }
 }
