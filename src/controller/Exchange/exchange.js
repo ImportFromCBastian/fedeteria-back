@@ -242,7 +242,8 @@ export class ExchangeController {
 
   static async isInExchange(req, res) {
     try {
-      const pending = await ExchangeModel.isInExchange()
+      const { id } = req.params
+      const pending = await ExchangeModel.isInExchange(id)
       res.status(200).json(pending)
     } catch (error) {
       res.status(500).json({ error: error })
