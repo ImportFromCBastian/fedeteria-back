@@ -121,9 +121,10 @@ export class ExchangeModel {
 
   static async getPendingExchange() {
     const query = `
-    SELECT t.productoDeseado
+    SELECT t.productoDeseado, pc.idPublicacion
     FROM Trueque t
-    WHERE t.realizado = 2;
+    INNER JOIN ProductosCambio pc ON t.idTrueque = pc.idTrueque
+    WHERE t.realizado IN (2,3);
    `
     return await connection.query(query).then(([rows]) => {
       return { ok: true, rows }
@@ -174,12 +175,12 @@ export class ExchangeModel {
   }
   static async getTrueques() {
     const query = `
-    SELECT l.nombre, t.fecha, COUNT(*) AS CantidadDeTrueques
+    SELECT t.fecha, COUNT(*) AS CantidadDeTrueques
     FROM Local l
       LEFT JOIN
         Trueque t ON l.idLocal = t.idLocal
     WHERE realizado = 1
-    GROUP BY t.idLocal, l.nombre, t.fecha;`
+    GROUP BY  t.fecha;`
     try {
       const [rows] = await connection.query(query)
       return rows
@@ -401,8 +402,7 @@ ORDER BY t.fecha ASC;`
   }
 
   static async isInExchange(id) {
-    const query = `
-    SELECT *
+    const query = `SELECT *
     FROM Publicacion p
     WHERE p.borrado = 0 AND
     p.precio != 0 AND
@@ -411,9 +411,9 @@ ORDER BY t.fecha ASC;`
      SELECT pc.idPublicacion
       FROM ProductosCambio pc
       INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
-      WHERE t.realizado != 5
-    );
-   `
+      WHERE t.realizado IS NOT NULL AND t.realizado != 5
+    );`
+
     const [rows] = await connection.query(query, [id])
     return rows
   }
