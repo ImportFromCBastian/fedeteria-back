@@ -17,6 +17,7 @@ export class PublicationModel {
     SELECT p.*
     FROM Publicacion p
     WHERE p.precio <> 0
+    AND p.borrado = 0
       AND p.idPublicacion NOT IN (
         SELECT t.productoDeseado
         FROM Trueque t
@@ -27,7 +28,9 @@ export class PublicationModel {
         FROM ProductosCambio pc
         INNER JOIN Trueque t ON pc.idTrueque = t.idTrueque
         WHERE t.realizado IS NOT NULL AND t.realizado IN (1,2,3)
-      );`
+        
+      )
+        ;`
     const [publications] = await connection.query(queryPublication)
     return publications
   }
@@ -42,7 +45,10 @@ export class PublicationModel {
     const query = `
     SELECT p.*
     FROM Publicacion p
-    WHERE p.idPublicacion NOT IN (
+    WHERE
+    p.precio <> 0
+    AND p.borrado = 0
+    AND p.idPublicacion NOT IN (
       SELECT t.productoDeseado
       FROM Trueque t
       WHERE t.realizado IS NOT NULL AND t.realizado IN (1,2,3)
@@ -133,6 +139,7 @@ export class PublicationModel {
     FROM Publicacion p
     WHERE p.idPublicacion = ?
     AND p.precio > 0
+    AND p.borrado = 0
     AND p.idPublicacion NOT IN (
       SELECT t.productoDeseado
       FROM Trueque t
