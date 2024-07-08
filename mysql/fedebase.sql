@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`publicacion` (
   `productoACambio` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
   `estado` VARCHAR(5) NOT NULL,
   `rechazado` TINYINT UNSIGNED NULL DEFAULT NULL,
+  `borrado` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`idPublicacion`),
   UNIQUE INDEX `id_UNIQUE` (`idPublicacion` ASC) VISIBLE,
   INDEX `CLIENTE_PUB_FK_idx` (`DNI` ASC) VISIBLE,
@@ -120,26 +121,6 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`publicacion` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- Table `fedeteria-db`.`consulta`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `fedeteria-db`.`consulta` ;
-
-CREATE TABLE IF NOT EXISTS `fedeteria-db`.`consulta` (
-  `idConsulta` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `textoConsulta` TEXT NOT NULL,
-  `idPublicacion` INT UNSIGNED NOT NULL,
-  `dniUsuario` VARCHAR(20) NOT NULL,
-  `idRespuesta` INT UNSIGNED NULL DEFAULT NULL,
-  PRIMARY KEY (`idConsulta`),
-  UNIQUE INDEX `idConsulta_UNIQUE` (`idConsulta` ASC) VISIBLE,
-  INDEX `PUB_PREGUNTA_FK_idx` (`idPublicacion` ASC) VISIBLE,
-  CONSTRAINT `PUB_CONSULTA_FK`
-    FOREIGN KEY (`idPublicacion`)
-    REFERENCES `fedeteria-db`.`publicacion` (`idPublicacion`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `fedeteria-db`.`empleado`
@@ -333,25 +314,6 @@ CREATE TABLE IF NOT EXISTS `fedeteria-db`.`productosvendidos` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- Table `fedeteria-db`.`respuesta`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `fedeteria-db`.`respuesta` ;
-
-CREATE TABLE IF NOT EXISTS `fedeteria-db`.`respuesta` (
-  `idRespuesta` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `dniDuenoPublicacion` VARCHAR(20) NOT NULL,
-  `textoRespuesta` TEXT NOT NULL,
-  `idPregunta` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`idRespuesta`),
-  UNIQUE INDEX `idRespuesta_UNIQUE` (`idRespuesta` ASC) VISIBLE,
-  INDEX `PREGUNTA_RESPUESTA_FK_idx` (`idPregunta` ASC) VISIBLE,
-  CONSTRAINT `PREGUNTA_RESPUESTA_FK`
-    FOREIGN KEY (`idPregunta`)
-    REFERENCES `fedeteria-db`.`pregunta` (`idPregunta`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
