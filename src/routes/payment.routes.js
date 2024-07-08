@@ -5,4 +5,6 @@ const router = Router()
 
 router.post('/', PaymentController.createPayment)
 
+router.get('/', PaymentController.getAll)
+
 export default router

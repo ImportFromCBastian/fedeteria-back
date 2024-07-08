@@ -14,4 +14,9 @@ export class PaymentController {
     await PaymentModel.insertData(payment, body.pubId)
     res.status(201).json(payment)
   }
+
+  static async getAll(req, res) {
+    const payments = await PaymentModel.getAll()
+    res.status(200).json(payments)
+  }
 }
